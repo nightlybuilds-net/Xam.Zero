@@ -12,4 +12,8 @@
     <ItemGroup>
         <PackageReference Include="Xamarin.Forms" Version="4.0.0.62955-pre2" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Xam.Zero\Xam.Zero.csproj" />
+    </ItemGroup>
 </Project>
