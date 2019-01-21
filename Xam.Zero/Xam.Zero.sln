@@ -2,6 +2,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero", "Xam.Zero\Xam.Zero.csproj", "{B1FA5BB6-6B5D-4C72-80FD-D5A4A6016B1B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Forms", "Forms", "{AB714ED3-A07B-475C-A240-D78BEF2442D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.Dev", "Forms\Xam.Zero.Dev\Xam.Zero.Dev\Xam.Zero.Dev.csproj", "{7E0EEA88-3032-4EF3-900C-3E0AEEE7D20D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.Dev.Android", "Forms\Xam.Zero.Dev\Xam.Zero.Dev.Android\Xam.Zero.Dev.Android.csproj", "{81F335ED-82A7-4A4F-B1D0-E6BD7527FFE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.Dev.iOS", "Forms\Xam.Zero.Dev\Xam.Zero.Dev.iOS\Xam.Zero.Dev.iOS.csproj", "{8A74CF57-D567-4293-AFEF-4FCE47393064}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +20,22 @@ Global
 		{B1FA5BB6-6B5D-4C72-80FD-D5A4A6016B1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1FA5BB6-6B5D-4C72-80FD-D5A4A6016B1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1FA5BB6-6B5D-4C72-80FD-D5A4A6016B1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E0EEA88-3032-4EF3-900C-3E0AEEE7D20D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E0EEA88-3032-4EF3-900C-3E0AEEE7D20D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E0EEA88-3032-4EF3-900C-3E0AEEE7D20D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E0EEA88-3032-4EF3-900C-3E0AEEE7D20D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81F335ED-82A7-4A4F-B1D0-E6BD7527FFE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81F335ED-82A7-4A4F-B1D0-E6BD7527FFE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81F335ED-82A7-4A4F-B1D0-E6BD7527FFE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81F335ED-82A7-4A4F-B1D0-E6BD7527FFE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A74CF57-D567-4293-AFEF-4FCE47393064}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{8A74CF57-D567-4293-AFEF-4FCE47393064}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{8A74CF57-D567-4293-AFEF-4FCE47393064}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{8A74CF57-D567-4293-AFEF-4FCE47393064}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7E0EEA88-3032-4EF3-900C-3E0AEEE7D20D} = {AB714ED3-A07B-475C-A240-D78BEF2442D5}
+		{81F335ED-82A7-4A4F-B1D0-E6BD7527FFE9} = {AB714ED3-A07B-475C-A240-D78BEF2442D5}
+		{8A74CF57-D567-4293-AFEF-4FCE47393064} = {AB714ED3-A07B-475C-A240-D78BEF2442D5}
 	EndGlobalSection
 EndGlobal

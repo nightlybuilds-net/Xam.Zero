@@ -4,6 +4,10 @@ using Xamarin.Forms;
 
 namespace Xam.Zero.MarkupExtensions
 {
+    /// <summary>
+    /// Resolve ViewModel from XAML
+    /// pass Page too 
+    /// </summary>
     public class ShellPagedViewModelMarkup : ViewModelMarkup
     {
         public Page Page { get; set; }
