@@ -12,6 +12,9 @@ namespace Xam.Zero.Dev
         {
             InitializeComponent();
 
+            
+            Ioc.RegisterViewmodels();
+            
             MainPage = new MainPage();
         }
 

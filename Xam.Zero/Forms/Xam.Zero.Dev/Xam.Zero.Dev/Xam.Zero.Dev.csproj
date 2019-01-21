@@ -16,4 +16,8 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Xam.Zero\Xam.Zero.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\Home" />
+    </ItemGroup>
 </Project>
