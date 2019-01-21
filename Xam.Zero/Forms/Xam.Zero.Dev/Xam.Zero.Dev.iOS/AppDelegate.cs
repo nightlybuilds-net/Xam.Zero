@@ -23,7 +23,6 @@ namespace Xam.Zero.Dev.iOS
         {
             global::Xamarin.Forms.Forms.SetFlags("Shell_Experimental");
             global::Xamarin.Forms.Forms.Init();
-            global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
