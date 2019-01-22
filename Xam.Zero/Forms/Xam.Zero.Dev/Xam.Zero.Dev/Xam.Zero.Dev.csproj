@@ -18,6 +18,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Home" />
+      <Page Include="AppShell.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Features\Home\HomePage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
     </ItemGroup>
 </Project>

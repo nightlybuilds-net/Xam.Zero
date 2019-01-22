@@ -15,7 +15,7 @@ namespace Xam.Zero.Dev
             
             Ioc.RegisterViewmodels();
             
-            MainPage = new MainPage();
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()

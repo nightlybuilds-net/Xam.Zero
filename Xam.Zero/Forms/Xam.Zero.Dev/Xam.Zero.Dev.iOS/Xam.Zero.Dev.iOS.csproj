@@ -110,7 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xam.Zero.Dev\Xam.Zero.Dev.csproj">
-      <Project>{56E8B6A2-267B-4264-9D79-43D8FEF5FD4C}</Project>
+      <Project>{7E0EEA88-3032-4EF3-900C-3E0AEEE7D20D}</Project>
       <Name>Xam.Zero.Dev</Name>
     </ProjectReference>
   </ItemGroup>
