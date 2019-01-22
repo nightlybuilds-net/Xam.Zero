@@ -10,4 +10,7 @@
             </ShellContent>
         </ShellSection>
     </ShellItem>
+    
+    <!-- <ShellContent Title="Profile" -->
+    <!--               ContentTemplate="{DataTemplate local:ProfilePage}" /> -->
 </Shell>

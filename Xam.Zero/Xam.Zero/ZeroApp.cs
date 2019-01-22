@@ -21,7 +21,19 @@ namespace Xam.Zero
         {
             ZeroIoc.UseContainer(container);
             ZeroIoc.RegisterPages();
-            ZeroIoc.RegisterViewmodels();
+            ZeroIoc.RegisterViewModels();
+        }
+
+        /// <summary>
+        /// Initialize ZeroApp
+        /// Register Pages
+        /// Register ViewModels
+        /// </summary>
+        /// <param name="containerFunc"></param>
+        public static void InitApp(Func<IContainer> containerFunc)
+        {
+            var container = containerFunc.Invoke();
+            InitApp(container);
         }
         
         /// <summary>

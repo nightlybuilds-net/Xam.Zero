@@ -17,7 +17,7 @@ namespace Xam.Zero.Dev
         {
             this.InitializeComponent();
 
-            ZeroApp.InitApp(new DryIocZeroContainer(Container));
+            ZeroApp.InitApp(DryIocZeroContainer.Build(Container));
             this.MainPage = new AppShell();
         }
 

@@ -18,7 +18,7 @@ namespace Xam.Zero.Ioc
         /// <summary>
         /// Register all viewmodel that extend ZeroBaseModel
         /// </summary>
-        public static void RegisterViewmodels()
+        public static void RegisterViewModels()
         {
             ZeroApp.RegisterMany(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ZeroBaseModel)));
         }

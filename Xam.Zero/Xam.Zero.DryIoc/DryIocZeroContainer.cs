@@ -8,7 +8,7 @@ namespace Xam.Zero.DryIoc
     {
         private readonly Container _dryIocContainer;
 
-        public DryIocZeroContainer(Container dryIocContainer)
+        private DryIocZeroContainer(Container dryIocContainer)
         {
             this._dryIocContainer = dryIocContainer;
         }
@@ -37,6 +37,11 @@ namespace Xam.Zero.DryIoc
         public object Resolve(Type type)
         {
             return this._dryIocContainer.Resolve(type);
+        }
+
+        public static DryIocZeroContainer Build(Container dryIocContainer)
+        {
+            return new DryIocZeroContainer(dryIocContainer);
         }
         
     }
