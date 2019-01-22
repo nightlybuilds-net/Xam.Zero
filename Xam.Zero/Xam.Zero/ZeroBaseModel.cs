@@ -77,7 +77,7 @@ namespace Xam.Zero
         /// <returns></returns>
         private async Task<Page> ResolvePageWithContext<T>(object data) where T : Page
         {
-            var page = Ioc.Container.Resolve<T>();
+            var page = ZeroIoc.Container.Resolve<T>();
             var context = (ZeroBaseModel) page.BindingContext;
             context.CurrentPage = page;
             context.PreviousModel = this;

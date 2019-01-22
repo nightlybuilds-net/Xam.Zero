@@ -1,5 +1,6 @@
 ﻿using System;
 using DryIoc;
+using Xam.Zero.Dev.Features.Home;
 using Xam.Zero.DryIoc;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

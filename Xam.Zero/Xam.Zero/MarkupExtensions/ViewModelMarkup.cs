@@ -12,7 +12,7 @@ namespace Xam.Zero.MarkupExtensions
         
         public virtual object ProvideValue (IServiceProvider serviceProvider)
         {
-            return Ioc.Container.Resolve(this.ViewModel);
+            return ZeroIoc.Container.Resolve(this.ViewModel);
         }
     }
 }

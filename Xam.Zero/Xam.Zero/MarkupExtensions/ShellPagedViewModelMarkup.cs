@@ -13,7 +13,7 @@ namespace Xam.Zero.MarkupExtensions
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            var baseModel = (ZeroBaseModel)Ioc.Container.Resolve(this.ViewModel);
+            var baseModel = (ZeroBaseModel)ZeroIoc.Container.Resolve(this.ViewModel);
             baseModel.CurrentPage = this.Page;
             return baseModel;
         }
