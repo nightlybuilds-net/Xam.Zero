@@ -1,5 +1,6 @@
 ﻿using System;
 using DryIoc;
+using IContainer = Xam.Zero.Ioc.IContainer;
 
 namespace Xam.Zero.DryIoc
 {

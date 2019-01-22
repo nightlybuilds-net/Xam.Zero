@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Xam.Zero.Utility;
 
-namespace Xam.Zero
+namespace Xam.Zero.ViewModels
 {
     public abstract class NotifyBaseModel : INotifyPropertyChanged
     {

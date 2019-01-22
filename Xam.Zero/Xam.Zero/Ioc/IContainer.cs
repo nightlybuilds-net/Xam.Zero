@@ -1,6 +1,6 @@
 using System;
 
-namespace Xam.Zero
+namespace Xam.Zero.Ioc
 {
     public interface IContainer
     {

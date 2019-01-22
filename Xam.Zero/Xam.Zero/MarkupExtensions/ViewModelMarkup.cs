@@ -1,4 +1,5 @@
 using System;
+using Xam.Zero.Ioc;
 using Xamarin.Forms.Xaml;
 
 namespace Xam.Zero.MarkupExtensions

@@ -2,7 +2,10 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using Xam.Zero.Classes;
+using Xam.Zero.Ioc;
 using Xamarin.Forms.Internals;
+using IContainer = Xam.Zero.Ioc.IContainer;
 
 namespace Xam.Zero
 {

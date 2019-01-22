@@ -1,6 +1,6 @@
 using System;
 
-namespace Xam.Zero
+namespace Xam.Zero.Classes
 {
     /// <summary>
     /// Mark class as transient

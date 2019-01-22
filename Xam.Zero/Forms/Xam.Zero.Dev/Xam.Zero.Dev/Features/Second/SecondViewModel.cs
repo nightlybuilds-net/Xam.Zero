@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using Xam.Zero.ViewModels;
 using Xamarin.Forms;
 
 namespace Xam.Zero.Dev.Features.Second

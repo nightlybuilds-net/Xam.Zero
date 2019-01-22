@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
+using Xam.Zero.Ioc;
 using Xamarin.Forms;
 
-namespace Xam.Zero
+namespace Xam.Zero.ViewModels
 {
     public class ZeroBaseModel : NotifyBaseModel
     {

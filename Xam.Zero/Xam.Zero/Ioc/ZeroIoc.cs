@@ -1,11 +1,7 @@
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using Xam.Zero.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
-namespace Xam.Zero
+namespace Xam.Zero.Ioc
 {
     internal static class ZeroIoc
     {
