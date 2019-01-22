@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Xam.Zero.Ioc;
 using Xamarin.Forms;
@@ -7,15 +8,48 @@ namespace Xam.Zero.ViewModels
     public class ZeroBaseModel : NotifyBaseModel
     {
         /// <summary>
-        /// Current Page setted from Zero framework
-        /// </summary>
-        public Page CurrentPage { get; set; }
-
-        /// <summary>
         /// Previous model hydrated by zeronavigator
         /// </summary>
         public ZeroBaseModel PreviousModel { get; set; }
 
+        
+        private Page _currentPage;
+        /// <summary>
+        /// Current Page setted from Zero framework
+        /// </summary>
+        public Page CurrentPage
+        {
+            get => this._currentPage;
+            set
+            {
+                if (this._currentPage != null)
+                {
+                    this._currentPage.Appearing -= this.CurrentPageOnAppearing;
+                    this._currentPage.Disappearing -= this.CurrentPageOnDisappearing;
+                }
+                
+                this._currentPage = value;
+                
+                this._currentPage.Appearing += this.CurrentPageOnAppearing;
+                this._currentPage.Disappearing += this.CurrentPageOnDisappearing;
+            }
+        }
+
+        protected virtual void CurrentPageOnDisappearing(object sender, EventArgs e)
+        {}
+
+        protected virtual void CurrentPageOnAppearing(object sender, EventArgs e)
+        {}
+        
+        protected virtual Task Init(object data)
+        {
+            return Task.CompletedTask;
+        }
+        
+        protected virtual Task ReverseInit(object data)
+        {
+            return Task.CompletedTask;
+        }
 
 
         #region PAGE Navigation
@@ -117,14 +151,6 @@ namespace Xam.Zero.ViewModels
 
         #endregion
 
-        protected virtual Task Init(object data)
-        {
-            return Task.CompletedTask;
-        }
-        
-        protected virtual Task ReverseInit(object data)
-        {
-            return Task.CompletedTask;
-        }
+      
     }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xam.Zero.Classes;
 using Xam.Zero.Dev.Features.Second;
 using Xam.Zero.ViewModels;
 using Xamarin.Forms;
@@ -39,5 +41,6 @@ namespace Xam.Zero.Dev.Features.Home
             this.Text = "reverseinit";
             return base.ReverseInit(data);
         }
+      
     }
 }
