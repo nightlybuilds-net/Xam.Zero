@@ -1,4 +1,6 @@
 ﻿using System;
+using DryIoc;
+using Xam.Zero.DryIoc;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,14 +10,14 @@ namespace Xam.Zero.Dev
 {
     public partial class App : Application
     {
+        public static readonly Container Container = new Container();
+        
         public App()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            
-            Ioc.RegisterViewmodels();
-            
-            MainPage = new AppShell();
+            ZeroApp.InitApp(new DryIocZeroContainer(Container));
+            this.MainPage = new AppShell();
         }
 
         protected override void OnStart()

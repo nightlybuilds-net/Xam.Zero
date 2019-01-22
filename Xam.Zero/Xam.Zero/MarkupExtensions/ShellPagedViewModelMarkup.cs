@@ -1,5 +1,4 @@
 using System;
-using DryIoc;
 using Xamarin.Forms;
 
 namespace Xam.Zero.MarkupExtensions

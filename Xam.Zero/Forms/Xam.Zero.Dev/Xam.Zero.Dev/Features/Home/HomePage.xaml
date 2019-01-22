@@ -12,6 +12,8 @@
             <Label Text="{Binding Text}"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
+            
+            <Button Text="Go!" Command="{Binding NavigateCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

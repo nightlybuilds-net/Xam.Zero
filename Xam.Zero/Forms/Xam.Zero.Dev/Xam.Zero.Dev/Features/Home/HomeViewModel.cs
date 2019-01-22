@@ -1,4 +1,7 @@
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xam.Zero.Dev.Features.Second;
+using Xamarin.Forms;
 
 namespace Xam.Zero.Dev.Features.Home
 {
@@ -15,9 +18,12 @@ namespace Xam.Zero.Dev.Features.Home
             } 
         }
 
+        public ICommand NavigateCommand { get; set; }
+
         public HomeViewModel()
         {
             this.Text = "Ctor";
+            this.NavigateCommand = new Command(async ()=> await this.GoTo<SecondPage>(null));
         }
 
 

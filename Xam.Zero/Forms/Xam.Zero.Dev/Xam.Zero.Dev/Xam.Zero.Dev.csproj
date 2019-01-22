@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Xam.Zero.DryIoc\Xam.Zero.DryIoc.csproj" />
       <ProjectReference Include="..\..\..\Xam.Zero\Xam.Zero.csproj" />
     </ItemGroup>
 
@@ -23,6 +24,10 @@
         <Generator></Generator>
       </Page>
       <Page Include="Features\Home\HomePage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Features\Second\SecondPage.xaml">
         <SubType>Designer</SubType>
         <Generator></Generator>
       </Page>

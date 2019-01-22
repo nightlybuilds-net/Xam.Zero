@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using DryIoc;
 using Xamarin.Forms;
 
 namespace Xam.Zero
@@ -91,28 +90,28 @@ namespace Xam.Zero
 
         #region VM Navigation
 
-        public async Task GoToVm<T>(object data, bool animated = true) where T : ZeroBaseModel
-        {
-            var page = await this.ResolvePageFromModel<T>(data);
-            await this.CurrentPage.Navigation.PushAsync(page, animated);
-        }
-        
-        public async Task GoModalToVm<T>(object data, bool animated = true) where T : ZeroBaseModel
-        {
-            var page = await this.ResolvePageFromModel<T>(data);
-            await this.CurrentPage.Navigation.PushModalAsync(page, animated);
-        }
-
-        private async Task<Page> ResolvePageFromModel<T>(object data) where T : ZeroBaseModel
-        {
-            var serviceKey = typeof(T).Name.Replace("Model", "");
-            var page = (Page) Ioc.Container.Resolve<IPageController>(serviceKey: serviceKey);
-            var context = (ZeroBaseModel) page.BindingContext;
-            context.CurrentPage = page;
-            context.PreviousModel = this;
-            await context.Init(data);
-            return page;
-        }
+//        public async Task GoToVm<T>(object data, bool animated = true) where T : ZeroBaseModel
+//        {
+//            var page = await this.ResolvePageFromModel<T>(data);
+//            await this.CurrentPage.Navigation.PushAsync(page, animated);
+//        }
+//        
+//        public async Task GoModalToVm<T>(object data, bool animated = true) where T : ZeroBaseModel
+//        {
+//            var page = await this.ResolvePageFromModel<T>(data);
+//            await this.CurrentPage.Navigation.PushModalAsync(page, animated);
+//        }
+//
+//        private async Task<Page> ResolvePageFromModel<T>(object data) where T : ZeroBaseModel
+//        {
+//            var serviceKey = typeof(T).Name.Replace("Model", "");
+//            var page = (Page) Ioc.Container.Resolve<IPageController>(serviceKey: serviceKey);
+//            var context = (ZeroBaseModel) page.BindingContext;
+//            context.CurrentPage = page;
+//            context.PreviousModel = this;
+//            await context.Init(data);
+//            return page;
+//        }
         
 
         #endregion
