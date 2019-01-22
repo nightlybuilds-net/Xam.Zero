@@ -31,5 +31,17 @@
         <SubType>Designer</SubType>
         <Generator></Generator>
       </Page>
+      <Page Include="Features\Tabbed\FirstTab\FirstTabPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Features\Tabbed\SecondTab\SecondTabPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="TabbedShell.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
     </ItemGroup>
 </Project>

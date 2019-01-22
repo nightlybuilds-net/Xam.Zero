@@ -22,11 +22,18 @@ namespace Xam.Zero.Dev.Features.Home
         }
 
         public ICommand NavigateCommand { get; set; }
+        public ICommand GoToTabbedCommand { get; set; }
+        
+        
 
         public HomeViewModel()
         {
             this.Text = "Ctor";
             this.NavigateCommand = new Command(async ()=> await this.GoTo<SecondPage>(null));
+            this.GoToTabbedCommand = new Command(() =>
+            {
+                MessagingCenter.Send(this,"Tabbed");
+            });
         }
 
 

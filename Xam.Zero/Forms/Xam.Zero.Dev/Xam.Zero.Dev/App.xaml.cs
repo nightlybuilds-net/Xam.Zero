@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using DryIoc;
 using Xam.Zero.Dev.Features.Home;
 using Xam.Zero.DryIoc;
@@ -13,10 +14,17 @@ namespace Xam.Zero.Dev
     {
         public static readonly Container Container = new Container();
         
+        
         public App()
         {
             this.InitializeComponent();
 
+            
+            MessagingCenter.Subscribe<HomeViewModel>(this,"Tabbed", model =>
+            {
+                this.MainPage = new TabbedShell();
+            });
+            
             ZeroApp.InitApp(DryIocZeroContainer.Build(Container));
             this.MainPage = new AppShell();
         }
@@ -35,5 +43,7 @@ namespace Xam.Zero.Dev
         {
             // Handle when your app resumes
         }
+
+        
     }
 }

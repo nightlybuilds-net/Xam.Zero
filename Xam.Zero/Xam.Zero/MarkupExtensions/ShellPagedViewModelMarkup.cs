@@ -17,6 +17,7 @@ namespace Xam.Zero.MarkupExtensions
         {
             var baseModel = (ZeroBaseModel)ZeroIoc.Container.Resolve(this.ViewModel);
             baseModel.CurrentPage = this.Page;
+//            baseModel.Init(null).GetAwaiter().GetResult();
             return baseModel;
         }
     }
