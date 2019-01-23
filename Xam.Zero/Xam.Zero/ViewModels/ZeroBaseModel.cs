@@ -35,6 +35,8 @@ namespace Xam.Zero.ViewModels
             }
         }
 
+        #region VIRTUALS
+
         protected virtual void CurrentPageOnDisappearing(object sender, EventArgs e)
         {}
 
@@ -51,6 +53,27 @@ namespace Xam.Zero.ViewModels
             return Task.CompletedTask;
         }
 
+        #endregion
+
+        #region ALERTS
+
+        public Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
+        {
+            return this.CurrentPage?.DisplayAlert(title, message, accept, cancel);
+        }
+        
+        public Task DisplayAlert(string title, string message, string cancel)
+        {
+            return this.CurrentPage?.DisplayAlert(title, message, cancel);
+        }
+
+        public Task<string> DisplayActionSheet(string title, string cancel, string destruction, string[] buttons)
+        {
+            return this.CurrentPage?.DisplayActionSheet(title, cancel, destruction, buttons);
+        }
+        
+
+        #endregion
 
         #region PAGE Navigation
 
