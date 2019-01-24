@@ -13,7 +13,7 @@ namespace Xam.Zero.Dev
     {
         public TabbedShell()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

@@ -13,20 +13,17 @@ namespace Xam.Zero.Dev
     public partial class App : Application
     {
         public static readonly Container Container = new Container();
-        
-        
+
+
         public App()
         {
             this.InitializeComponent();
 
-            
-            MessagingCenter.Subscribe<HomeViewModel>(this,"Tabbed", model =>
-            {
-                this.MainPage = new TabbedShell();
-            });
-            
-            ZeroApp.InitApp(DryIocZeroContainer.Build(Container));
-            this.MainPage = new AppShell();
+            ZeroApp.On(this)
+                .WithContainer(DryIocZeroContainer.Build(Container))
+                .RegisterShell(() => new AppShell())
+                .RegisterShell(() => new TabbedShell())
+                .Start<AppShell>();
         }
 
         protected override void OnStart()
@@ -43,7 +40,5 @@ namespace Xam.Zero.Dev
         {
             // Handle when your app resumes
         }
-
-        
     }
 }

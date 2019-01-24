@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage x:Name="FirstTab" 
-    xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage x:Name="FirstTab"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
              xmlns:firstTab="clr-namespace:Xam.Zero.Dev.Features.Tabbed.FirstTab;assembly=Xam.Zero.Dev"
              BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type firstTab:FirstTabViewModel}, Page={x:Reference FirstTab}}"
              x:Class="Xam.Zero.Dev.Features.Tabbed.FirstTab.FirstTabPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding Prova}"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+        <StackLayout VerticalOptions="Center">
+            <Button Text="Back To Main" Command="{Binding BackCommand}" />
+
+            <Label Text="{Binding Prova}" />
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

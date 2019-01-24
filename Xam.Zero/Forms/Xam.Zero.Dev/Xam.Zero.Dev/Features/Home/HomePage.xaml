@@ -15,6 +15,7 @@
             
             <Button Text="Go!" Command="{Binding NavigateCommand}"/>
             <Button Text="Change Shell" Command="{Binding GoToTabbedCommand}"/>
+            <Button Text="Test Shell Service" Command="{Binding TestShellServiceCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

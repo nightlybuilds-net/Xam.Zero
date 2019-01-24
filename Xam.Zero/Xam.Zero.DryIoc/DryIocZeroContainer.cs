@@ -29,6 +29,11 @@ namespace Xam.Zero.DryIoc
 
         }
 
+        public void RegisterInstance<T>(T instance)
+        {
+            this._dryIocContainer.UseInstance(instance);
+        }
+
         public T Resolve<T>()
         {
             return this._dryIocContainer.Resolve<T>();
