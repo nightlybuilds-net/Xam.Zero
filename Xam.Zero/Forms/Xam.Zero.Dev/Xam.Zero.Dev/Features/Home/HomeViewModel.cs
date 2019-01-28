@@ -45,6 +45,7 @@ namespace Xam.Zero.Dev.Features.Home
             {
 //                this._shellService.Test();
             });
+            
         }
 
 

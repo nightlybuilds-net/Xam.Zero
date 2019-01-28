@@ -23,7 +23,7 @@ namespace Xam.Zero.Dev
                 .WithContainer(DryIocZeroContainer.Build(Container))
                 .RegisterShell(() => new AppShell())
                 .RegisterShell(() => new TabbedShell())
-                .Start<AppShell>();
+                .StartWith<AppShell>();
         }
 
         protected override void OnStart()

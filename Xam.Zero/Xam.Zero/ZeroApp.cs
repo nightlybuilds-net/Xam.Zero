@@ -49,27 +49,48 @@ namespace Xam.Zero
         }
 
 
+        /// <summary>
+        /// Start app when only one shell is registered
+        /// Initialize ZeroApp
+        /// Register Pages
+        /// Register ViewModels
+        /// </summary>
+        public void Start()
+        {
+            if(this.Shells.Count > 1)
+                throw new Exception("Mutiple shells registered, use StartWith<T>!");
+
+            this.InnerBootStrap();
+            Builded.App.MainPage = this.Shells.Single().Value.Value;
+        }
+
         
         /// <summary>
         /// Initialize ZeroApp
         /// Register Pages
         /// Register ViewModels
         /// </summary>
-        public void Start<T>() where T : Shell
+        public void StartWith<T>() where T : Shell
+        {
+            this.InnerBootStrap();
+            Builded.App.MainPage = this.Shells.Single(s => s.Key == typeof(T)).Value.Value;
+        }
+
+        /// <summary>
+        /// Bootstrap application
+        /// Register services, pages, models
+        /// </summary>
+        private void InnerBootStrap() 
         {
             ZeroIoc.UseContainer(this._container);
             ZeroIoc.RegisterPages();
             ZeroIoc.RegisterViewModels();
 
-            // todo init shellnavigation
-            this._container.Register<IShellService,ShellService>(true);
-            this._container.RegisterInstance<IMessagingCenter>(MessagingCenter.Instance); // register messaging center for injection
+            this._container.Register<IShellService, ShellService>(true);
+            this._container.RegisterInstance<IMessagingCenter>(MessagingCenter
+                .Instance); // register messaging center for injection
 
             Builded = this; // set builded
-
-            Builded.App.MainPage = this.Shells.Single(s => s.Key == typeof(T)).Value.Value;
-
-//            (Builded.App.MainPage as Shell)
         }
 
         /// <summary>
