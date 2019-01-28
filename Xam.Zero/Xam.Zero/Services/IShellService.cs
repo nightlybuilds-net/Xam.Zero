@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Xam.Zero.Services
@@ -10,5 +11,6 @@ namespace Xam.Zero.Services
         /// </summary>
         /// <typeparam name="T"></typeparam>
         void SwitchContainer<T>() where T : Shell;
+
     }
 }

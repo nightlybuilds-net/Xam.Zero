@@ -1,3 +1,4 @@
+using System.Reflection;
 using Xamarin.Forms;
 
 namespace Xam.Zero.Dev

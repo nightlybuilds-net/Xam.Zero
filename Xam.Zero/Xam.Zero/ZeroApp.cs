@@ -15,15 +15,22 @@ namespace Xam.Zero
 {
     public class ZeroApp
     {
+        /// <summary>
+        /// Builded Instance of ZeroApp
+        /// </summary>
         internal static ZeroApp Builded { get; private set; }
+
         internal Application App { get; private set; }
+
+        internal readonly Dictionary<Type, Lazy<Shell>> Shells = new Dictionary<Type, Lazy<Shell>>();
+
+        private IContainer _container;
 
         private ZeroApp(Application application)
         {
             this.App = application;
         }
 
-        private IContainer _container;
 
         public static ZeroApp On(Application app)
         {
@@ -39,9 +46,7 @@ namespace Xam.Zero
             return this;
         }
 
-        internal readonly Dictionary<Type,Lazy<Shell>> Shells = new Dictionary<Type, Lazy<Shell>>();
 
-        
         public ZeroApp RegisterShell<T>(Func<T> shell) where T : Shell
         {
             this.Shells.Add(typeof(T), new Lazy<Shell>(shell));
@@ -57,14 +62,14 @@ namespace Xam.Zero
         /// </summary>
         public void Start()
         {
-            if(this.Shells.Count > 1)
+            if (this.Shells.Count > 1)
                 throw new Exception("Mutiple shells registered, use StartWith<T>!");
 
             this.InnerBootStrap();
             Builded.App.MainPage = this.Shells.Single().Value.Value;
         }
 
-        
+
         /// <summary>
         /// Initialize ZeroApp
         /// Register Pages
@@ -80,7 +85,7 @@ namespace Xam.Zero
         /// Bootstrap application
         /// Register services, pages, models
         /// </summary>
-        private void InnerBootStrap() 
+        private void InnerBootStrap()
         {
             ZeroIoc.UseContainer(this._container);
             ZeroIoc.RegisterPages();
