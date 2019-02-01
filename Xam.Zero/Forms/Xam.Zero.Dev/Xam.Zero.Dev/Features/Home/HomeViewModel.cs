@@ -25,7 +25,7 @@ namespace Xam.Zero.Dev.Features.Home
 
         public ICommand NavigateCommand { get; set; }
         public ICommand GoToTabbedCommand { get; set; }
-        public ICommand TestShellServiceCommand { get; set; }
+        public ICommand AlertCommand { get; set; }
         
         
         
@@ -36,15 +36,12 @@ namespace Xam.Zero.Dev.Features.Home
             this._shellService = shellService;
             this.Text = "Ctor";
             this.NavigateCommand = new Command(async ()=> await this.GoTo<SecondPage>(null));
-            this.GoToTabbedCommand = new Command(() =>
+            this.GoToTabbedCommand = new Command(async () =>
             {
                 this._shellService.SwitchContainer<TabbedShell>();
             });
             
-            this.TestShellServiceCommand = new Command(() =>
-            {
-//                this._shellService.Test();
-            });
+            this.AlertCommand = new Command(() => { this.DisplayAlert("Prova", "Dai che fungi", "ok"); });
             
         }
 

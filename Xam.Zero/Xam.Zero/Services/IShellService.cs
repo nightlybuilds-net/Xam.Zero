@@ -11,6 +11,6 @@ namespace Xam.Zero.Services
         /// </summary>
         /// <typeparam name="T"></typeparam>
         void SwitchContainer<T>() where T : Shell;
-
     }
+
 }

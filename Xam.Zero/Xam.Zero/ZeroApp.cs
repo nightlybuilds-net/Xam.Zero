@@ -104,7 +104,7 @@ namespace Xam.Zero
         /// If type has attribute Transient will be register as transient
         /// </summary>
         /// <param name="filter"></param>
-        public static void RegisterMany(Func<Type, bool> filter)
+        internal static void RegisterMany(Func<Type, bool> filter)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes());

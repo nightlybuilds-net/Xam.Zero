@@ -16,5 +16,10 @@ namespace Xam.Zero.Services.Impl
             
             ZeroApp.Builded.App.MainPage = container;
         }
+
+        public Task Alert()
+        {
+            return ZeroApp.Builded.App.MainPage.DisplayAlert("prova", "oinoinw", "OK");
+        }
     }
 }

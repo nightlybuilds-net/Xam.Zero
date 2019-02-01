@@ -59,17 +59,20 @@ namespace Xam.Zero.ViewModels
 
         public Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
         {
-            return this.CurrentPage?.DisplayAlert(title, message, accept, cancel);
+            return ZeroApp.Builded.App.MainPage.DisplayAlert(title, message, accept, cancel);
+//            return this.CurrentPage?.DisplayAlert(title, message, accept, cancel);
         }
         
         public Task DisplayAlert(string title, string message, string cancel)
         {
-            return this.CurrentPage?.DisplayAlert(title, message, cancel);
+            return ZeroApp.Builded.App.MainPage.DisplayAlert(title, message, cancel);
+//            return this.CurrentPage?.DisplayAlert(title, message, cancel);
         }
 
         public Task<string> DisplayActionSheet(string title, string cancel, string destruction, string[] buttons)
         {
-            return this.CurrentPage?.DisplayActionSheet(title, cancel, destruction, buttons);
+            return ZeroApp.Builded.App.MainPage.DisplayActionSheet(title, cancel, destruction, buttons);
+//            return this.CurrentPage?.DisplayActionSheet(title, cancel, destruction, buttons);
         }
         
 
