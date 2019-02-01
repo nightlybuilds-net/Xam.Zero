@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xam.Zero.SimpleTabbedApp.Pages.RegistrationPage">
+    <ContentPage.Content>
+        <StackLayout
+            Orientation="Vertical">
+            <Label Text="Registration here!"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            <Button
+                Text="Back to Login"
+                Command="{Binding BackToLoginCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

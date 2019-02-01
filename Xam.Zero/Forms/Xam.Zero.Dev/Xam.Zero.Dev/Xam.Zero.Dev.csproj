@@ -10,10 +10,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Xamarin.Forms" Version="4.0.0.62955-pre2" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\..\Xam.Zero.DryIoc\Xam.Zero.DryIoc.csproj" />
       <ProjectReference Include="..\..\..\Xam.Zero\Xam.Zero.csproj" />
     </ItemGroup>
@@ -43,5 +39,9 @@
         <SubType>Designer</SubType>
         <Generator></Generator>
       </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Xamarin.Forms" Version="4.0.0.94569-pre3" />
     </ItemGroup>
 </Project>
