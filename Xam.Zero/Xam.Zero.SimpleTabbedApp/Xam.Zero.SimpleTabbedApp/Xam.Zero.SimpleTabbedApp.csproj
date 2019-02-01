@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>pdbonly</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Xam.Zero.DryIoc\Xam.Zero.DryIoc.csproj" />
+      <ProjectReference Include="..\..\Xam.Zero\Xam.Zero.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Pages\NewsPage.cs">
+        <DependentUpon>NewsPage.xaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Include="Pages\RegistrationPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Shells\SimpleShell.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Shells\TabbedShell.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Xamarin.Forms" Version="4.0.0.94569-pre3" />
+    </ItemGroup>
+</Project>
