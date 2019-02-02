@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Xam.Zero.SimpleTabbedApp.Pages.RegistrationPage">
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+    xmlns:viewModels="clr-namespace:Xam.Zero.SimpleTabbedApp.ViewModels;assembly=Xam.Zero.SimpleTabbedApp"
+    x:Class="Xam.Zero.SimpleTabbedApp.Pages.RegistrationPage"
+    x:Name="Registration"
+    BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:RegistrationViewModel}, Page={x:Reference Registration}, CallInit=True}">
+
     <ContentPage.Content>
         <StackLayout
             Orientation="Vertical">

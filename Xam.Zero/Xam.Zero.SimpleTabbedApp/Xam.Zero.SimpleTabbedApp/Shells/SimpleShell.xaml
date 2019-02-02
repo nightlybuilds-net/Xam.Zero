@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <Shell 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:Xam.Zero.SimpleTabbedApp.Pages;assembly=Xam.Zero.SimpleTabbedApp"
+    FlyoutBehavior="Disabled"
     x:Class="Xam.Zero.SimpleTabbedApp.Shells.SimpleShell">
     
     <ShellItem>
