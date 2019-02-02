@@ -6,6 +6,7 @@
     xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
     xmlns:viewModels="clr-namespace:Xam.Zero.SimpleTabbedApp.ViewModels;assembly=Xam.Zero.SimpleTabbedApp"
     x:Name="Login"
+    Title="Login"
     BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:LoginViewModel}, Page={x:Reference Login}, CallInit=True}">
 
     <StackLayout

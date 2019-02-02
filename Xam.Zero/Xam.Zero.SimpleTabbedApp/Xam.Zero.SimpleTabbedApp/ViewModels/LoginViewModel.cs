@@ -22,6 +22,7 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
             {
                 await base.GoModalTo<RegistrationPage>(null);
             });
+            
             this.LoginCommand = new Command( () =>
             {
                 _shellService.SwitchContainer<TabbedShell>();

@@ -7,6 +7,7 @@
     xmlns:viewModels="clr-namespace:Xam.Zero.SimpleTabbedApp.ViewModels;assembly=Xam.Zero.SimpleTabbedApp"
     x:Class="Xam.Zero.SimpleTabbedApp.Pages.RegistrationPage"
     x:Name="Registration"
+    Title="Registration"
     BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:RegistrationViewModel}, Page={x:Reference Registration}, CallInit=True}">
 
     <ContentPage.Content>

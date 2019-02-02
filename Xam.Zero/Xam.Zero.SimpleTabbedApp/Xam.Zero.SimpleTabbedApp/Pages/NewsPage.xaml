@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Xam.Zero.SimpleTabbedApp.ViewModels;assembly=Xam.Zero.SimpleTabbedApp"
+             xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+             x:Class="Xam.Zero.SimpleTabbedApp.Pages.NewsPage"
+             x:Name="News"
+             BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:NewsViewModel}, Page={x:Reference News}, CallInit=True}">
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="News"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

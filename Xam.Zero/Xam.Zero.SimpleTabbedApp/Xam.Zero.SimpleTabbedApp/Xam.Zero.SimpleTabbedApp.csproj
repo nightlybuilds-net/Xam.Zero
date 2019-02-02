@@ -21,7 +21,19 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Page Include="Pages\HomePage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Pages\NewsPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
       <Page Include="Pages\RegistrationPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Pages\SettingsPage.xaml">
         <SubType>Designer</SubType>
         <Generator></Generator>
       </Page>
