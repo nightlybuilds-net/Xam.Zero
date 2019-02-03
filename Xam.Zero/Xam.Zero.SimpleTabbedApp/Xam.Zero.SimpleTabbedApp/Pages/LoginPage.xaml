@@ -7,7 +7,7 @@
     xmlns:viewModels="clr-namespace:Xam.Zero.SimpleTabbedApp.ViewModels;assembly=Xam.Zero.SimpleTabbedApp"
     x:Name="Login"
     Title="Login"
-    BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:LoginViewModel}, Page={x:Reference Login}, CallInit=True}">
+    BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:LoginViewModel}, Page={x:Reference Login}}">
 
     <StackLayout
         Orientation="Vertical">

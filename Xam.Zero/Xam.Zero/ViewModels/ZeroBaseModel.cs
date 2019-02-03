@@ -43,12 +43,12 @@ namespace Xam.Zero.ViewModels
         protected virtual void CurrentPageOnAppearing(object sender, EventArgs e)
         {}
         
-        protected virtual Task Init(object data)
+        protected virtual Task PrepareModel(object data)
         {
             return Task.CompletedTask;
         }
         
-        protected virtual Task ReverseInit(object data)
+        protected virtual Task ReversePrepareModel(object data)
         {
             return Task.CompletedTask;
         }
@@ -87,7 +87,7 @@ namespace Xam.Zero.ViewModels
         /// <param name="animated">animated?</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task GoTo<T>(object data, bool animated = true) where T : Page
+        public async Task Push<T>(object data = null, bool animated = true) where T : Page
         {
             var page = await this.ResolvePageWithContext<T>(data);
             await this.CurrentPage.Navigation.PushAsync(page, animated);
@@ -100,7 +100,7 @@ namespace Xam.Zero.ViewModels
         /// <param name="animated">animated</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task GoModalTo<T>(object data, bool animated = true) where T : Page
+        public async Task PushModal<T>(object data = null, bool animated = true) where T : Page
         {
             var page = await this.ResolvePageWithContext<T>(data);
             await this.CurrentPage.Navigation.PushModalAsync(page, animated);
@@ -114,7 +114,7 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task Pop(object data = null, bool animated = true)
         {
-            if (this.PreviousModel != null) await this.PreviousModel.ReverseInit(data);
+            if (this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(data);
             await this.CurrentPage.Navigation.PopAsync(animated);
         }
         
@@ -126,7 +126,7 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task PopModal(object data = null, bool animated = true)
         {
-            if (this.PreviousModel != null) await this.PreviousModel.ReverseInit(data);
+            if (this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(data);
             await this.CurrentPage.Navigation.PopModalAsync(animated);
         }
         
@@ -142,7 +142,7 @@ namespace Xam.Zero.ViewModels
             var context = (ZeroBaseModel) page.BindingContext;
             context.CurrentPage = page;
             context.PreviousModel = this;
-            await context.Init(data);
+            await context.PrepareModel(data);
             return page;
         }
 

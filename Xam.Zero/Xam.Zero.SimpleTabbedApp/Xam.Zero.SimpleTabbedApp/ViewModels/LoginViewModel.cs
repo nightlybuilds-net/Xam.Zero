@@ -20,7 +20,7 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
             
             this.GoToRegistrationCommand = new Command(async () =>
             {
-                await base.GoModalTo<RegistrationPage>(null);
+                await base.PushModal<RegistrationPage>(null);
             });
             
             this.LoginCommand = new Command( () =>
@@ -28,10 +28,7 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
                 _shellService.SwitchContainer<TabbedShell>();
             });
         }
-
-        protected override async Task Init(object data)
-        {
-            await base.Init(data);
-        }
+        
+        
     }
 }
