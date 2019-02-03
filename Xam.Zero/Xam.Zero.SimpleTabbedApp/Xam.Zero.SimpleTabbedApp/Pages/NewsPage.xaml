@@ -6,7 +6,7 @@
              xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
              x:Class="Xam.Zero.SimpleTabbedApp.Pages.NewsPage"
              x:Name="News"
-             BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:NewsViewModel}, Page={x:Reference News}, CallInit=True}">
+             BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:NewsViewModel}, Page={x:Reference News}}">
 
     <ContentPage.Content>
         <StackLayout>

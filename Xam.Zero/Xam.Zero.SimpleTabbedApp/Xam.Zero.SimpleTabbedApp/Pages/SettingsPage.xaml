@@ -6,7 +6,7 @@
              xmlns:viewModels="clr-namespace:Xam.Zero.SimpleTabbedApp.ViewModels;assembly=Xam.Zero.SimpleTabbedApp"
              x:Class="Xam.Zero.SimpleTabbedApp.Pages.SettingsPage"
              x:Name="Settings"
-             BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:SettingsViewModel}, Page={x:Reference Settings}, CallInit=True}">
+             BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:SettingsViewModel}, Page={x:Reference Settings}}">
 
     <ContentPage.Content>
         <StackLayout

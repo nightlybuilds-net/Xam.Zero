@@ -6,7 +6,7 @@
              xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
              x:Class="Xam.Zero.SimpleTabbedApp.Pages.HomePage"
              x:Name="Home"
-             BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:HomeViewModel}, Page={x:Reference Home}, CallInit=True}">
+             BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:HomeViewModel}, Page={x:Reference Home}}">
 
     <ContentPage.Content>
         <StackLayout>
