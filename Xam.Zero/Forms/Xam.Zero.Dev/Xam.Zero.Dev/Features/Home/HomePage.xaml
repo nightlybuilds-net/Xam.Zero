@@ -5,7 +5,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
              xmlns:home="clr-namespace:Xam.Zero.Dev.Features.Home;assembly=Xam.Zero.Dev"
-             BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type home:HomeViewModel}, Page={x:Reference Home}, CallInit=True}"
+             BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type home:HomeViewModel}, Page={x:Reference Home}}"
              x:Class="Xam.Zero.Dev.Features.Home.HomePage">
     <ContentPage.Content>
         <StackLayout>

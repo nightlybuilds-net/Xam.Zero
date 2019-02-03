@@ -35,7 +35,7 @@ namespace Xam.Zero.Dev.Features.Home
         {
             this._shellService = shellService;
             this.Text = "Ctor";
-            this.NavigateCommand = new Command(async ()=> await this.GoTo<SecondPage>(null));
+            this.NavigateCommand = new Command(async ()=> await this.Push<SecondPage>(null));
             this.GoToTabbedCommand = new Command(async () =>
             {
                 this._shellService.SwitchContainer<TabbedShell>();
@@ -46,17 +46,17 @@ namespace Xam.Zero.Dev.Features.Home
         }
 
 
-        protected override Task Init(object data)
+        protected override Task PrepareModel(object data)
         {
             
             this.Text = "init";
-            return base.Init(data);
+            return base.PrepareModel(data);
         }
 
-        protected override Task ReverseInit(object data)
+        protected override Task ReversePrepareModel(object data)
         {
             this.Text = "reverseinit";
-            return base.ReverseInit(data);
+            return base.ReversePrepareModel(data);
         }
       
     }
