@@ -1,27 +1,29 @@
 ﻿using System;
+using TinyIoC;
 using IContainer = Xam.Zero.Ioc.IContainer;
 
 namespace Xam.Zero.TinyIoc
 {
     public class TinyIocZeroContainer: IContainer
     {
-        public TinyIocZeroContainer()
+        private readonly TinyIoCContainer _tinyIoCContainer;
+
+        public TinyIocZeroContainer(TinyIoCContainer tinyIoCContainer)
         {
+            _tinyIoCContainer = tinyIoCContainer;
         }
         
         public void Register<T>(bool transient)
         {
-            throw new NotImplementedException();
         }
 
         public void Register<T, TImpl>(bool transient) where TImpl : T
         {
-            throw new NotImplementedException();
         }
 
         public void Register(Type type, bool transient)
         {
-            throw new NotImplementedException();
+            _tinyIoCContainer.
         }
 
         public void RegisterInstance<T>(T instance)
@@ -37,6 +39,11 @@ namespace Xam.Zero.TinyIoc
         public object Resolve(Type type)
         {
             throw new NotImplementedException();
+        }
+        
+        public static TinyIocZeroContainer Build(TinyIoCContainer tinyIocContainer)
+        {
+            return new TinyIocZeroContainer(tinyIocContainer);
         }
     }
 }
