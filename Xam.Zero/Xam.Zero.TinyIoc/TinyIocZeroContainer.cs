@@ -15,35 +15,56 @@ namespace Xam.Zero.TinyIoc
         
         public void Register<T>(bool transient)
         {
+            if (transient)
+            {
+                _tinyIoCContainer.Register(typeof(T)).AsMultiInstance();
+                return;
+            }
+
+            _tinyIoCContainer.Register(typeof(T)).AsSingleton();
         }
 
         public void Register<T, TImpl>(bool transient) where TImpl : T
         {
+            if (transient)
+            {
+                _tinyIoCContainer.Register(typeof(T), typeof(TImpl)).AsMultiInstance();
+                return;
+            }
+
+            _tinyIoCContainer.Register(typeof(T), typeof(TImpl)).AsSingleton();
         }
 
         public void Register(Type type, bool transient)
         {
-            _tinyIoCContainer.
+            if (transient)
+            {
+                _tinyIoCContainer.Register(type).AsMultiInstance();
+                return;
+            }
+
+            _tinyIoCContainer.Register(type).AsSingleton();
         }
 
         public void RegisterInstance<T>(T instance)
         {
-            throw new NotImplementedException();
+            _tinyIoCContainer.Register(typeof(T)).AsSingleton();
         }
 
         public T Resolve<T>()
         {
-            throw new NotImplementedException();
+            var type = (T)_tinyIoCContainer.Resolve(typeof(T));
+            return type;
         }
 
         public object Resolve(Type type)
         {
-            throw new NotImplementedException();
+            return _tinyIoCContainer.Resolve(type);
         }
         
-        public static TinyIocZeroContainer Build(TinyIoCContainer tinyIocContainer)
+        public static TinyIocZeroContainer Build()
         {
-            return new TinyIocZeroContainer(tinyIocContainer);
+            return new TinyIocZeroContainer(TinyIoCContainer.Current);
         }
     }
 }

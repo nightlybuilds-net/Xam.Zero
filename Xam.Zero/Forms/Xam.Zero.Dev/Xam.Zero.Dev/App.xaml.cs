@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using DryIoc;
 using Xam.Zero.Dev.Features.Home;
 using Xam.Zero.DryIoc;
+using Xam.Zero.TinyIoc;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,7 +21,7 @@ namespace Xam.Zero.Dev
             this.InitializeComponent();
 
             ZeroApp.On(this)
-                .WithContainer(DryIocZeroContainer.Build(Container))
+                .WithContainer(TinyIocZeroContainer.Build())
                 .RegisterShell(() => new AppShell())
                 .RegisterShell(() => new TabbedShell())
                 .StartWith<AppShell>();

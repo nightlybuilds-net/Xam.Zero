@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Xam.Zero.DryIoc\Xam.Zero.DryIoc.csproj" />
+      <ProjectReference Include="..\..\..\Xam.Zero.TinyIoc\Xam.Zero.TinyIoc.csproj" />
       <ProjectReference Include="..\..\..\Xam.Zero\Xam.Zero.csproj" />
     </ItemGroup>
 
