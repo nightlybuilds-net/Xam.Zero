@@ -17,6 +17,9 @@
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
             <Button
+                Text="Click me!"
+                Command="{Binding ClickMeCommand}"/>
+            <Button
                 Text="Back to Login"
                 Command="{Binding BackToLoginCommand}"/>
         </StackLayout>
