@@ -8,7 +8,7 @@
     x:Class="Xam.Zero.SimpleTabbedApp.Pages.RegistrationPage"
     x:Name="Registration"
     Title="Registration"
-    BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:RegistrationViewModel}, Page={x:Reference Registration}}">
+    BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type viewModels:RegistrationViewModel}}">
 
     <ContentPage.Content>
         <StackLayout
