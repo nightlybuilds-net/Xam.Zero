@@ -13,15 +13,15 @@ namespace Xam.Zero.TinyIoc
             _tinyIoCContainer = tinyIoCContainer;
         }
         
-        public void Register<T>(bool transient)
+        public void Register<T>(bool transient) where T : class
         {
             if (transient)
             {
-                _tinyIoCContainer.Register(typeof(T)).AsMultiInstance();
+                _tinyIoCContainer.Register<T>().AsMultiInstance();
                 return;
             }
 
-            _tinyIoCContainer.Register(typeof(T)).AsSingleton();
+            _tinyIoCContainer.Register<T>().AsSingleton();
         }
 
         public void Register<T, TImpl>(bool transient) where TImpl : T
@@ -48,7 +48,7 @@ namespace Xam.Zero.TinyIoc
 
         public void RegisterInstance<T>(T instance)
         {
-            _tinyIoCContainer.Register(typeof(T)).AsSingleton();
+            _tinyIoCContainer.Register(instance.GetType(), instance);
         }
 
         public T Resolve<T>()
