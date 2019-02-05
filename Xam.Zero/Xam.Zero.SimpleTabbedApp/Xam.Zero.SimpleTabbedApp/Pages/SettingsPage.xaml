@@ -10,9 +10,9 @@
 
     <ContentPage.Content>
         <StackLayout
+            VerticalOptions="Center"
             Orientation="Vertical">
             <Label Text="Settings"
-                   VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
             <Button
                 Text="Logout"

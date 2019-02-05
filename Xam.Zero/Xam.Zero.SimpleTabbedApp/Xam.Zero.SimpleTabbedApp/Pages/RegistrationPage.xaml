@@ -16,6 +16,22 @@
             <Label Text="Registration here!"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
+            <StackLayout 
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Horizontal">
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="Data received: "
+                                />
+                            <Span
+                                Text="{Binding Param, Mode=OneWay}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+            
             <Button
                 Text="Click me!"
                 Command="{Binding ClickMeCommand}"/>

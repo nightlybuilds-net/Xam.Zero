@@ -20,7 +20,8 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
             
             this.GoToRegistrationCommand = new Command(async () =>
             {
-                await base.PushModal<RegistrationPage>(null);
+                var param = "I'm data!";
+                await base.PushModal<RegistrationPage>(param);
             });
             
             this.LoginCommand = new Command( () =>
@@ -29,6 +30,23 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
             });
         }
         
-        
+        private string _param;
+
+        public string Param
+        {
+            get => _param;
+            set
+            {
+                _param = value;
+                base.RaisePropertyChanged(() => this.Param);
+            }
+        }
+
+        protected override Task ReversePrepareModel(object data)
+        {
+            var param = data.ToString();
+            this.Param = param;
+            return base.PrepareModel(data);
+        }
     }
 }

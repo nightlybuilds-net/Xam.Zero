@@ -15,6 +15,21 @@
         <Label Text="Here's the login!" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
+        <StackLayout 
+            HorizontalOptions="CenterAndExpand"
+            Orientation="Horizontal">
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span
+                            Text="Data received back: "
+                        />
+                        <Span
+                            Text="{Binding Param, Mode=OneWay}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
         <Button 
             Text="Login"
             Command="{Binding LoginCommand}"/>
