@@ -13,7 +13,7 @@ namespace Xam.Zero.DryIoc
             this._dryIocContainer = dryIocContainer;
         }
         
-        public void Register<T>(bool transient)
+        public void Register<T>(bool transient) where T : class
         {
             this._dryIocContainer.Register<T>(transient ? Reuse.Transient : Reuse.Singleton);
         }

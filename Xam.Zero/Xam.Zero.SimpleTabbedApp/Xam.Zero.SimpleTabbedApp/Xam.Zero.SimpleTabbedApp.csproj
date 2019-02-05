@@ -10,33 +10,38 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Xam.Zero.DryIoc\Xam.Zero.DryIoc.csproj" />
-      <ProjectReference Include="..\..\..\Xam.Zero.TinyIoc\Xam.Zero.TinyIoc.csproj" />
-      <ProjectReference Include="..\..\..\Xam.Zero\Xam.Zero.csproj" />
+      <ProjectReference Include="..\..\Xam.Zero.DryIoc\Xam.Zero.DryIoc.csproj" />
+      <ProjectReference Include="..\..\Xam.Zero\Xam.Zero.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Page Include="AppShell.xaml">
+      <Compile Update="Pages\NewsPage.cs">
+        <DependentUpon>NewsPage.xaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Include="Pages\HomePage.xaml">
         <SubType>Designer</SubType>
         <Generator></Generator>
       </Page>
-      <Page Include="Features\Home\HomePage.xaml">
+      <Page Include="Pages\NewsPage.xaml">
         <SubType>Designer</SubType>
         <Generator></Generator>
       </Page>
-      <Page Include="Features\Second\SecondPage.xaml">
+      <Page Include="Pages\RegistrationPage.xaml">
         <SubType>Designer</SubType>
         <Generator></Generator>
       </Page>
-      <Page Include="Features\Tabbed\FirstTab\FirstTabPage.xaml">
+      <Page Include="Pages\SettingsPage.xaml">
         <SubType>Designer</SubType>
         <Generator></Generator>
       </Page>
-      <Page Include="Features\Tabbed\SecondTab\SecondTabPage.xaml">
+      <Page Include="Shells\SimpleShell.xaml">
         <SubType>Designer</SubType>
         <Generator></Generator>
       </Page>
-      <Page Include="TabbedShell.xaml">
+      <Page Include="Shells\TabbedShell.xaml">
         <SubType>Designer</SubType>
         <Generator></Generator>
       </Page>

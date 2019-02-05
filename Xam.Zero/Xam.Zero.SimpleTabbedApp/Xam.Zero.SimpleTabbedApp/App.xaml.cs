@@ -1,30 +1,27 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using DryIoc;
-using Xam.Zero.Dev.Features.Home;
+﻿using DryIoc;
 using Xam.Zero.DryIoc;
-using Xam.Zero.TinyIoc;
+using Xam.Zero.SimpleTabbedApp.Shells;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
-namespace Xam.Zero.Dev
+namespace Xam.Zero.SimpleTabbedApp
 {
     public partial class App : Application
     {
         public static readonly Container Container = new Container();
 
-
         public App()
         {
-            this.InitializeComponent();
-
-            ZeroApp.On(this)
-                .WithContainer(TinyIocZeroContainer.Build())
-                .RegisterShell(() => new AppShell())
+            InitializeComponent();
+            
+            ZeroApp
+                .On(this)
+                .WithContainer(DryIocZeroContainer.Build(Container))
+                .RegisterShell(() => new SimpleShell())
                 .RegisterShell(() => new TabbedShell())
-                .StartWith<AppShell>();
+                .StartWith<SimpleShell>();
         }
 
         protected override void OnStart()

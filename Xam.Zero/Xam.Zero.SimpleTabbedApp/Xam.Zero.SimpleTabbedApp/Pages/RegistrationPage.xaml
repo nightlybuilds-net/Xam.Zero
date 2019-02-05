@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+    xmlns:viewModels="clr-namespace:Xam.Zero.SimpleTabbedApp.ViewModels;assembly=Xam.Zero.SimpleTabbedApp"
+    x:Class="Xam.Zero.SimpleTabbedApp.Pages.RegistrationPage"
+    x:Name="Registration"
+    Title="Registration"
+    BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type viewModels:RegistrationViewModel}}">
+
+    <ContentPage.Content>
+        <StackLayout
+            Orientation="Vertical">
+            <Label Text="Registration here!"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            <Button
+                Text="Click me!"
+                Command="{Binding ClickMeCommand}"/>
+            <Button
+                Text="Back to Login"
+                Command="{Binding BackToLoginCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
