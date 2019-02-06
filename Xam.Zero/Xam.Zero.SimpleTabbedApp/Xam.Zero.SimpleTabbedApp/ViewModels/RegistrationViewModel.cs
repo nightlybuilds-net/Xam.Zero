@@ -1,13 +1,18 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
+using PropertyChanged;
 using Xam.Zero.ViewModels;
 using Xamarin.Forms;
 
 namespace Xam.Zero.SimpleTabbedApp.ViewModels
 {
+    [AddINotifyPropertyChangedInterface]
     public class RegistrationViewModel: ZeroBaseModel
     {
+        [DoNotNotify]
         public ICommand BackToLoginCommand { get; private set; }
+        
+        [DoNotNotify]
         public ICommand ClickMeCommand { get; private set; }
 
         public RegistrationViewModel()
@@ -19,17 +24,21 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
             });
         }
 
-        private string _param;
-
-        public string Param
-        {
-            get => _param;
-            set
-            {
-                _param = value;
-                base.RaisePropertyChanged(() => this.Param);
-            }
-        }
+        // with Fody
+        public string Param { get; set; }
+        
+//        // without Fody
+//        private string _param;
+//
+//        public string Param
+//        {
+//            get => _param;
+//            set
+//            {
+//                _param = value;
+//                base.RaisePropertyChanged(() => this.Param);
+//            }
+//        }
 
         protected override Task PrepareModel(object data)
         {
