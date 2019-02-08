@@ -6,7 +6,7 @@
 
     <ItemGroup>
       <PackageReference Include="DryIoc.dll" Version="3.0.2" />
-      <PackageReference Include="Xamarin.Forms" Version="4.0.0.94569-pre3" />
+      <PackageReference Include="Xamarin.Forms" Version="4.0.0.135214-pre4" />
     </ItemGroup>
 
     <ItemGroup>
