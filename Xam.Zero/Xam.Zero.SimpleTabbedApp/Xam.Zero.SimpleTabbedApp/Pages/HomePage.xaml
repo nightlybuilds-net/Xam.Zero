@@ -8,11 +8,14 @@
              x:Name="Home"
              BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:HomeViewModel}, Page={x:Reference Home}}">
 
-    <ContentPage.Content>
-        <StackLayout>
+        <StackLayout
+            Orientation="Vertical"
+            VerticalOptions="Center">
             <Label Text="Home"
-                   VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
+            <Button
+                Text="Check if IoC works"
+                Command="{Binding GetDummyDataCommand}"
+                />
         </StackLayout>
-    </ContentPage.Content>
 </ContentPage>

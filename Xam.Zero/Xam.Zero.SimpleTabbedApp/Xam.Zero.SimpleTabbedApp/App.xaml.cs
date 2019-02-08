@@ -1,5 +1,7 @@
-﻿using DryIoc;
-using Xam.Zero.DryIoc;
+﻿using Ninject;
+using Xam.Zero.Ninject;
+using Xam.Zero.SimpleTabbedApp.Services;
+using Xam.Zero.SimpleTabbedApp.Services.Impl;
 using Xam.Zero.SimpleTabbedApp.Shells;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,7 +12,7 @@ namespace Xam.Zero.SimpleTabbedApp
 {
     public partial class App : Application
     {
-        public static readonly Container Container = new Container();
+        public static readonly StandardKernel Kernel = new StandardKernel();
 
         public App()
         {
@@ -18,10 +20,13 @@ namespace Xam.Zero.SimpleTabbedApp
             
             ZeroApp
                 .On(this)
-                .WithContainer(DryIocZeroContainer.Build(Container))
+                .WithContainer(NinjectZeroContainer.Build(Kernel))
                 .RegisterShell(() => new SimpleShell())
                 .RegisterShell(() => new TabbedShell())
                 .StartWith<SimpleShell>();
+
+            Kernel.Bind<IDummyService>().To<DummyService>().InSingletonScope();
+
         }
 
         protected override void OnStart()

@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.SimpleTabbedApp.iO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.TinyIoc", "Xam.Zero.TinyIoc\Xam.Zero.TinyIoc.csproj", "{58D21331-4025-402D-AA05-3382A270DCEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.Ninject", "Xam.Zero.Ninject\Xam.Zero.Ninject.csproj", "{95FC0FD2-B119-44DA-A41D-0920D58A7156}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{58D21331-4025-402D-AA05-3382A270DCEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58D21331-4025-402D-AA05-3382A270DCEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58D21331-4025-402D-AA05-3382A270DCEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95FC0FD2-B119-44DA-A41D-0920D58A7156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95FC0FD2-B119-44DA-A41D-0920D58A7156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95FC0FD2-B119-44DA-A41D-0920D58A7156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95FC0FD2-B119-44DA-A41D-0920D58A7156}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7E0EEA88-3032-4EF3-900C-3E0AEEE7D20D} = {AB714ED3-A07B-475C-A240-D78BEF2442D5}
