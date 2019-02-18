@@ -1,8 +1,16 @@
+using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using DryIoc;
 using Container = DryIoc.Container;
 using NUnit.Framework;
 using Xam.Zero.DryIoc;
+using Xam.Zero.Services;
+using Xam.Zero.Tests.MockedResources;
+using Xam.Zero.Tests.MockedResources.Pages;
+using Xam.Zero.Tests.MockedResources.Shells;
 using Xam.Zero.Tests.MockedResources.ViewModels;
 using Xamarin.Forms;
 
@@ -95,41 +103,50 @@ namespace Xam.Zero.Tests
             Assert.AreEqual(previousModel, baseModel.PreviousModel);
         }
 
-//        [Test]
-//        public void Test_PushModel()
-//        {
-//
-//            var currentPage = new ContentPage();
-//            var currentViewModel = new FirstViewModel();
-//            currentPage.BindingContext = currentViewModel;
-//            
-//            var nextPage = new ContentPage();
-//            var nextViewModel = new SecondViewModel();
-//            nextPage.BindingContext = nextViewModel;
-//            
-//            
-//            var shellContent = new ShellContent {Content = currentPage};
-//            var shellSection = new ShellSection {CurrentItem = shellContent};
-//            var shellItem = new ShellItem {Items = {shellSection}};
-//            var shell = new Shell {Items = {shellItem}};
-//            
-//            
-//            var container = new Container();
-//            
-//            var app = new Application();
-//            ZeroApp
-//                .On(app)
-//                .WithContainer(DryIocZeroContainer.Build(container))
-//                .RegisterShell(() => shell);
-//
-//            currentViewModel.PushModal<FirstPage>();
-//
-//
-//        }
-
-        internal class FirstPage : ContentPage
+        [Test]
+        public void Test_ViewModels_ShellService_And_MessagingCenter_Are_Registered_On_Startup()
         {
+
+            var container = new Container();
+            var constructor = typeof(ZeroApp).GetConstructor (BindingFlags.NonPublic|BindingFlags.Instance, null, new Type[0], null);
+            var zeroApp = (ZeroApp)constructor.Invoke(null);
+            zeroApp
+                .WithContainer(DryIocZeroContainer.Build(container))
+                .RegisterShell(() => new FirstShell());
             
+            var method = typeof(ZeroApp).GetMethod("InnerBootStrap", BindingFlags.NonPublic | BindingFlags.Instance);
+            method.Invoke(zeroApp, new object[0]);
+
+            var firstViewModel = container.Resolve<FirstViewModel>();
+            var secondViewModel = container.Resolve<SecondViewModel>();
+
+            var shellService = container.Resolve<IShellService>();
+            var messagingCenter = container.Resolve<IMessagingCenter>();
+            
+            Assert.NotNull(firstViewModel);
+            Assert.NotNull(secondViewModel);
+            Assert.NotNull(shellService);
+            Assert.NotNull(messagingCenter);
+
         }
+
+        [Test]
+        public async Task Push_Model()
+        {
+            var container = new Container();
+            var constructor = typeof(ZeroApp).GetConstructor (BindingFlags.NonPublic|BindingFlags.Instance, null, new Type[0], null);
+            var zeroApp = (ZeroApp)constructor.Invoke(null);
+            zeroApp
+                .WithContainer(DryIocZeroContainer.Build(container))
+                .RegisterShell(() => new FirstShell());
+            
+            var method = typeof(ZeroApp).GetMethod("InnerBootStrap", BindingFlags.NonPublic | BindingFlags.Instance);
+            method.Invoke(zeroApp, new object[0]);
+
+            var firstViewModel = container.Resolve<FirstViewModel>();
+//            await firstViewModel.Push<SecondPage>();
+
+        }
+
     }
 }

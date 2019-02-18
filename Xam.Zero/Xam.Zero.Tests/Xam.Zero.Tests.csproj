@@ -59,6 +59,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MockedResources\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MockedResources\Pages\FirstPage.xaml.cs">
+      <DependentUpon>FirstPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MockedResources\Pages\SecondPage.xaml.cs">
+      <DependentUpon>SecondPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MockedResources\Shells\FirstShell.xaml.cs">
+      <DependentUpon>FirstShell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MockedResources\ViewModels\FirstViewModel.cs" />
     <Compile Include="MockedResources\ViewModels\MockedZeroBaseModel.cs" />
     <Compile Include="MockedResources\ViewModels\SecondViewModel.cs" />
@@ -80,8 +92,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MockedResources\Pages" />
-    <Folder Include="MockedResources\Shells" />
+    <EmbeddedResource Include="MockedResources\Pages\FirstPage.xaml" />
+    <EmbeddedResource Include="MockedResources\Pages\SecondPage.xaml" />
+    <EmbeddedResource Include="MockedResources\Shells\FirstShell.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MockedResources\App.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
