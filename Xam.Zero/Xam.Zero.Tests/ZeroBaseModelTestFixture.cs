@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -13,6 +14,7 @@ using Xam.Zero.Tests.MockedResources.Pages;
 using Xam.Zero.Tests.MockedResources.Shells;
 using Xam.Zero.Tests.MockedResources.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 
 namespace Xam.Zero.Tests
@@ -50,72 +52,18 @@ namespace Xam.Zero.Tests
             Assert.AreEqual(testString, baseModel.StringProperty);
         }
 
-        [TestCase("default string", "updated string")]
-        public void Test_PrepareModel(string defaultString, string updatedString)
-        {
-            var baseModel = new MockedZeroBaseModel();
-            baseModel.StringProperty = defaultString;
-            
-            Assert.AreEqual(baseModel.StringProperty, defaultString);
-
-            var method = baseModel.GetType().GetMethod("PrepareModel", BindingFlags.NonPublic | BindingFlags.Instance);
-            method.Invoke(baseModel, new object[]{updatedString});
-            
-            Assert.AreEqual(baseModel.StringProperty, updatedString);
-
-        }
-        
-        [TestCase("default string", "updated string")]
-        public void Test_ReversePrepareModel(string defaultString, string updatedString)
-        {
-            var baseModel = new MockedZeroBaseModel();
-            baseModel.StringProperty = defaultString;
-            
-            Assert.AreEqual(baseModel.StringProperty, defaultString);
-
-            var method = baseModel.GetType().GetMethod("ReversePrepareModel", BindingFlags.NonPublic | BindingFlags.Instance);
-            method.Invoke(baseModel, new object[]{updatedString});
-
-            Assert.AreEqual(baseModel.StringProperty, updatedString);
-        }
-
-        [Test]
-        public void Test_Current_Page()
-        {
-            var baseModel = new MockedZeroBaseModel();
-            var currentPage = new ContentPage();
-
-            baseModel.CurrentPage = currentPage;
-            
-            Assert.IsNotNull(baseModel.CurrentPage);
-            Assert.AreEqual(currentPage, baseModel.CurrentPage);
-        }
-        
-        [Test]
-        public void Test_Previous_Model()
-        {
-            var baseModel = new MockedZeroBaseModel();
-            var previousModel = new FirstViewModel();
-
-            baseModel.PreviousModel = previousModel;
-            
-            Assert.IsNotNull(baseModel.PreviousModel);
-            Assert.AreEqual(previousModel, baseModel.PreviousModel);
-        }
-
         [Test]
         public void Test_ViewModels_ShellService_And_MessagingCenter_Are_Registered_On_Startup()
         {
 
             var container = new Container();
-            var constructor = typeof(ZeroApp).GetConstructor (BindingFlags.NonPublic|BindingFlags.Instance, null, new Type[0], null);
-            var zeroApp = (ZeroApp)constructor.Invoke(null);
-            zeroApp
+            var app = new Application();
+
+            ZeroApp
+                .On(app)
                 .WithContainer(DryIocZeroContainer.Build(container))
-                .RegisterShell(() => new FirstShell());
-            
-            var method = typeof(ZeroApp).GetMethod("InnerBootStrap", BindingFlags.NonPublic | BindingFlags.Instance);
-            method.Invoke(zeroApp, new object[0]);
+                .RegisterShell(() => new FirstShell())
+                .Start();
 
             var firstViewModel = container.Resolve<FirstViewModel>();
             var secondViewModel = container.Resolve<SecondViewModel>();
@@ -130,21 +78,98 @@ namespace Xam.Zero.Tests
 
         }
 
-        [Test]
-        public async Task Push_Model()
+        [TestCase("PushedStringValue")]
+        public async Task Push_And_Prepare_Model(string stringValue)
         {
             var container = new Container();
-            var constructor = typeof(ZeroApp).GetConstructor (BindingFlags.NonPublic|BindingFlags.Instance, null, new Type[0], null);
-            var zeroApp = (ZeroApp)constructor.Invoke(null);
-            zeroApp
-                .WithContainer(DryIocZeroContainer.Build(container))
-                .RegisterShell(() => new FirstShell());
-            
-            var method = typeof(ZeroApp).GetMethod("InnerBootStrap", BindingFlags.NonPublic | BindingFlags.Instance);
-            method.Invoke(zeroApp, new object[0]);
+            var app = new Application();
 
+            ZeroApp
+                .On(app)
+                .WithContainer(DryIocZeroContainer.Build(container))
+                .RegisterShell(() => new FirstShell())
+                .Start();
+            
             var firstViewModel = container.Resolve<FirstViewModel>();
-//            await firstViewModel.Push<SecondPage>();
+            var secondViewModel = container.Resolve<SecondViewModel>();
+
+            var secondViewModelPageBeforePush = secondViewModel.CurrentPage;
+            var secondViewModelPreviousModelBeforePush = secondViewModel.PreviousModel;
+            
+            Assert.IsNull(secondViewModelPageBeforePush);
+            Assert.IsNull(secondViewModelPreviousModelBeforePush);
+            Assert.IsNull(secondViewModel.SecondStringProperty);
+            
+            await firstViewModel.Push<SecondPage>(stringValue);
+
+            var secondViewModelPageAfterPush = secondViewModel.CurrentPage;
+            var secondViewModelPreviousModelAfterPush = secondViewModel.PreviousModel;
+
+            Assert.IsNotNull(secondViewModelPageAfterPush);
+            Assert.IsNotNull(secondViewModelPreviousModelAfterPush);
+            Assert.AreEqual(secondViewModelPageAfterPush.GetType(), typeof(SecondPage));
+            Assert.AreEqual(secondViewModelPreviousModelAfterPush.GetType(), typeof(FirstViewModel));
+            Assert.AreEqual(firstViewModel, secondViewModel.PreviousModel);
+            Assert.IsNotNull(secondViewModel.SecondStringProperty);
+            Assert.AreEqual(stringValue, secondViewModel.SecondStringProperty);
+        }
+
+        [TestCase("ReceivedStringValue")]
+        public async Task Pop_And_ReversePrepare_Model(string stringValue)
+        {
+            var container = new Container();
+            var app = new Application();
+
+            ZeroApp
+                .On(app)
+                .WithContainer(DryIocZeroContainer.Build(container))
+                .RegisterShell(() => new FirstShell())
+                .Start();
+            
+            var firstViewModel = container.Resolve<FirstViewModel>();
+            var secondViewModel = container.Resolve<SecondViewModel>();
+            
+            Assert.AreEqual(firstViewModel.CurrentPage.GetType(), typeof(FirstPage));
+            Assert.IsNull(secondViewModel.CurrentPage);
+
+            Assert.AreEqual(firstViewModel.CurrentPage.Navigation.NavigationStack.Count, 1);
+
+            await firstViewModel.Push<SecondPage>();
+
+            Assert.AreEqual(firstViewModel.CurrentPage.Navigation.NavigationStack.Count, 2);
+
+            Assert.AreEqual(firstViewModel.CurrentPage.GetType(), typeof(FirstPage));
+            Assert.AreEqual(secondViewModel.CurrentPage.GetType(), typeof(SecondPage));
+
+            await secondViewModel.Pop(stringValue);
+
+            Assert.AreEqual(firstViewModel.CurrentPage.Navigation.NavigationStack.Count, 1);
+
+            Assert.AreEqual(firstViewModel.CurrentPage.GetType(), typeof(FirstPage));
+            Assert.AreEqual(secondViewModel.CurrentPage.GetType(), typeof(SecondPage));
+
+            Assert.NotNull(firstViewModel.FirstStringProperty);
+            Assert.AreEqual(firstViewModel.FirstStringProperty, stringValue);
+            
+
+        }
+
+        [Test]
+        public void ViewModel_Markup_Returns_ActualViewModel()
+        {
+            var firstPage = new ContentPage();
+            firstPage.LoadFromXaml(
+                "<ContentPage xmlns=\"http://xamarin.com/schemas/2014/forms\" xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\" xmlns:markupExtensions=\"clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero\" xmlns:viewModels=\"clr-namespace:Xam.Zero.Tests.MockedResources.ViewModels;assembly=Xam.Zero.Tests\" x:Class=\"Xam.Zero.Tests.MockedResources.Pages.FirstPage\" x:Name=\"First\" BindingContext=\"{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:FirstViewModel}, Page={x:Reference First}}\"></ContentPage>");
+            Assert.AreEqual(firstPage.BindingContext.GetType(), typeof(FirstViewModel));
+        }
+        
+        [SetUp]
+        public void SetUp()
+        {
+            Xamarin.Forms.Mocks.MockForms.Init();
+            
+            //todo change when xamarin.forms.mocks will support xamarin.forms 4
+            Device.SetFlags(new List<string>{"Shell_Experimental"});
 
         }
 
