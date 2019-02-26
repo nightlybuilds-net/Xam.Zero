@@ -8,6 +8,7 @@ using DryIoc;
 using Container = DryIoc.Container;
 using NUnit.Framework;
 using Xam.Zero.DryIoc;
+using Xam.Zero.MarkupExtensions;
 using Xam.Zero.Services;
 using Xam.Zero.Tests.MockedResources;
 using Xam.Zero.Tests.MockedResources.Pages;
@@ -15,6 +16,7 @@ using Xam.Zero.Tests.MockedResources.Shells;
 using Xam.Zero.Tests.MockedResources.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms.Xaml.Internals;
 
 
 namespace Xam.Zero.Tests
@@ -157,10 +159,54 @@ namespace Xam.Zero.Tests
         [Test]
         public void ViewModel_Markup_Returns_ActualViewModel()
         {
-            var firstPage = new ContentPage();
-            firstPage.LoadFromXaml(
-                "<ContentPage xmlns=\"http://xamarin.com/schemas/2014/forms\" xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\" xmlns:markupExtensions=\"clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero\" xmlns:viewModels=\"clr-namespace:Xam.Zero.Tests.MockedResources.ViewModels;assembly=Xam.Zero.Tests\" x:Class=\"Xam.Zero.Tests.MockedResources.Pages.FirstPage\" x:Name=\"First\" BindingContext=\"{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:FirstViewModel}, Page={x:Reference First}}\"></ContentPage>");
-            Assert.AreEqual(firstPage.BindingContext.GetType(), typeof(FirstViewModel));
+
+            var container = new Container();
+            var app = new Application();
+
+            ZeroApp
+                .On(app)
+                .WithContainer(DryIocZeroContainer.Build(container))
+                .RegisterShell(() => new FirstShell())
+                .Start();
+            
+            var markup = new ViewModelMarkup()
+            {
+                ViewModel = typeof(FirstViewModel)
+            };
+
+            var provider = new XamlServiceProvider();
+
+            var vmValue = (FirstViewModel) markup.ProvideValue(provider);
+            Assert.AreEqual(typeof(FirstViewModel), vmValue.GetType());
+            Assert.AreEqual(vmValue, container.Resolve<FirstViewModel>());
+        }
+        
+        [Test]
+        public void ShellPagedViewModel_Markup_Returns_ActualViewModel()
+        {
+
+            var container = new Container();
+            var app = new Application();
+
+            ZeroApp
+                .On(app)
+                .WithContainer(DryIocZeroContainer.Build(container))
+                .RegisterShell(() => new FirstShell())
+                .Start();
+
+            var firstPage = container.Resolve<FirstPage>();
+            
+            var markup = new ShellPagedViewModelMarkup()
+            {
+                ViewModel = typeof(FirstViewModel),
+                Page = firstPage
+            };
+
+            var provider = new XamlServiceProvider();
+
+            var vmValue = (FirstViewModel) markup.ProvideValue(provider);
+            Assert.AreEqual(typeof(FirstViewModel), vmValue.GetType());
+            Assert.AreEqual(vmValue, container.Resolve<FirstViewModel>());
         }
         
         [SetUp]
