@@ -20,7 +20,7 @@ namespace Xam.Zero.MarkupExtensions
             baseModel.CurrentPage = this.Page;
 
             // call init method
-            var dynMethod = typeof(ZeroBaseModel).GetMethod("Init", 
+            var dynMethod = typeof(ZeroBaseModel).GetMethod("PrepareModel", 
                 BindingFlags.NonPublic | BindingFlags.Instance);
             if (dynMethod != null) dynMethod.Invoke(baseModel, new object[] {null});
           

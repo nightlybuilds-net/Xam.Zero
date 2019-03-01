@@ -5,12 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="DryIoc.dll" Version="3.0.2" />
-      <PackageReference Include="Xamarin.Forms" Version="4.0.0.169046-pre5" />
+      <ProjectReference Include="..\Xam.Zero\Xam.Zero.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Xam.Zero\Xam.Zero.csproj" />
+      <PackageReference Include="TinyIoC" Version="1.3.0" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,17 @@
+
+<Shell 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Xam.Zero.Tests.MockedResources.Pages;assembly=Xam.Zero.Tests"
+    FlyoutBehavior="Disabled"
+    x:Class="Xam.Zero.Tests.MockedResources.Shells.SimpleShell">
+
+    <ShellItem>
+        <ShellSection>
+            <ShellContent>
+                <pages:FirstPage/>
+            </ShellContent>
+        </ShellSection>
+    </ShellItem>
+    
+</Shell>

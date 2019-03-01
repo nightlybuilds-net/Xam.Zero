@@ -31,6 +31,11 @@ namespace Xam.Zero
             this.App = application;
         }
 
+        private ZeroApp()
+        {
+            
+        }
+
 
         public static ZeroApp On(Application app)
         {
