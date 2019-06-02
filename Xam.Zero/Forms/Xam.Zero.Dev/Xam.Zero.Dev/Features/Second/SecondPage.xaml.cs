@@ -14,7 +14,7 @@ namespace Xam.Zero.Dev.Features.Second
     {
         public SecondPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

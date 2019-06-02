@@ -6,7 +6,7 @@ namespace Xam.Zero.SimpleTabbedApp.Shells
     {
         public SimpleShell()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

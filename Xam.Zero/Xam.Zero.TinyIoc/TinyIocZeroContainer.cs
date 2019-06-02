@@ -10,56 +10,56 @@ namespace Xam.Zero.TinyIoc
 
         public TinyIocZeroContainer(TinyIoCContainer tinyIoCContainer)
         {
-            _tinyIoCContainer = tinyIoCContainer;
+            this._tinyIoCContainer = tinyIoCContainer;
         }
         
         public void Register<T>(bool transient) where T : class
         {
             if (transient)
             {
-                _tinyIoCContainer.Register<T>().AsMultiInstance();
+                this._tinyIoCContainer.Register<T>().AsMultiInstance();
                 return;
             }
 
-            _tinyIoCContainer.Register<T>().AsSingleton();
+            this._tinyIoCContainer.Register<T>().AsSingleton();
         }
 
         public void Register<T, TImpl>(bool transient) where TImpl : T
         {
             if (transient)
             {
-                _tinyIoCContainer.Register(typeof(T), typeof(TImpl)).AsMultiInstance();
+                this._tinyIoCContainer.Register(typeof(T), typeof(TImpl)).AsMultiInstance();
                 return;
             }
 
-            _tinyIoCContainer.Register(typeof(T), typeof(TImpl)).AsSingleton();
+            this._tinyIoCContainer.Register(typeof(T), typeof(TImpl)).AsSingleton();
         }
 
         public void Register(Type type, bool transient)
         {
             if (transient)
             {
-                _tinyIoCContainer.Register(type).AsMultiInstance();
+                this._tinyIoCContainer.Register(type).AsMultiInstance();
                 return;
             }
 
-            _tinyIoCContainer.Register(type).AsSingleton();
+            this._tinyIoCContainer.Register(type).AsSingleton();
         }
 
         public void RegisterInstance<T>(T instance)
         {
-            _tinyIoCContainer.Register(instance.GetType(), instance);
+            this._tinyIoCContainer.Register(instance.GetType(), instance);
         }
 
         public T Resolve<T>()
         {
-            var type = (T)_tinyIoCContainer.Resolve(typeof(T));
+            var type = (T) this._tinyIoCContainer.Resolve(typeof(T));
             return type;
         }
 
         public object Resolve(Type type)
         {
-            return _tinyIoCContainer.Resolve(type);
+            return this._tinyIoCContainer.Resolve(type);
         }
         
         public static TinyIocZeroContainer Build()

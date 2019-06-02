@@ -14,11 +14,11 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
         
         public SettingsViewModel(IShellService shellService)
         {
-            _shellService = shellService;
+            this._shellService = shellService;
             
             this.LogoutCommand = new Command(() =>
             {
-                _shellService.SwitchContainer<SimpleShell>();
+                this._shellService.SwitchContainer<SimpleShell>();
             });
         }
     }

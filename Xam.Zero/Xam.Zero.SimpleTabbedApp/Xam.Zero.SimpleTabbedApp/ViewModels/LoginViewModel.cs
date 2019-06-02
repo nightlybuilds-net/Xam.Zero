@@ -22,17 +22,17 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
 
         public LoginViewModel(IShellService shellService)
         {
-            _shellService = shellService;
+            this._shellService = shellService;
             
             this.GoToRegistrationCommand = new Command(async () =>
             {
                 var param = "I'm data!";
-                await base.PushModal<RegistrationPage>(param);
+                await this.PushModal<RegistrationPage>(param);
             });
             
             this.LoginCommand = new Command( () =>
             {
-                _shellService.SwitchContainer<TabbedShell>();
+                this._shellService.SwitchContainer<TabbedShell>();
             });
         }
         

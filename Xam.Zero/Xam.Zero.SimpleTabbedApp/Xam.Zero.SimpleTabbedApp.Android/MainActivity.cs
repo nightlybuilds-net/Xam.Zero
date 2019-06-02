@@ -19,9 +19,9 @@ namespace Xam.Zero.SimpleTabbedApp.Android
 
             base.OnCreate(savedInstanceState);
             
-            global::Xamarin.Forms.Forms.SetFlags("Shell_Experimental");
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            Xamarin.Forms.Forms.SetFlags("Shell_Experimental");
+            Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            this.LoadApplication(new App());
         }
     }
 }

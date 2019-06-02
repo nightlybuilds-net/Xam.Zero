@@ -14,7 +14,7 @@ namespace Xam.Zero.Dev.Features.Tabbed.SecondTab
     {
         public SecondTabPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

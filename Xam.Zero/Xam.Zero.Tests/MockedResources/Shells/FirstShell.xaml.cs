@@ -6,7 +6,7 @@ namespace Xam.Zero.Tests.MockedResources.Shells
     {
         public FirstShell()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }
