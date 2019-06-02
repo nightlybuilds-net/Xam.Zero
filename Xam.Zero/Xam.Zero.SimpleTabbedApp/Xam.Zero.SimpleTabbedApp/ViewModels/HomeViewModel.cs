@@ -13,11 +13,11 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
         
         public HomeViewModel(IDummyService dummyService)
         {
-            _dummyService = dummyService;
+            this._dummyService = dummyService;
             this.GetDummyDataCommand = new Command(() =>
             {
-                var dummyData = _dummyService.GetDummyString();
-                base.DisplayAlert("Info", dummyData, "OK");
+                var dummyData = this._dummyService.GetDummyString();
+                this.DisplayAlert("Info", dummyData, "OK");
             });
         }
         

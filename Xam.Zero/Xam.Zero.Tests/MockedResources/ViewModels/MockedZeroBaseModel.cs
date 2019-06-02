@@ -8,13 +8,13 @@ namespace Xam.Zero.Tests.MockedResources.ViewModels
         private string _stringProperty;
         public string StringProperty
         {
-            get => _stringProperty;
+            get => this._stringProperty;
             set
             {
-                if (value == _stringProperty)
+                if (value == this._stringProperty)
                     return;
-                _stringProperty = value;
-                RaisePropertyChanged();
+                this._stringProperty = value;
+                this.RaisePropertyChanged();
             } 
         }
 

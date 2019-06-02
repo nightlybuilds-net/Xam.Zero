@@ -10,55 +10,55 @@ namespace Xam.Zero.Ninject
         
         public NinjectZeroContainer(StandardKernel kernel)
         {
-            _kernel = kernel;
+            this._kernel = kernel;
         }
        
         public void Register<T>(bool transient) where T : class
         {
             if (transient)
             {
-                _kernel.Bind<T>().ToSelf().InTransientScope();
+                this._kernel.Bind<T>().ToSelf().InTransientScope();
                 return;
             }
 
-            _kernel.Bind<T>().ToSelf().InSingletonScope();
+            this._kernel.Bind<T>().ToSelf().InSingletonScope();
         }
 
         public void Register<T, TImpl>(bool transient) where TImpl : T
         {
             if (transient)
             {
-                _kernel.Bind<T>().To<TImpl>().InTransientScope();
+                this._kernel.Bind<T>().To<TImpl>().InTransientScope();
                 return;
             }
 
-            _kernel.Bind<T>().To<TImpl>().InSingletonScope();
+            this._kernel.Bind<T>().To<TImpl>().InSingletonScope();
         }
 
         public void Register(Type type, bool transient)
         {
             if (transient)
             {
-                _kernel.Bind(type).ToSelf().InTransientScope();
+                this._kernel.Bind(type).ToSelf().InTransientScope();
                 return;
             }
 
-            _kernel.Bind(type).ToSelf().InSingletonScope();
+            this._kernel.Bind(type).ToSelf().InSingletonScope();
         }
 
         public void RegisterInstance<T>(T instance)
         {
-            _kernel.Bind<T>().ToConstant(instance);
+            this._kernel.Bind<T>().ToConstant(instance);
         }
 
         public T Resolve<T>()
         {
-            return _kernel.Get<T>();
+            return this._kernel.Get<T>();
         }
 
         public object Resolve(Type type)
         {
-            return _kernel.Get(type);
+            return this._kernel.Get(type);
         }
 
         public static NinjectZeroContainer Build(StandardKernel kernel)

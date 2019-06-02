@@ -16,7 +16,7 @@ namespace Xam.Zero.SimpleTabbedApp
 
         public App()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             
             ZeroApp
                 .On(this)

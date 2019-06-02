@@ -14,7 +14,7 @@ namespace Xam.Zero.Dev.Features.Home
     {
         public HomePage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

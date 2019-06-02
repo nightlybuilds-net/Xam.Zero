@@ -14,7 +14,7 @@ namespace Xam.Zero.Dev.Features.Tabbed.FirstTab
     {
         public FirstTabPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

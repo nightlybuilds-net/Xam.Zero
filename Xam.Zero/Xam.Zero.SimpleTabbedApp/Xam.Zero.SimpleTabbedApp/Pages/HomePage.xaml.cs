@@ -6,7 +6,7 @@ namespace Xam.Zero.SimpleTabbedApp.Pages
     {
         public HomePage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

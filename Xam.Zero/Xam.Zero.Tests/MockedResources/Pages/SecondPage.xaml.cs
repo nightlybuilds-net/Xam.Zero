@@ -13,7 +13,7 @@ namespace Xam.Zero.Tests.MockedResources.Pages
     {
         public SecondPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

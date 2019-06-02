@@ -18,9 +18,9 @@ namespace Xam.Zero.SimpleTabbedApp.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.SetFlags("Shell_Experimental");
-            global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            Xamarin.Forms.Forms.SetFlags("Shell_Experimental");
+            Xamarin.Forms.Forms.Init();
+            this.LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
         }

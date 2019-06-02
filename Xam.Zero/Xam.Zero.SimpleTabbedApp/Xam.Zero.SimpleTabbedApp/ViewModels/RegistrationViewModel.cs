@@ -17,10 +17,10 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
 
         public RegistrationViewModel()
         {
-            this.BackToLoginCommand = new Command(async () => await base.PopModal("I'm received back data!"));
+            this.BackToLoginCommand = new Command(async () => await this.PopModal("I'm received back data!"));
             this.ClickMeCommand = new Command(async () =>
             {
-                await base.DisplayAlert("Info", "You clicked!", "OK");
+                await this.DisplayAlert("Info", "You clicked!", "OK");
             });
         }
 
