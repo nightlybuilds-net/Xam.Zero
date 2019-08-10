@@ -26,6 +26,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.TinyIoc", "Xam.Zero.TinyIoc\Xam.Zero.TinyIoc.csproj", "{58D21331-4025-402D-AA05-3382A270DCEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.Ninject", "Xam.Zero.Ninject\Xam.Zero.Ninject.csproj", "{95FC0FD2-B119-44DA-A41D-0920D58A7156}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ABCC24A5-EB13-435B-AC07-158B3C3380B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.Tests", "Xam.Zero.Tests\Xam.Zero.Tests.csproj", "{F97467B0-D218-42AC-929A-23FD88145551}"
