@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <PackageVersion>19.0.1</PackageVersion>
+        <Title>Xam.Zero.DryIoc</Title>
+        <Authors>Marco Milani, Gabriele Coppola</Authors>
+        <Description>DryIoc implementation for Xam.Zero</Description>
+        <Copyright>Marco Milani</Copyright>
+        <PackageProjectUrl>https://github.com/markjackmilian/Xam.Zero</PackageProjectUrl>
+        <PackageTags>xam.zero, dryioc, xamarin</PackageTags>
+        <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DryIoc.dll" Version="3.0.2" />
+      <PackageReference Include="Xamarin.Forms" Version="4.0.0.471375" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Xam.Zero\Xam.Zero.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>pdbonly</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Xam.Zero.DryIoc\Xam.Zero.DryIoc.csproj" />
+      <ProjectReference Include="..\..\Xam.Zero.Ninject\Xam.Zero.Ninject.csproj" />
+      <ProjectReference Include="..\..\Xam.Zero\Xam.Zero.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Pages\NewsPage.cs">
+        <DependentUpon>NewsPage.xaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Include="Pages\HomePage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Pages\NewsPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Pages\RegistrationPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Pages\SettingsPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Shells\SimpleShell.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Shells\TabbedShell.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Fody" Version="3.3.5" />
+      <PackageReference Include="PropertyChanged.Fody" Version="2.6.0" />
+      <PackageReference Include="Xamarin.Forms" Version="4.0.0.471375" />
+    </ItemGroup>
+</Project>

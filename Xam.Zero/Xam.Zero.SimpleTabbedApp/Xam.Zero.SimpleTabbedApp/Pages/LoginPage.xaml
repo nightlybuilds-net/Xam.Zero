@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Xam.Zero.SimpleTabbedApp.Pages.LoginPage"
+    xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+    xmlns:viewModels="clr-namespace:Xam.Zero.SimpleTabbedApp.ViewModels;assembly=Xam.Zero.SimpleTabbedApp"
+    x:Name="Login"
+    Title="Login"
+    BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:LoginViewModel}, Page={x:Reference Login}}">
+
+    <StackLayout
+        Orientation="Vertical">
+        <!-- Place new controls here -->
+        <Label Text="Here's the login!" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+        <StackLayout 
+            HorizontalOptions="CenterAndExpand"
+            Orientation="Horizontal">
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span
+                            Text="Data received back: "
+                        />
+                        <Span
+                            Text="{Binding Param, Mode=OneWay}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+        <Button 
+            Text="Login"
+            Command="{Binding LoginCommand}"/>
+        <Button 
+            Text="Registration"
+            Command="{Binding GoToRegistrationCommand}"/>
+    </StackLayout>
+
+</ContentPage>

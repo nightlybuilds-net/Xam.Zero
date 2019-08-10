@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <PackageVersion>19.0.1</PackageVersion>
+        <Title>Xam Zero</Title>
+        <Authors>Marco Milani, Gabriele Coppola</Authors>
+        <Description>A simple, easy, agile and fluent framework for Xamarin forms which encapsulates all the features of Xamarin by supporting developers with a real MVVM architecture. With Xamarin.Zero you will be able to build up the structure of your app in Zero seconds with no waste of time!</Description>
+        <PackageProjectUrl>https://github.com/markjackmilian/Xam.Zero</PackageProjectUrl>
+        <PackageTags>xamarin, xam.zero, xamarin zero, mvvm</PackageTags>
+        <PackageReleaseNotes>First release</PackageReleaseNotes>
+        <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Xamarin.Forms" Version="4.0.0.471375" />
+    </ItemGroup>
+
+</Project>

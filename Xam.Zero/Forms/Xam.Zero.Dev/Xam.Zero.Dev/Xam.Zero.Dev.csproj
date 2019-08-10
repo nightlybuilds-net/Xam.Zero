@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>pdbonly</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Xam.Zero.DryIoc\Xam.Zero.DryIoc.csproj" />
+      <ProjectReference Include="..\..\..\Xam.Zero.TinyIoc\Xam.Zero.TinyIoc.csproj" />
+      <ProjectReference Include="..\..\..\Xam.Zero\Xam.Zero.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Include="AppShell.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Features\Home\HomePage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Features\Second\SecondPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Features\Tabbed\FirstTab\FirstTabPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="Features\Tabbed\SecondTab\SecondTabPage.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+      <Page Include="TabbedShell.xaml">
+        <SubType>Designer</SubType>
+        <Generator></Generator>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Xamarin.Forms" Version="4.0.0.471375" />
+    </ItemGroup>
+</Project>
