@@ -33,7 +33,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: 'Xam.Zero.nuspec'
+    packagesToPack: 'Xam.Zero/Xam.Zero.nuspec'
     versioningScheme: 'byBuildNumber'
     verbosityPack: 'Detailed'
     packDestination: '$(Build.ArtifactStagingDirectory)/nuget'
