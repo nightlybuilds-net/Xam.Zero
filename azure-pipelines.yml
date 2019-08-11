@@ -28,15 +28,13 @@ steps:
   inputs:
     command: 'build'
     projects: '$(zeroProj)'
-    arguments: '-c $(buildConfiguration)'
+    arguments: '-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
 
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: '$(zeroProj)'
+    packagesToPack: 'Xam.Zero.nuspec'
     versioningScheme: 'byBuildNumber'
-
-
 
 - task: PublishBuildArtifacts@1
   inputs:
