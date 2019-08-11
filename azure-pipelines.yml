@@ -35,10 +35,15 @@ steps:
     command: 'pack'
     packagesToPack: 'Xam.Zero.nuspec'
     versioningScheme: 'byBuildNumber'
+    verbosityPack: 'Detailed'
+    packDestination: '$(Build.ArtifactStagingDirectory)/nuget'
+    
+
+
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/nuget'
     ArtifactName: 'drop-xam-zero'
 
 
