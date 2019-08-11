@@ -32,6 +32,6 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: 'Xam.Zero/Xam.Zero/bin/$(buildConfiguration)/netstandard2.0'
+    PathtoPublish: 'Xam.Zero/Xam.Zero/bin'
     ArtifactName: 'drop-xam-zero'
     publishLocation: 'Container'
