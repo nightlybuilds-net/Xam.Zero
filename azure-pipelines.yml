@@ -31,9 +31,15 @@ steps:
     projects: 'Xam.Zero/Xam.Zero/Xam.Zero.csproj'
     arguments: '-c $(buildConfiguration)'
 
+- task: NuGetCommand@2
+  inputs:
+    command: 'pack'
+    packagesToPack: 'Xam.Zero.nuspec'
+    versioningScheme: 'byBuildNumber'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: 'Xam.Zero/Xam.Zero/bin/$(buildConfiguration)/netstandard2.0'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop-xam-zero'
-    publishLocation: 'Container'
+
+
