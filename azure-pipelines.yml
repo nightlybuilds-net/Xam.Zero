@@ -29,6 +29,8 @@ steps:
   inputs:
     command: 'build'
     projects: 'Xam.Zero/Xam.Zero/Xam.Zero.csproj'
+    arguments: '-c $(buildConfiguration)'
+
 
 - task: PublishBuildArtifacts@1
   inputs:
