@@ -28,22 +28,18 @@ steps:
   inputs:
     command: 'build'
     projects: '$(zeroProj)'
-    arguments: '-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
+    arguments: '-c $(buildConfiguration)'
 
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
     packagesToPack: 'Xam.Zero/Xam.Zero.nuspec'
     versioningScheme: 'byBuildNumber'
-    verbosityPack: 'Detailed'
-    packDestination: '$(Build.ArtifactStagingDirectory)/nuget'
-    
-
 
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/nuget'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop-xam-zero'
 
 
