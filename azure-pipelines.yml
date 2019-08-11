@@ -12,8 +12,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  zeroProj: 
-
+  zeroProj: Xam.Zero/Xam.Zero/Xam.Zero.csproj
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -28,18 +27,23 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: 'Xam.Zero/Xam.Zero/Xam.Zero.csproj'
-    arguments: '-c $(buildConfiguration)'
+    projects: '$(zeroProj)'
+    arguments: '-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
 
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: 'Xam.Zero.nuspec'
+    packagesToPack: 'Xam.Zero/Xam.Zero.nuspec'
     versioningScheme: 'byBuildNumber'
+    verbosityPack: 'Detailed'
+    packDestination: '$(Build.ArtifactStagingDirectory)/nuget'
+    
+
+
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/nuget'
     ArtifactName: 'drop-xam-zero'
 
 
