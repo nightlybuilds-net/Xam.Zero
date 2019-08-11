@@ -12,8 +12,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  zeroProj: 
-
+  zeroProj: Xam.Zero/Xam.Zero/Xam.Zero.csproj
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -28,13 +27,13 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: 'Xam.Zero/Xam.Zero/Xam.Zero.csproj'
+    projects: '$(zeroProj)'
     arguments: '-c $(buildConfiguration)'
 
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: '**/*.csproj'
+    packagesToPack: '$(zeroProj)'
     versioningScheme: 'byBuildNumber'
 
 
