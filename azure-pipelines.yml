@@ -34,8 +34,10 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: 'Xam.Zero.nuspec'
+    packagesToPack: '**/*.csproj'
     versioningScheme: 'byBuildNumber'
+
+
 
 - task: PublishBuildArtifacts@1
   inputs:
