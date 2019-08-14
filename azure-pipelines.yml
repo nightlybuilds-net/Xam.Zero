@@ -13,6 +13,7 @@ pool:
 
 variables:
   zeroProj: Xam.Zero/Xam.Zero/Xam.Zero.csproj
+  zeroDryProj: Xam.Zero/Xam.Zero.DryIoc/Xam.Zero.DryIoc.csproj
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -25,25 +26,34 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: DotNetCoreCLI@2
+  displayName: Build Zero
   inputs:
     command: 'build'
     projects: '$(zeroProj)'
-    arguments: '-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
+    arguments: '-c $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: Build DryIoc
+  inputs:
+    command: 'build'
+    projects: '$(zeroDryProj)'
+    arguments: '-c $(buildConfiguration)'
 
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
     packagesToPack: 'Xam.Zero/Xam.Zero.nuspec'
     versioningScheme: 'byBuildNumber'
-    verbosityPack: 'Detailed'
-    packDestination: '$(Build.ArtifactStagingDirectory)/nuget'
-    
 
-
+- task: NuGetCommand@2
+  inputs:
+    command: 'pack'
+    packagesToPack: 'Xam.Zero/Xam.Zero.DryIoc.nuspec'
+    versioningScheme: 'byBuildNumber'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/nuget'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop-xam-zero'
 
 
