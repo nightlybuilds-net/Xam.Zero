@@ -17,7 +17,7 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
 
         public RegistrationViewModel()
         {
-            this.BackToLoginCommand = new Command(async () => await this.PopModal("I'm received back data!"));
+            this.BackToLoginCommand = new Command(async () => await this.Pop("I'm received back data!"));
             this.ClickMeCommand = new Command(async () =>
             {
                 await this.DisplayAlert("Info", "You clicked!", "OK");
