@@ -12,6 +12,8 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
     [AddINotifyPropertyChangedInterface]
     public class LoginViewModel: ZeroBaseModel
     {
+        
+        
         private readonly IShellService _shellService;
         
         [DoNotNotify]
@@ -27,7 +29,7 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
             this.GoToRegistrationCommand = new Command(async () =>
             {
                 var param = "I'm data!";
-                await this.PushModal<RegistrationPage>(param);
+                await this.Push<RegistrationPage>(param);
             });
             
             this.LoginCommand = new Command( () =>
@@ -54,6 +56,12 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
 
         protected override Task ReversePrepareModel(object data)
         {
+            if (data == null)
+            {
+                this.Param = "no data back";
+                return Task.CompletedTask;
+            }
+           
             var param = data.ToString();
             this.Param = param;
             return base.PrepareModel(data);
