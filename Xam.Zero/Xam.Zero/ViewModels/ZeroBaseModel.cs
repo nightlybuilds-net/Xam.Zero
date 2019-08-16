@@ -8,6 +8,11 @@ namespace Xam.Zero.ViewModels
     public class ZeroBaseModel : NotifyBaseModel
     {
         /// <summary>
+        /// True after pop or popmodal
+        /// </summary>
+        private bool _popped;
+        
+        /// <summary>
         /// Previous model hydrated by zeronavigator
         /// </summary>
         public ZeroBaseModel PreviousModel { get; set; }
@@ -22,11 +27,7 @@ namespace Xam.Zero.ViewModels
             get => this._currentPage;
             set
             {
-                if (this._currentPage != null)
-                {
-                    this._currentPage.Appearing -= this.CurrentPageOnAppearing;
-                    this._currentPage.Disappearing -= this.CurrentPageOnDisappearing;
-                }
+                this.Unsubscribe();
                 
                 this._currentPage = value;
                 
@@ -35,13 +36,21 @@ namespace Xam.Zero.ViewModels
             }
         }
 
+      
+
         #region VIRTUALS
 
-        protected virtual void CurrentPageOnDisappearing(object sender, EventArgs e)
-        {}
+        protected virtual async void CurrentPageOnDisappearing(object sender, EventArgs e)
+        {
+            this.Unsubscribe();
+            
+            if (!this._popped && this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(null);
+        }
 
         protected virtual void CurrentPageOnAppearing(object sender, EventArgs e)
-        {}
+        {
+            this._popped = false;
+        }
         
         protected virtual Task PrepareModel(object data)
         {
@@ -60,19 +69,16 @@ namespace Xam.Zero.ViewModels
         public Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
         {
             return ZeroApp.Builded.App.MainPage.DisplayAlert(title, message, accept, cancel);
-//            return this.CurrentPage?.DisplayAlert(title, message, accept, cancel);
         }
         
         public Task DisplayAlert(string title, string message, string cancel)
         {
             return ZeroApp.Builded.App.MainPage.DisplayAlert(title, message, cancel);
-//            return this.CurrentPage?.DisplayAlert(title, message, cancel);
         }
 
         public Task<string> DisplayActionSheet(string title, string cancel, string destruction, string[] buttons)
         {
             return ZeroApp.Builded.App.MainPage.DisplayActionSheet(title, cancel, destruction, buttons);
-//            return this.CurrentPage?.DisplayActionSheet(title, cancel, destruction, buttons);
         }
         
 
@@ -114,6 +120,7 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task Pop(object data = null, bool animated = true)
         {
+            this._popped = true;
             if (this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(data);
             await this.CurrentPage.Navigation.PopAsync(animated);
         }
@@ -126,6 +133,7 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task PopModal(object data = null, bool animated = true)
         {
+            this._popped = true;
             if (this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(data);
             await this.CurrentPage.Navigation.PopModalAsync(animated);
         }
@@ -176,6 +184,13 @@ namespace Xam.Zero.ViewModels
         
 
         #endregion
+        
+        private void Unsubscribe()
+        {
+            if (this._currentPage == null) return;
+            this._currentPage.Appearing -= this.CurrentPageOnAppearing;
+            this._currentPage.Disappearing -= this.CurrentPageOnDisappearing;
+        }
 
       
     }
