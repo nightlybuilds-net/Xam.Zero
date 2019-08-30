@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Xam.Zero</id>
+    <version>$version$</version>
+    <title>Xam Zero</title>
+    <authors>Marco Milani,Gabriele Coppola</authors>
+    <owners>Marco Milani,Gabriele Coppola</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/markjackmilian/Xam.Zero</projectUrl>
+    <description>A simple, easy, agile and fluent framework for Xamarin forms which encapsulates all the features of Xamarin by supporting developers with a real MVVM architecture. With Xamarin.Zero you will be able to build up the structure of your app in Zero seconds with no waste of time!</description>
+    <releaseNotes>First release</releaseNotes>
+    <tags>xamarin, xam.zero, xamarin zero, mvvm</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Xamarin.Forms" version="4.0.0.471375" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Xam.Zero\bin\Release\netstandard2.0\Xam.Zero.dll" target="lib\netstandard2.0\Xam.Zero.dll" />
+  </files>
+</package>
