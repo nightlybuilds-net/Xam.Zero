@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="DryIoc.dll" Version="3.0.2" />
+      <PackageReference Include="DryIoc.dll" Version="4.0.0" />
       <PackageReference Include="Xamarin.Forms" Version="4.0.0.471375" />
     </ItemGroup>
 
