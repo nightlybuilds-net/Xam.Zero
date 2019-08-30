@@ -8,11 +8,6 @@ namespace Xam.Zero.ViewModels
     public class ZeroBaseModel : NotifyBaseModel
     {
         /// <summary>
-        /// True after pop or popmodal
-        /// </summary>
-        private bool _popped;
-        
-        /// <summary>
         /// Previous model hydrated by zeronavigator
         /// </summary>
         public ZeroBaseModel PreviousModel { get; set; }
@@ -40,16 +35,13 @@ namespace Xam.Zero.ViewModels
 
         #region VIRTUALS
 
-        protected virtual async void CurrentPageOnDisappearing(object sender, EventArgs e)
+        protected virtual void CurrentPageOnDisappearing(object sender, EventArgs e)
         {
             this.Unsubscribe();
-            
-            if (!this._popped && this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(null);
         }
 
         protected virtual void CurrentPageOnAppearing(object sender, EventArgs e)
         {
-            this._popped = false;
         }
         
         protected virtual Task PrepareModel(object data)
@@ -120,7 +112,6 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task Pop(object data = null, bool animated = true)
         {
-            this._popped = true;
             if (this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(data);
             await this.CurrentPage.Navigation.PopAsync(animated);
         }
@@ -133,7 +124,6 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task PopModal(object data = null, bool animated = true)
         {
-            this._popped = true;
             if (this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(data);
             await this.CurrentPage.Navigation.PopModalAsync(animated);
         }
