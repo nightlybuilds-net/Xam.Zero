@@ -44,14 +44,12 @@ namespace Xam.Zero.ViewModels
         {
         }
         
-        protected virtual Task PrepareModel(object data)
+        protected virtual void PrepareModel(object data)
         {
-            return Task.CompletedTask;
         }
         
-        protected virtual Task ReversePrepareModel(object data)
+        protected virtual void ReversePrepareModel(object data)
         {
-            return Task.CompletedTask;
         }
 
         #endregion
@@ -112,7 +110,7 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task Pop(object data = null, bool animated = true)
         {
-            if (this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(data);
+            this.PreviousModel?.ReversePrepareModel(data);
             await this.CurrentPage.Navigation.PopAsync(animated);
         }
         
@@ -124,7 +122,7 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task PopModal(object data = null, bool animated = true)
         {
-            if (this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(data);
+            this.PreviousModel?.ReversePrepareModel(data);
             await this.CurrentPage.Navigation.PopModalAsync(animated);
         }
         
@@ -140,7 +138,7 @@ namespace Xam.Zero.ViewModels
             var context = (ZeroBaseModel) page.BindingContext;
             context.CurrentPage = page;
             context.PreviousModel = this;
-            await context.PrepareModel(data);
+            context.PrepareModel(data);
             return page;
         }
 

@@ -54,17 +54,17 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
 //            }
 //        }
 
-        protected override Task ReversePrepareModel(object data)
+        protected override void ReversePrepareModel(object data)
         {
             if (data == null)
             {
                 this.Param = "no data back";
-                return Task.CompletedTask;
+                return;
             }
            
             var param = data.ToString();
             this.Param = param;
-            return base.PrepareModel(data);
+            base.PrepareModel(data);
         }
     }
 }
