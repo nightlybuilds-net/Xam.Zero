@@ -46,17 +46,17 @@ namespace Xam.Zero.Dev.Features.Home
         }
 
 
-        protected override Task PrepareModel(object data)
+        protected override void PrepareModel(object data)
         {
             
             this.Text = "init";
-            return base.PrepareModel(data);
+            base.PrepareModel(data);
         }
 
-        protected override Task ReversePrepareModel(object data)
+        protected override void ReversePrepareModel(object data)
         {
             this.Text = "reverseinit";
-            return base.ReversePrepareModel(data);
+            base.ReversePrepareModel(data);
         }
       
     }

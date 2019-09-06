@@ -18,7 +18,7 @@ namespace Xam.Zero.Tests.MockedResources.ViewModels
             } 
         }
 
-        protected override Task PrepareModel(object data)
+        protected override void PrepareModel(object data)
         {
             if (data != null)
             {
@@ -26,7 +26,7 @@ namespace Xam.Zero.Tests.MockedResources.ViewModels
                 this.SecondStringProperty = stringValue;
             }
 
-            return base.PrepareModel(data);
+            base.PrepareModel(data);
         }
 
     }

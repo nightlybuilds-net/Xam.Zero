@@ -40,11 +40,11 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
 //            }
 //        }
 
-        protected override Task PrepareModel(object data)
+        protected override void PrepareModel(object data)
         {
             var param = data.ToString();
             this.Param = param;
-            return base.PrepareModel(data);
+            base.PrepareModel(data);
         }
     }
 }
