@@ -11,21 +11,16 @@ namespace Xam.Zero.Classes
 
         public WeakEventHandler(EventHandler<TEventArgs> callback)
         {
-            _method = callback.Method;
-            _targetReference = new WeakReference(callback.Target, true);
+            this._method = callback.Method;
+            this._targetReference = new WeakReference(callback.Target, true);
         }
 
         public void Handler(object sender, TEventArgs e)
         {
-            var target = _targetReference.Target;
-            if (target != null)
-            {
-                var callback = (Action<object, TEventArgs>)Delegate.CreateDelegate(typeof(Action<object, TEventArgs>), target, _method, true);
-                if (callback != null)
-                {
-                    callback(sender, e);
-                }
-            }
+            var target = this._targetReference.Target;
+            if (target == null) return;
+            var callback = (Action<object, TEventArgs>)Delegate.CreateDelegate(typeof(Action<object, TEventArgs>), target, this._method, true);
+            callback?.Invoke(sender, e);
         }
     }
 }
