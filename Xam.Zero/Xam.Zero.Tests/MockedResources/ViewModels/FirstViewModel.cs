@@ -18,11 +18,11 @@ namespace Xam.Zero.Tests.MockedResources.ViewModels
             } 
         }
 
-        protected override Task ReversePrepareModel(object data)
+        protected override void ReversePrepareModel(object data)
         {
             var stringValue = data.ToString();
             this.FirstStringProperty = stringValue;
-            return base.ReversePrepareModel(data);
+            base.ReversePrepareModel(data);
         }
     }
 }

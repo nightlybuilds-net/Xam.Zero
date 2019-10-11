@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Xam.Zero.Classes;
 using Xam.Zero.Ioc;
 using Xamarin.Forms;
 
@@ -22,12 +23,10 @@ namespace Xam.Zero.ViewModels
             get => this._currentPage;
             set
             {
-                this.Unsubscribe();
-                
                 this._currentPage = value;
                 
-                this._currentPage.Appearing += this.CurrentPageOnAppearing;
-                this._currentPage.Disappearing += this.CurrentPageOnDisappearing;
+                this._currentPage.Appearing += new WeakEventHandler<EventArgs>(this.CurrentPageOnAppearing).Handler;
+                this._currentPage.Disappearing += new WeakEventHandler<EventArgs>(this.CurrentPageOnDisappearing).Handler; 
             }
         }
 
@@ -37,21 +36,18 @@ namespace Xam.Zero.ViewModels
 
         protected virtual void CurrentPageOnDisappearing(object sender, EventArgs e)
         {
-            this.Unsubscribe();
         }
 
         protected virtual void CurrentPageOnAppearing(object sender, EventArgs e)
         {
         }
         
-        protected virtual Task PrepareModel(object data)
+        protected virtual void PrepareModel(object data)
         {
-            return Task.CompletedTask;
         }
         
-        protected virtual Task ReversePrepareModel(object data)
+        protected virtual void ReversePrepareModel(object data)
         {
-            return Task.CompletedTask;
         }
 
         #endregion
@@ -112,7 +108,7 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task Pop(object data = null, bool animated = true)
         {
-            if (this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(data);
+            this.PreviousModel?.ReversePrepareModel(data);
             await this.CurrentPage.Navigation.PopAsync(animated);
         }
         
@@ -124,7 +120,7 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task PopModal(object data = null, bool animated = true)
         {
-            if (this.PreviousModel != null) await this.PreviousModel.ReversePrepareModel(data);
+            this.PreviousModel?.ReversePrepareModel(data);
             await this.CurrentPage.Navigation.PopModalAsync(animated);
         }
         
@@ -140,47 +136,15 @@ namespace Xam.Zero.ViewModels
             var context = (ZeroBaseModel) page.BindingContext;
             context.CurrentPage = page;
             context.PreviousModel = this;
-            await context.PrepareModel(data);
+            context.PrepareModel(data);
             return page;
         }
 
         #endregion
 
 
-        #region VM Navigation
-
-//        public async Task GoToVm<T>(object data, bool animated = true) where T : ZeroBaseModel
-//        {
-//            var page = await this.ResolvePageFromModel<T>(data);
-//            await this.CurrentPage.Navigation.PushAsync(page, animated);
-//        }
-//        
-//        public async Task GoModalToVm<T>(object data, bool animated = true) where T : ZeroBaseModel
-//        {
-//            var page = await this.ResolvePageFromModel<T>(data);
-//            await this.CurrentPage.Navigation.PushModalAsync(page, animated);
-//        }
-//
-//        private async Task<Page> ResolvePageFromModel<T>(object data) where T : ZeroBaseModel
-//        {
-//            var serviceKey = typeof(T).Name.Replace("Model", "");
-//            var page = (Page) Ioc.Container.Resolve<IPageController>(serviceKey: serviceKey);
-//            var context = (ZeroBaseModel) page.BindingContext;
-//            context.CurrentPage = page;
-//            context.PreviousModel = this;
-//            await context.Init(data);
-//            return page;
-//        }
         
-
-        #endregion
-        
-        private void Unsubscribe()
-        {
-            if (this._currentPage == null) return;
-            this._currentPage.Appearing -= this.CurrentPageOnAppearing;
-            this._currentPage.Disappearing -= this.CurrentPageOnDisappearing;
-        }
+       
 
       
     }

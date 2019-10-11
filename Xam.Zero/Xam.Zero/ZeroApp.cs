@@ -87,6 +87,17 @@ namespace Xam.Zero
         }
 
         /// <summary>
+        /// Start with a shell using shellselector func
+        /// </summary>
+        /// <param name="shellSelector"></param>
+        public void StartWith(Func<IContainer, Type> shellSelector)
+        {
+            this.InnerBootStrap();
+            Builded.App.MainPage = this.Shells.Single(s => s.Key == shellSelector.Invoke(this._container)).Value.Value;
+        }
+        
+
+        /// <summary>
         /// Bootstrap application
         /// Register services, pages, models
         /// </summary>
