@@ -328,3 +328,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+Xam.Zero/Xam.Zero.SimpleTabbedApp/Xam.Zero.SimpleTabbedApp.Android/Resources/Resource.designer.cs
