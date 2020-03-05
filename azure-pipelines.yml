@@ -47,7 +47,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '$(zeroProj)'
-    versioningScheme: 'off'
+    versioningScheme: 'byBuildNumber'
 
 - task: NuGetCommand@2
   inputs:
