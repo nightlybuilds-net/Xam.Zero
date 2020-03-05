@@ -5,7 +5,6 @@
 
 trigger:
 - master
-- develop
 
 pool:
   vmImage: 'windows-latest'
@@ -48,8 +47,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: 'Xam.Zero/Xam.Zero.nuspec'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'PackNumber'
+    versioningScheme: 'off'
 
 - task: NuGetCommand@2
   inputs:
