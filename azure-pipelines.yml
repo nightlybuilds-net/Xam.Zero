@@ -3,8 +3,6 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-name: $(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)
-
 trigger:
 - master
 
@@ -17,9 +15,15 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  packNumber: $(Build.BuildNumber)
 
 steps:
 - task: NuGetToolInstaller@1
+
+- task: GitVersion@5
+  inputs:
+    runtime: 'core'
+    updateAssemblyInfo: true
 
 - task: NuGetCommand@2
   inputs:
@@ -43,13 +47,15 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: 'Xam.Zero/Xam.Zero.nuspec'
-    versioningScheme: 'byBuildNumber'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'PackNumber'
 
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
     packagesToPack: 'Xam.Zero/Xam.Zero.DryIoc.nuspec'
-    versioningScheme: 'byBuildNumber'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'PackNumber'
 
 - task: PublishBuildArtifacts@1
   inputs:
