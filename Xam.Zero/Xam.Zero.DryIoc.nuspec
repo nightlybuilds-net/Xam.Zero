@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>Xam.Zero.DryIoc</id>
+    <id>Xam.Zero.DryIoc.Sem</id>
     <version>$version$</version>
     <title>Xam.Zero.DryIoc</title>
     <authors>Marco Milani,Gabriele Coppola</authors>
@@ -13,9 +13,8 @@
     <tags>xam.zero, dryioc, xamarin</tags>
     <dependencies>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="Xam.Zero" version="2019.8.11.20" exclude="Build,Analyzers" />
-        <dependency id="DryIoc.dll" version="4.0.0" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.Forms" version="4.0.0.471375" exclude="Build,Analyzers" />
+        <dependency id="Xam.Zero" version="2019.8.11.20" />
+        <dependency id="DryIoc.dll" version="4.0.0"  />
       </group>
     </dependencies>
   </metadata>

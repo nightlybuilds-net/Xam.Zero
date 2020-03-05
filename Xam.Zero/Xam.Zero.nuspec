@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>Xam.Zero</id>
+    <id>Xam.Zero.Sem</id>
     <version>$version$</version>
     <title>Xam Zero</title>
     <authors>Marco Milani,Gabriele Coppola</authors>
@@ -13,7 +13,7 @@
     <tags>xamarin, xam.zero, xamarin zero, mvvm</tags>
     <dependencies>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="Xamarin.Forms" version="4.0.0.471375" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.Forms" version="4.0.0.471375" />
       </group>
     </dependencies>
   </metadata>
