@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Xam.Zero.Sem</id>
-    <version>$version$</version>
+    <version>0.5.0</version>
     <title>Xam Zero</title>
     <authors>Marco Milani,Gabriele Coppola</authors>
     <owners>Marco Milani,Gabriele Coppola</owners>
