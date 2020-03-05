@@ -10,6 +10,7 @@
         <PackageTags>xamarin, xam.zero, xamarin zero, mvvm</PackageTags>
         <PackageReleaseNotes>First release</PackageReleaseNotes>
         <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+        <PackageId>Xam.Zero.Sem</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
