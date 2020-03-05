@@ -46,7 +46,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: '$(zeroProj)'
+    packagesToPack: 'Xam.Zero/Xam.Zero.nuspec'
     versioningScheme: 'off'
 
 - task: NuGetCommand@2
