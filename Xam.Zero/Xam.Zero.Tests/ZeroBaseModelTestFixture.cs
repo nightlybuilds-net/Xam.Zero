@@ -215,7 +215,7 @@ namespace Xam.Zero.Tests
             Xamarin.Forms.Mocks.MockForms.Init();
             
             //todo change when xamarin.forms.mocks will support xamarin.forms 4
-            Device.SetFlags(new List<string>{"Shell_Experimental"});
+            // Device.SetFlags(new List<string>{"Shell_Experimental"});
 
         }
 
