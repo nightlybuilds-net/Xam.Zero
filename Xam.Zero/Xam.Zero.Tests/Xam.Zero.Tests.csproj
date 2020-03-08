@@ -39,6 +39,10 @@
       <HintPath>..\packages\DryIoc.dll.4.1.1\lib\net45\DryIoc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7">
+      <HintPath>..\packages\Portable.Ninject.3.3.1\lib\net40-client\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -82,7 +86,8 @@
     <Compile Include="MockedResources\ViewModels\MockedZeroBaseModel.cs" />
     <Compile Include="MockedResources\ViewModels\SecondViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ZeroBaseModelTestFixture.cs" />
+    <Compile Include="ZeroBaseModelTestFixtureDryIocShould.cs" />
+    <Compile Include="ZeroBaseModelTestFixtureNinjectShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -91,6 +96,14 @@
     <ProjectReference Include="..\Xam.Zero.DryIoc\Xam.Zero.DryIoc.csproj">
       <Project>{fa0d3e2e-3678-46c3-9af8-adddf2266dd2}</Project>
       <Name>Xam.Zero.DryIoc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xam.Zero.Ninject\Xam.Zero.Ninject.csproj">
+      <Project>{95fc0fd2-b119-44da-a41d-0920d58a7156}</Project>
+      <Name>Xam.Zero.Ninject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xam.Zero.TinyIoc\Xam.Zero.TinyIoc.csproj">
+      <Project>{58d21331-4025-402d-aa05-3382a270dcec}</Project>
+      <Name>Xam.Zero.TinyIoc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xam.Zero\Xam.Zero.csproj">
       <Project>{b1fa5bb6-6b5d-4c72-80fd-d5a4a6016b1b}</Project>
