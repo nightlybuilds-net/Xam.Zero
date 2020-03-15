@@ -6,6 +6,14 @@
 
 Hi! I'm [Mark Jack Milian](http://markjackmilian.net/) and i'm here to aswer a few questions
 
+## Packages ##
+
+Platform/Feature               | Package name                              | Stable      | Status 
+-----------------------|-------------------------------------------|-----------------------------|------------------------
+Core             | `Xam.Zero.Sem` | [![Nuget](https://img.shields.io/nuget/v/Xam.Zero.Sem)](https://www.nuget.org/packages/Xam.Zero.Sem/) | [![Build Status](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_apis/build/status/markjackmilian.Xam.Zero?branchName=master)](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_build/latest?definitionId=11&branchName=master)|
+Core  | `Xam.Zero.DryIoc`  | [![NuGet](https://img.shields.io/nuget/v/Xam.Zero.DryIoc.Sem)](https://www.nuget.org/packages/Xam.Zero.DryIoc.Sem/) | [![Build Status](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_apis/build/status/markjackmilian.Xam.Zero?branchName=master)](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_build/latest?definitionId=11&branchName=master)| 
+
+
 ## What is Xamarin.Zero?
 
 A simple, easy, agile and fluent framework for Xamarin forms which encapsulates all the features of Xamarin by supporting developers with a real MVVM architecture. With Xamarin.Zero you will be able to build up the structure of your app in Zero seconds with no waste of time!
