@@ -15,7 +15,8 @@ Platform/Feature               | Package name                              | Sta
 Core             | `Xam.Zero.Sem` | [![Nuget](https://img.shields.io/nuget/v/Xam.Zero.Sem)](https://www.nuget.org/packages/Xam.Zero.Sem/) | [![Build Status](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_apis/build/status/markjackmilian.Xam.Zero?branchName=master)](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_build/latest?definitionId=11&branchName=master)|
 Core  | `Xam.Zero.DryIoc.Sem`  | [![NuGet](https://img.shields.io/nuget/v/Xam.Zero.DryIoc.Sem)](https://www.nuget.org/packages/Xam.Zero.Sem/) | [![Build Status](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_apis/build/status/markjackmilian.Xam.Zero?branchName=master)](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_build/latest?definitionId=11&branchName=master)|
 
-All packages are compliant with Semantic Versioning(https://semver.org/)
+All packages are compliant with [Semantic Versioning](https://semver.org/)
+
 
 
 
