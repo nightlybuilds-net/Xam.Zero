@@ -159,6 +159,9 @@ Xamarin.Zero does not force you to use a specific IoC container, however it offe
 ### IMessagingCenter
 During bootstrapping, on application start up, Xamarin.Forms [IMessagingCenter](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.imessagingcenter?view=xamarin-forms) Interface will be registered, so that we can inject it in view models constructor implementing Dependency Injection. This does not preclude the use of the standard Xamarin.Forms singleton mechanism.
 
+### Weak Event Handler Pattern
+Xam.Zero gracefully implements this pattern, by whom you can manage more efficiently navigation events. In the case you can subscribe to CurrentPageOnAppeanring and CurrentPageOnDisappearing events and even extend them by adding more login in your ViewModel, without worrying about unsubscribe to them. The WeakEventHandler class is a public sealed one in Xam.Zero, so you can use it for managing every kind of event.
+
 ## Samples
 
  - Simple/Tabbed navigation app by switching navigation containers; 
