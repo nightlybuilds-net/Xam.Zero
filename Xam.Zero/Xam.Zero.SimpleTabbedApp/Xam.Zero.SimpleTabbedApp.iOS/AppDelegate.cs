@@ -18,7 +18,6 @@ namespace Xam.Zero.SimpleTabbedApp.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            Xamarin.Forms.Forms.SetFlags("Shell_Experimental");
             Xamarin.Forms.Forms.Init();
             this.LoadApplication(new App());
 

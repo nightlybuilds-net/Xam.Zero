@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using DryIoc;
+using TinyIoC;
 using Xam.Zero.Dev.Features.Home;
 using Xam.Zero.DryIoc;
 using Xam.Zero.TinyIoc;
@@ -13,7 +14,7 @@ namespace Xam.Zero.Dev
 {
     public partial class App : Application
     {
-        public static readonly Container Container = new Container();
+        public static readonly TinyIoCContainer Container = new TinyIoCContainer();
 
 
         public App()
@@ -21,7 +22,7 @@ namespace Xam.Zero.Dev
             this.InitializeComponent();
 
             ZeroApp.On(this)
-                .WithContainer(TinyIocZeroContainer.Build())
+                .WithContainer(TinyIocZeroContainer.Build(Container))
                 .RegisterShell(() => new AppShell())
                 .RegisterShell(() => new TabbedShell())
                 .StartWith<AppShell>();
