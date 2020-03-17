@@ -20,10 +20,10 @@ variables:
 steps:
 - task: NuGetToolInstaller@1
 
-- task: GitVersion@5
-  inputs:
-    runtime: 'core'
-    updateAssemblyInfo: true
+#- task: GitVersion@5
+#  inputs:
+#    runtime: 'core'
+#    updateAssemblyInfo: true
 
 - task: NuGetCommand@2
   inputs:
@@ -46,16 +46,14 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: 'Xam.Zero/Xam.Zero.nuspec'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'PackNumber'
+    packagesToPack: 'Xam.Zero/Nuspecs/Xam.Zero.nuspec'
+    versioningScheme: 'off'
 
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: 'Xam.Zero/Xam.Zero.DryIoc.nuspec'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'PackNumber'
+    packagesToPack: 'Xam.Zero/Nuspecs/Xam.Zero.DryIoc.nuspec'
+    versioningScheme: 'off'
 
 - task: PublishBuildArtifacts@1
   inputs:

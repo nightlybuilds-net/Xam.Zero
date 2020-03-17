@@ -31,6 +31,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ABCC24A5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.Tests", "Xam.Zero.Tests\Xam.Zero.Tests.csproj", "{F97467B0-D218-42AC-929A-23FD88145551}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuspecs", "Nuspecs", "{8CB77523-5A08-4497-87D9-8E5EFE855B98}"
+ProjectSection(SolutionItems) = preProject
+	Nuspecs\Xam.Zero.DryIoc.nuspec = Nuspecs\Xam.Zero.DryIoc.nuspec
+	Nuspecs\Xam.Zero.nuspec = Nuspecs\Xam.Zero.nuspec
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

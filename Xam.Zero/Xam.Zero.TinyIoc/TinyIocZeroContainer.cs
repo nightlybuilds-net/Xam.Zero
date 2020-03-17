@@ -62,9 +62,9 @@ namespace Xam.Zero.TinyIoc
             return this._tinyIoCContainer.Resolve(type);
         }
         
-        public static TinyIocZeroContainer Build()
+        public static TinyIocZeroContainer Build(TinyIoCContainer container)
         {
-            return new TinyIocZeroContainer(TinyIoCContainer.Current);
+            return new TinyIocZeroContainer(container);
         }
     }
 }
