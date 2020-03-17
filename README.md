@@ -9,10 +9,14 @@ Hi! I'm [Mark Jack Milian](http://markjackmilian.net/) and i'm here to aswer a f
 
 ## Packages ##
 
+
 Platform/Feature               | Package name                              | Stable      | Status 
 -----------------------|-------------------------------------------|-----------------------------|------------------------
-Core             | `Xam.Zero.Sem` | [![Nuget](https://img.shields.io/nuget/v/Xam.Zero.Sem)](https://www.nuget.org/packages/Xam.Zero.Sem/) | ![Azure DevOps releases](https://img.shields.io/azure-devops/release/nightlybuilds-net/fd840dd0-50b6-4943-b786-063cf8f08582/1/2)|
-Core  | `Xam.Zero.DryIoc`  | [![NuGet](https://img.shields.io/nuget/v/Xam.Zero.DryIoc.Sem)](https://www.nuget.org/packages/Xam.Zero.DryIoc.Sem/) |![Azure DevOps releases](https://img.shields.io/azure-devops/release/nightlybuilds-net/fd840dd0-50b6-4943-b786-063cf8f08582/2/4)
+Core             | `Xam.Zero.Sem` | [![Nuget](https://img.shields.io/nuget/v/Xam.Zero.Sem)](https://www.nuget.org/packages/Xam.Zero.Sem/) | [![Build Status](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_apis/build/status/markjackmilian.Xam.Zero?branchName=master)](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_build/latest?definitionId=11&branchName=master)|
+Core  | `Xam.Zero.DryIoc.Sem`  | [![NuGet](https://img.shields.io/nuget/v/Xam.Zero.DryIoc.Sem)](https://www.nuget.org/packages/Xam.Zero.Sem/) | [![Build Status](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_apis/build/status/markjackmilian.Xam.Zero?branchName=master)](https://dev.azure.com/nightlybuilds-net/Xam.Zero/_build/latest?definitionId=11&branchName=master)|
+
+All packages are compliant with Semantic Versioning(https://semver.org/)
+
 
 
 
