@@ -1,0 +1,35 @@
+name: .NET Core
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+        
+    - name: Install dependencies
+      run: dotnet restore Xam.Zero/Xam.Zero/Xam.Zero.csproj
+      
+    - name: Build and Pack
+      run: dotnet pack Xam.Zero/Xam.Zero/Xam.Zero.csproj --configuration Release --no-restore /p:Version=${GITHUB_REF##*/} 
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        # Artifact name
+        name: xam.zero
+        # Directory containing files to upload
+        path: Xam.Zero/Xam.Zero/bin/Release
+    
+    - name: Push to nuget
+      run: dotnet nuget push Xam.Zero/Xam.Zero/bin/Release/Xam.Zero.Sem.${GITHUB_REF##*/}.nupkg -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
+    
