@@ -103,8 +103,8 @@ namespace Xam.Zero
         private void InnerBootStrap()
         {
             ZeroIoc.UseContainer(this._container);
-            ZeroIoc.RegisterPages(this.App.GetType().Assembly);
-            ZeroIoc.RegisterViewModels(this.App.GetType().Assembly);
+            ZeroIoc.RegisterPages();
+            ZeroIoc.RegisterViewModels();
 
             this._container.Register<IShellService, ShellService>(true);
             this._container.RegisterInstance<IMessagingCenter>(MessagingCenter
@@ -118,13 +118,12 @@ namespace Xam.Zero
         /// Default registration is Singleton
         /// If type has attribute Transient will be register as transient
         /// </summary>
-        /// <param name="entryAssembly">pass entryassembly</param>
         /// <param name="filter"></param>
-        internal static void RegisterMany(Assembly entryAssembly, Func<Type, bool> filter)
+        internal static void RegisterMany(Func<Type, bool> filter)
         {
-            
-            var types = entryAssembly.GetReferencedAssemblies().Select(Assembly.Load)
-                .SelectMany(sm => sm.GetTypes());
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(w=> !w.FullName.StartsWith("JetBrains")) // kludge fix error in rider
+                .SelectMany(s => s.GetTypes());
             
             var models = types.Where(filter.Invoke).ToArray();
 
