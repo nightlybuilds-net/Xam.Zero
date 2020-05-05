@@ -1,4 +1,3 @@
-using System.Reflection;
 using Xam.Zero.ViewModels;
 using Xamarin.Forms;
 
@@ -11,17 +10,17 @@ namespace Xam.Zero.Ioc
         /// <summary>
         /// Register all content page
         /// </summary>
-        public static void RegisterPages(Assembly entryAssembly)
+        public static void RegisterPages()
         {
-            ZeroApp.RegisterMany(entryAssembly,type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ContentPage)));
+            ZeroApp.RegisterMany(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ContentPage)));
         }
 
         /// <summary>
         /// Register all viewmodel that extend ZeroBaseModel
         /// </summary>
-        public static void RegisterViewModels(Assembly entryAssembly)
+        public static void RegisterViewModels()
         {
-            ZeroApp.RegisterMany(entryAssembly,type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ZeroBaseModel)));
+            ZeroApp.RegisterMany(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ZeroBaseModel)));
         }
         
         
