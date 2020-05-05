@@ -33,7 +33,6 @@ namespace Xam.Zero
 
         private ZeroApp()
         {
-            
         }
 
 
@@ -95,7 +94,7 @@ namespace Xam.Zero
             this.InnerBootStrap();
             Builded.App.MainPage = this.Shells.Single(s => s.Key == shellSelector.Invoke(this._container)).Value.Value;
         }
-        
+
 
         /// <summary>
         /// Bootstrap application
@@ -122,9 +121,9 @@ namespace Xam.Zero
         /// <param name="filter"></param>
         internal static void RegisterMany(Func<Type, bool> filter)
         {
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes());
-
+            var types = Assembly.GetEntryAssembly()?.GetReferencedAssemblies().Select(Assembly.Load)
+                .SelectMany(sm => sm.GetTypes());
+            
             var models = types.Where(filter.Invoke).ToArray();
 
             models.ForEach(type =>
