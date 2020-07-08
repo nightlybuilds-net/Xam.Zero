@@ -92,7 +92,8 @@ namespace Xam.Zero
         public void StartWith(Func<IContainer, Type> shellSelector)
         {
             this.InnerBootStrap();
-            Builded.App.MainPage = this.Shells.Single(s => s.Key == shellSelector.Invoke(this._container)).Value.Value;
+            var shellType = shellSelector.Invoke(this._container);
+            Builded.App.MainPage = this.Shells.Single(s => s.Key == shellType).Value.Value;
         }
 
 
