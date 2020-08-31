@@ -108,6 +108,8 @@ namespace Xam.Zero
             ZeroIoc.RegisterViewModels();
 
             this._container.Register<IShellService, ShellService>(true);
+            this._container.Register<IPageResolver, PageResolver>(true);
+            
             this._container.RegisterInstance<IMessagingCenter>(MessagingCenter
                 .Instance); // register messaging center for injection
 

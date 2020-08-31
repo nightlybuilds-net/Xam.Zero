@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using Xam.Zero.Ioc;
 using Xam.Zero.ViewModels;
 using Xamarin.Forms;
@@ -18,13 +17,8 @@ namespace Xam.Zero.MarkupExtensions
         {
             var baseModel = (ZeroBaseModel)ZeroIoc.Container.Resolve(this.ViewModel);
             baseModel.CurrentPage = this.Page;
-
-            // call init method
-            var dynMethod = typeof(ZeroBaseModel).GetMethod("PrepareModel", 
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            if (dynMethod != null) dynMethod.Invoke(baseModel, new object[] {null});
-          
-
+            
+            Utility.Utility.InvokeReflectionPrepareModel(baseModel,null);
             return baseModel;
         }
     }
