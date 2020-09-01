@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Xam.Zero.Classes;
 using Xam.Zero.Ioc;
+using Xam.Zero.Services;
 using Xamarin.Forms;
 
 namespace Xam.Zero.ViewModels
@@ -83,7 +84,7 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task Push<T>(object data = null, bool animated = true) where T : Page
         {
-            var page = await this.ResolvePageWithContext<T>(data);
+            var page = this.ResolvePageWithContext<T>(data);
             await this.CurrentPage.Navigation.PushAsync(page, animated);
         }
         
@@ -96,7 +97,7 @@ namespace Xam.Zero.ViewModels
         /// <returns></returns>
         public async Task PushModal<T>(object data = null, bool animated = true) where T : Page
         {
-            var page = await this.ResolvePageWithContext<T>(data);
+            var page = this.ResolvePageWithContext<T>(data);
             await this.CurrentPage.Navigation.PushModalAsync(page, animated);
         }
         
@@ -130,13 +131,10 @@ namespace Xam.Zero.ViewModels
         /// <param name="data"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private async Task<Page> ResolvePageWithContext<T>(object data) where T : Page
+        private Page ResolvePageWithContext<T>(object data) where T : Page
         {
-            var page = ZeroIoc.Container.Resolve<T>();
-            var context = (ZeroBaseModel) page.BindingContext;
-            context.CurrentPage = page;
-            context.PreviousModel = this;
-            context.PrepareModel(data);
+            var resolver = ZeroIoc.Container.Resolve<IPageResolver>();
+            var page = resolver.ResolvePage<T>(this, data);
             return page;
         }
 
