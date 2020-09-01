@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Xam.Zero.Classes
 {
-    public sealed class WeakEventHandler<TEventArgs> where TEventArgs : EventArgs
+    public sealed class WeakEventHandler<TEventArgs>  
     {
         private readonly WeakReference _targetReference;
         private readonly MethodInfo _method;
