@@ -9,7 +9,7 @@ namespace Xam.Zero.Services.Impl
     {
         public void SwitchContainer<T>() where T : Shell
         {
-            var container = ZeroApp.Builded.Shells.SingleOrDefault(s => s.Key == typeof(T)).Value.Value;
+            var container = ZeroApp.Builded.Shells.SingleOrDefault(s => s.Key == typeof(T)).Value();
             
             if(container == null)
                 throw new Exception($"Cannot switch to shell of type: {typeof(T)}. Have you register using ZeroApp.RegisterShell<T>??");

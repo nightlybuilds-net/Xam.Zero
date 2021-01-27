@@ -22,7 +22,7 @@ namespace Xam.Zero
 
         internal Application App { get; private set; }
 
-        internal readonly Dictionary<Type, Lazy<Shell>> Shells = new Dictionary<Type, Lazy<Shell>>();
+        internal readonly Dictionary<Type, Func<Shell>> Shells = new Dictionary<Type, Func<Shell>>();
 
         private IContainer _container;
 
@@ -53,7 +53,7 @@ namespace Xam.Zero
 
         public ZeroApp RegisterShell<T>(Func<T> shell) where T : Shell
         {
-            this.Shells.Add(typeof(T), new Lazy<Shell>(shell));
+            this.Shells.Add(typeof(T), shell);
             return this;
         }
 
@@ -70,7 +70,7 @@ namespace Xam.Zero
                 throw new Exception("Mutiple shells registered, use StartWith<T>!");
 
             this.InnerBootStrap();
-            Builded.App.MainPage = this.Shells.Single().Value.Value;
+            Builded.App.MainPage = this.Shells.Single().Value();
         }
 
 
@@ -82,7 +82,7 @@ namespace Xam.Zero
         public void StartWith<T>() where T : Shell
         {
             this.InnerBootStrap();
-            Builded.App.MainPage = this.Shells.Single(s => s.Key == typeof(T)).Value.Value;
+            Builded.App.MainPage = this.Shells.Single(s => s.Key == typeof(T)).Value();
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Xam.Zero
         {
             this.InnerBootStrap();
             var shellType = shellSelector.Invoke(this._container);
-            Builded.App.MainPage = this.Shells.Single(s => s.Key == shellType).Value.Value;
+            Builded.App.MainPage = this.Shells.Single(s => s.Key == shellType).Value();
         }
 
 
