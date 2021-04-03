@@ -13,6 +13,8 @@ namespace Xam.Zero.Dev.Features.Home
     {
         private readonly IShellService _shellService;
         private string _text;
+        private string _promptText;
+
         public string Text
         {
             get => this._text;
@@ -22,10 +24,21 @@ namespace Xam.Zero.Dev.Features.Home
                 this.RaisePropertyChanged(()=>this.Text);
             } 
         }
+        
+        public string PromptText
+        {
+            get => this._promptText;
+            set
+            {
+                this._promptText = value;
+                this.RaisePropertyChanged(()=>this._promptText);
+            } 
+        }
 
         public ICommand NavigateCommand { get; set; }
         public ICommand GoToTabbedCommand { get; set; }
         public ICommand AlertCommand { get; set; }
+        public ICommand PromptCommand { get; set; }
         
         
         
@@ -42,6 +55,7 @@ namespace Xam.Zero.Dev.Features.Home
             });
             
             this.AlertCommand = new Command(() => { this.DisplayAlert("Prova", "Dai che fungi", "ok"); });
+            this.PromptCommand = new Command(async () => { this._promptText = await this.DisplayPrompt("Prova", "Scrivi una mail", accept: "ok", keyboard: Keyboard.Email); });
             
         }
 
