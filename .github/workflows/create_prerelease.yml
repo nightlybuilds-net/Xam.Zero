@@ -10,8 +10,7 @@ on:
 
 env:
     next_mode: preminor
-    ACTIONS_ALLOW_UNSECURE_COMMANDS: true
- 
+    ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
