@@ -25,6 +25,8 @@ namespace Xam.Zero
         internal readonly Dictionary<Type, Func<Shell>> Shells = new Dictionary<Type, Func<Shell>>();
 
         private IContainer _container;
+        private bool _viewmodelsAreTransient;
+        private bool _pagesAreTransient;
 
         private ZeroApp(Application application)
         {
@@ -56,8 +58,28 @@ namespace Xam.Zero
             this.Shells.Add(typeof(T), shell);
             return this;
         }
+        
+        /// <summary>
+        /// Setup default register behaviour as transient
+        /// </summary>
+        /// <returns></returns>
+        public ZeroApp WithTransientViewModels()
+        {
+            this._viewmodelsAreTransient = true;
+            return this;
+        }
 
+        /// <summary>
+        /// Setup default register behaviour as transient
+        /// </summary>
+        /// <returns></returns>
+        public ZeroApp WithTransientPages()
+        {
+            this._pagesAreTransient = true;
+            return this;
+        }
 
+        
         /// <summary>
         /// Start app when only one shell is registered
         /// Initialize ZeroApp
@@ -104,8 +126,8 @@ namespace Xam.Zero
         private void InnerBootStrap()
         {
             ZeroIoc.UseContainer(this._container);
-            ZeroIoc.RegisterPages();
-            ZeroIoc.RegisterViewModels();
+            ZeroIoc.RegisterPages(this._pagesAreTransient);
+            ZeroIoc.RegisterViewModels(this._viewmodelsAreTransient);
 
             this._container.Register<IShellService, ShellService>(true);
             this._container.Register<IPageResolver, PageResolver>(true);
@@ -122,7 +144,8 @@ namespace Xam.Zero
         /// If type has attribute Transient will be register as transient
         /// </summary>
         /// <param name="filter"></param>
-        internal static void RegisterMany(Func<Type, bool> filter)
+        /// <param name="isDefaultTransient">if true force all registration to transient. if is false look for transient attribute</param>
+        internal static void RegisterMany(Func<Type, bool> filter, bool isDefaultTransient)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .Where(w=> !w.FullName.StartsWith("JetBrains")) // kludge fix error in rider
@@ -133,7 +156,7 @@ namespace Xam.Zero
             models.ForEach(type =>
             {
                 var transient = type.GetCustomAttribute<TransientAttribute>();
-                var isTransient = transient != null;
+                var isTransient = isDefaultTransient || transient != null;
 
                 ZeroIoc.Container.Register(type, isTransient);
             });
