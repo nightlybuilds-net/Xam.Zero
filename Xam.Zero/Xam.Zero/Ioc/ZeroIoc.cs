@@ -10,21 +10,21 @@ namespace Xam.Zero.Ioc
         /// <summary>
         /// Register all content page
         /// </summary>
-        public static void RegisterPages()
+        /// <param name="pagesAreTransient"></param>
+        public static void RegisterPages(bool pagesAreTransient)
         {
-            ZeroApp.RegisterMany(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ContentPage)));
+            ZeroApp.RegisterMany(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ContentPage)), pagesAreTransient);
         }
 
         /// <summary>
         /// Register all viewmodel that extend ZeroBaseModel
         /// </summary>
-        public static void RegisterViewModels()
+        /// <param name="viewmodelsAreTransient"></param>
+        public static void RegisterViewModels(bool viewmodelsAreTransient)
         {
-            ZeroApp.RegisterMany(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ZeroBaseModel)));
+            ZeroApp.RegisterMany(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ZeroBaseModel)), viewmodelsAreTransient);
         }
         
-        
-
         internal static void UseContainer(IContainer container)
         {
             Container = container;
