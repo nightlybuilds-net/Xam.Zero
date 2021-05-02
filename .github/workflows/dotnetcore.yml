@@ -4,6 +4,10 @@ on:
   release:
     types: [created]
 
+
+env:
+    ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
 jobs:
   build:
 
