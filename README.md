@@ -1,4 +1,5 @@
 
+
   
 # Welcome to Xamarin.Zero
 
@@ -144,7 +145,10 @@ ZeroApp  WithContainer(IContainer  container){}
 ZeroApp  RegisterShell<T>(Func<T> shell) where  T : Shell{}
 void  Start(){}
 void  StartWith<T>() where  T : Shell{}
+ZeroApp WithTransientViewModels()  
+ZeroApp WithTransientPages()
 ```
+Default lifecycle for pages and viewmodels is singleton. You can register all as transient using WithTransientViewModels/Pages, or you can use [Transient] attribute.
 
 #### IShellService
 it is responsible of switching navigation containers. Default use case is change from a login status to a logout one.
