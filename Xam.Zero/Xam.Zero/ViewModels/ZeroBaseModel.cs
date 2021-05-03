@@ -69,6 +69,11 @@ namespace Xam.Zero.ViewModels
         {
             return ZeroApp.Builded.App.MainPage.DisplayActionSheet(title, cancel, destruction, buttons);
         }
+
+        public Task<string> DisplayPrompt(string title, string message, string accept = "OK", string cancel = "Cancel", string placeholder = null, int maxLength = -1, Keyboard keyboard = null, string initialValue = "")
+        {
+            return ZeroApp.Builded.App.MainPage.DisplayPromptAsync(title, message, accept, cancel, placeholder, maxLength, keyboard, initialValue);
+        }
         
 
         #endregion

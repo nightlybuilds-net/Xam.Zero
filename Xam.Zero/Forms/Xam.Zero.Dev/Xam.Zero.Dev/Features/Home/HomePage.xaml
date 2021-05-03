@@ -13,9 +13,14 @@
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
             
+            <Label Text="{Binding PromptText}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            
             <Button Text="Go!" Command="{Binding NavigateCommand}"/>
             <Button Text="Change Shell" Command="{Binding GoToTabbedCommand}"/>
             <Button Text="Test Alert" Command="{Binding AlertCommand}"/>
+            <Button Text="Test Prompt Alert" Command="{Binding PromptCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
