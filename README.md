@@ -59,7 +59,7 @@ Where:
 - ***ZeroApp***  is a wrapper around Xamarin.Forms bootstrapping the main Application;
 - ***AppShell*** and ***TabbedShell*** are two sample shells which act as navigation containers. Please see ***Samples*** section for further details.
 
-NB: Xamarin Zero will register ***all Pages and ViewModels in bootstrap time***. This will be possible only if every view model will extends the ZeroBaseModel class. The registration is Singleton by default; to make it multi-instance style, we have to use the [Transient](https://github.com/markjackmilian/Xam.Zero/blob/develop/Xam.Zero/Xam.Zero/Classes/TransientAttribute.cs) attribute.
+NB: Xamarin Zero will register ***all Pages and ViewModels in bootstrap time***. This will be possible only if every view model will extends the ZeroBaseModel class. The registration is Singleton by default (you can choose for transient using Attribute or builder method); to make it multi-instance style, we have to use the [Transient](https://github.com/markjackmilian/Xam.Zero/blob/develop/Xam.Zero/Xam.Zero/Classes/TransientAttribute.cs) attribute.
 
 ### Binding context and markup
 there are two mandatory ways to define the binding context of out pages and both use a [markup extension mechanism](https://github.com/markjackmilian/Xam.Zero/tree/develop/Xam.Zero/Xam.Zero/MarkupExtensions):
@@ -134,6 +134,7 @@ A full display managing is guaranteed.
 Task<bool> DisplayAlert(string  title, string  message, string  accept, string  cancel){}
 Task  DisplayAlert(string  title, string  message, string  cancel){}
 Task<string> DisplayActionSheet(string title, string cancel, string destruction, string[] buttons){}
+Task<string> DisplayPrompt(string title, string message, string accept = "OK", string cancel = "Cancel", string placeholder = null, int maxLength = -1, Keyboard keyboard = null, string initialValue = "")
 ```
 
 #### ZeroApp
@@ -144,6 +145,8 @@ ZeroApp  WithContainer(IContainer  container){}
 ZeroApp  RegisterShell<T>(Func<T> shell) where  T : Shell{}
 void  Start(){}
 void  StartWith<T>() where  T : Shell{}
+ZeroApp WithTransientViewModels()
+ZeroApp WithTransientPages()
 ```
 
 #### IShellService

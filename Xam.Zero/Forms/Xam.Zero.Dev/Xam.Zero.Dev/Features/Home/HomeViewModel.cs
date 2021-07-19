@@ -48,7 +48,8 @@ namespace Xam.Zero.Dev.Features.Home
         {
             this._shellService = shellService;
             this.Text = "Ctor";
-            this.NavigateCommand = new Command(async ()=> await this.Push<SecondPage>(null));
+            // this.NavigateCommand = new Command(async ()=> await this.Push<SecondPage>(null));
+            this.NavigateCommand = new Command(async ()=> await this.Push(typeof(SecondPage)));
             this.GoToTabbedCommand = new Command(async () =>
             {
                 this._shellService.SwitchContainer<TabbedShell>();
