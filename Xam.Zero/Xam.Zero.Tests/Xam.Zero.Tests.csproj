@@ -89,6 +89,7 @@
     <Compile Include="ZeroBaseModelTestFixtureDryIocShould.cs" />
     <Compile Include="ZeroBaseModelTestFixtureNinjectShould.cs" />
     <Compile Include="ZeroBaseModelTestFixtureNinjectTinyIoc.cs" />
+    <Compile Include="ZeroCommandShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

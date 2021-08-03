@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:commandPage="clr-namespace:Xam.Zero.Dev.Features.CommandPage;assembly=Xam.Zero.Dev"
+             xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+             x:DataType="commandPage:CommandViewModel"
+             BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type commandPage:CommandViewModel}}"
+             x:Class="Xam.Zero.Dev.Features.CommandPage.CommandPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry
+                Placeholder="Name"
+                Text="{Binding Name}"/>
+            <Entry
+                Placeholder="Surname"
+                Text="{Binding Surname}"/>
+            <Button
+                Text="Test Excecute command"
+                Command="{Binding TestCommand}"
+                />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
