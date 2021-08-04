@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Xamarin.Forms.Internals;
 
 namespace Xam.Zero.Classes
 {
@@ -20,8 +17,7 @@ namespace Xam.Zero.Classes
         private ZeroCommand(INotifyPropertyChanged viewmodel)
         {
             this._viewmodel = viewmodel;
-            
-            viewmodel.PropertyChanged += this.InnerEvaluateCanExcecute;
+            viewmodel.PropertyChanged +=new WeakEventHandler<PropertyChangedEventArgs>(this.InnerEvaluateCanExcecute).Handler;
         }
 
         private void InnerEvaluateCanExcecute(object sender, PropertyChangedEventArgs e)
@@ -61,6 +57,7 @@ namespace Xam.Zero.Classes
 
             switch (canExcecuteExpression)
             {
+                
                 case MemberExpression memberExpression:
                 {
                     if(memberExpression.Member.DeclaringType == trackedType)
@@ -72,10 +69,14 @@ namespace Xam.Zero.Classes
                     allProperties.AddRange(this.GetTrackProperties(binaryExpression.Right,trackedType));
                     break;
                 case MethodCallExpression methodCallExpression:
-                    methodCallExpression.Arguments.ForEach(expression =>
+                    foreach (var expression in methodCallExpression.Arguments)
                     {
                         allProperties.AddRange(this.GetTrackProperties(expression,trackedType));
-                    });
+                    }
+
+                    break;
+                case UnaryExpression unaryExpression:
+                    allProperties.AddRange(this.GetTrackProperties(unaryExpression.Operand,trackedType));
                     break;
             }
 
