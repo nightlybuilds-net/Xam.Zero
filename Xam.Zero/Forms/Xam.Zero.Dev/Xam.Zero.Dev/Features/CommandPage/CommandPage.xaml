@@ -20,9 +20,17 @@
                 IsToggled="{Binding Checked}"
                 />
             <Button
-                Text="Test Excecute command"
-                Command="{Binding TestCommand}"
+                Text="Success command"
+                Command="{Binding TestSuccessCommand}"
                 />
+            <Button
+                Text="Swallowed exception command"
+                Command="{Binding TestSwallowErrorCommand}"/>
+                
+            <Button
+                Text="Exception command"
+                Command="{Binding TestErrorCommand}"
+            />
           
         </StackLayout>
     </ContentPage.Content>

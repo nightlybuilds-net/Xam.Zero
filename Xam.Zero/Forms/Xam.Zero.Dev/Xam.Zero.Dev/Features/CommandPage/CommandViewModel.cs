@@ -13,7 +13,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
         private string _surname;
         private bool _checked;
         private bool _isBusy;
-        public ICommand TestCommand { get; set; }
+        public ICommand TestSuccessCommand { get; set; }
 
         public string Surname
         {
@@ -55,21 +55,47 @@ namespace Xam.Zero.Dev.Features.CommandPage
             }
         }
 
+        public ICommand TestSwallowErrorCommand { get; set; }
+        public ICommand TestErrorCommand { get; set; }
+
         public CommandViewModel()
         {
-            this.TestCommand = ZeroCommand.On(this)
-                // .WithCanExcecute(() => !string.IsNullOrEmpty(this.Name)  && !string.IsNullOrEmpty(this.Surname))
+            this.TestSuccessCommand = ZeroCommandBuilder.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(this.InnerAction);
+                .WithExecute(this.InnerShowMessageAction)
+                .Build();
+            
+            this.TestSwallowErrorCommand = ZeroCommandBuilder.On(this)
+                .WithCanExecute(this.InnerExpression())
+                .WithExecute(this.InnerManageErrorWithSwallow)
+                .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
+                .WithSwallowException()
+                .Build();
+            
+            this.TestErrorCommand = ZeroCommandBuilder.On(this)
+                .WithCanExecute(this.InnerExpression())
+                .WithExecute(this.InnerManageErrorWithoutSwallow)
+                .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
+                .Build();
         }
 
-        private async Task InnerAction()
+        private async Task InnerShowMessageAction()
         {
             this.IsBusy = true;
             await Task.Delay(1000);
             await base.DisplayAlert("Test", "Name and surname are correct!", "ok");
             await Task.Delay(1000);
             this.IsBusy = false;
+        }
+        
+        private void InnerManageErrorWithSwallow()
+        {
+            throw new Exception("MEssage from exception");
+        }
+        
+        private void InnerManageErrorWithoutSwallow()
+        {
+            throw new Exception("App is going to crash! EVERY MAN FOR HIMSELF!");
         }
 
         private Expression<Func<bool>> InnerExpression() =>
