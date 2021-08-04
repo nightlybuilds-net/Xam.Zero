@@ -13,6 +13,8 @@ namespace Xam.Zero.Classes
         private readonly INotifyPropertyChanged _viewmodel;
         private readonly Func<bool> _canExecute;
         private readonly IEnumerable<string> _trackedProperties;
+        private readonly Func<bool> _beforeExecute;
+        private readonly Func<Task<bool>> _beforeExecuteAsync;
         private readonly Action _action;
         private readonly Func<Task> _asyncAction;
         private readonly bool _swallowException;
@@ -21,7 +23,7 @@ namespace Xam.Zero.Classes
 
         internal ZeroCommand(INotifyPropertyChanged viewmodel, Action action, Func<Task> asyncAction,
             Func<bool> canExecute, Action<Exception> onError, Func<Exception, Task> onErrorAsync, bool swallowException,
-            IEnumerable<string> trackedProperties)
+            IEnumerable<string> trackedProperties, Func<bool> beforeExecute, Func<Task<bool>> beforeExecuteAsync)
         {
             this._viewmodel = viewmodel;
             this._action = action;
@@ -31,6 +33,8 @@ namespace Xam.Zero.Classes
             this._onErrorAsync = onErrorAsync;
             this._swallowException = swallowException;
             this._trackedProperties = trackedProperties;
+            this._beforeExecute = beforeExecute;
+            this._beforeExecuteAsync = beforeExecuteAsync;
             viewmodel.PropertyChanged +=
                 new WeakEventHandler<PropertyChangedEventArgs>(this.InnerEvaluateCanExcecute).Handler;
         }
@@ -59,8 +63,10 @@ namespace Xam.Zero.Classes
         {
             try
             {
+                if (await this.EvaluateBeforeRun()) return;
+
                 if (this._asyncAction != null)
-                    await this._asyncAction?.Invoke();
+                    await this._asyncAction.Invoke();
 
                 this._action?.Invoke();
             }
@@ -76,19 +82,37 @@ namespace Xam.Zero.Classes
             }
         }
 
+        /// <summary>
+        /// Evaluate if before run condition are met
+        /// </summary>
+        /// <returns></returns>
+        private async Task<bool> EvaluateBeforeRun()
+        {
+            var beforeRun = true;
+            if (this._beforeExecuteAsync != null)
+                beforeRun = await this._beforeExecuteAsync.Invoke();
+
+            if (this._beforeExecute != null)
+                beforeRun = this._beforeExecute.Invoke();
+
+            return !beforeRun;
+        }
+
         public event EventHandler CanExecuteChanged;
     }
 
     public class ZeroCommandBuilder
     {
         private readonly INotifyPropertyChanged _viewmodel;
-        private Func<bool> _canExecute;
         private IEnumerable<string> _trackedProperties;
         private bool _swallowException;
         private Action<Exception> _onError;
         private Func<Exception, Task> _onErrorAsync;
+        private Func<bool> _canExecute;
         private Action _action;
-        private Func<Task> _asyncAction;
+        private Func<Task> _actionAsync;
+        private Func<bool> _beforeExecute;
+        private Func<Task<bool>> _beforeExecuteAsync;
 
         private ZeroCommandBuilder(INotifyPropertyChanged viewmodel)
         {
@@ -175,6 +199,9 @@ namespace Xam.Zero.Classes
         /// <returns></returns>
         public ZeroCommandBuilder WithErrorHandler(Action<Exception> onError)
         {
+            if (this._onErrorAsync != null || this._onError != null)
+                throw new Exception("On error action already added!");
+            
             this._onError = onError;
             return this;
         }
@@ -186,6 +213,9 @@ namespace Xam.Zero.Classes
         /// <returns></returns>
         public ZeroCommandBuilder WithErrorHandler(Func<Exception, Task> onErrorTask)
         {
+            if (this._onErrorAsync != null || this._onError != null)
+                throw new Exception("On error action already added!");
+            
             this._onErrorAsync = onErrorTask;
             return this;
         }
@@ -197,6 +227,9 @@ namespace Xam.Zero.Classes
         /// <returns></returns>
         public ZeroCommandBuilder WithExecute(Action action)
         {
+            if (this._action != null || this._actionAsync != null)
+                throw new Exception("Execute action already added!");
+            
             this._action = action;
             return this;
         }
@@ -208,7 +241,35 @@ namespace Xam.Zero.Classes
         /// <returns></returns>
         public ZeroCommandBuilder WithExecute(Func<Task> taskAction)
         {
-            this._asyncAction = taskAction;
+            if (this._action != null || this._actionAsync != null)
+                throw new Exception("Execute action already added!");
+            
+            this._actionAsync = taskAction;
+            return this;
+        }
+
+        /// <summary>
+        /// Add action before execute
+        /// </summary>
+        /// <param name="beforeExecute"></param>
+        /// <returns>If return false stop the execution</returns>
+        public ZeroCommandBuilder WithBeforeExecute(Func<bool> beforeExecute)
+        {
+            if (this._beforeExecute != null || this._beforeExecuteAsync != null)
+                throw new Exception("Before Execute action already added!");
+            
+            this._beforeExecute = beforeExecute;
+            return this;
+        }
+        
+        /// <summary>
+        /// Add action before execute
+        /// </summary>
+        /// <param name="beforeExecuteAsync"></param>
+        /// <returns></returns>
+        public ZeroCommandBuilder WithBeforeExecute(Func<Task<bool>> beforeExecuteAsync)
+        {
+            this._beforeExecuteAsync = beforeExecuteAsync;
             return this;
         }
 
@@ -218,8 +279,8 @@ namespace Xam.Zero.Classes
         /// <returns></returns>
         public ZeroCommand Build()
         {
-            return new ZeroCommand(this._viewmodel, this._action, this._asyncAction, this._canExecute, this._onError,
-                this._onErrorAsync, this._swallowException, this._trackedProperties);
+            return new ZeroCommand(this._viewmodel, this._action, this._actionAsync, this._canExecute, this._onError,
+                this._onErrorAsync, this._swallowException, this._trackedProperties, this._beforeExecute,this._beforeExecuteAsync);
         }
     }
 }

@@ -14,6 +14,9 @@ namespace Xam.Zero.Dev.Features.CommandPage
         private bool _checked;
         private bool _isBusy;
         public ICommand TestSuccessCommand { get; set; }
+        public ICommand TestSwallowErrorCommand { get; set; }
+        public ICommand TestErrorCommand { get; set; }
+        public ICommand BeforeRunEvaluationCommadn { get; set; }
 
         public string Surname
         {
@@ -55,8 +58,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
             }
         }
 
-        public ICommand TestSwallowErrorCommand { get; set; }
-        public ICommand TestErrorCommand { get; set; }
+      
 
         public CommandViewModel()
         {
@@ -77,6 +79,12 @@ namespace Xam.Zero.Dev.Features.CommandPage
                 .WithExecute(this.InnerManageErrorWithoutSwallow)
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .Build();
+            
+            this.BeforeRunEvaluationCommadn = ZeroCommandBuilder.On(this)
+                .WithCanExecute(this.InnerExpression())
+                .WithExecute(this.InnerEvaluateCanRun)
+                .WithBeforeExecute(() => base.DisplayAlert("Before Run Question","Can i run?","yes","no"))
+                .Build();
         }
 
         private async Task InnerShowMessageAction()
@@ -96,6 +104,11 @@ namespace Xam.Zero.Dev.Features.CommandPage
         private void InnerManageErrorWithoutSwallow()
         {
             throw new Exception("App is going to crash! EVERY MAN FOR HIMSELF!");
+        }
+        
+        private void InnerEvaluateCanRun()
+        {
+            base.DisplayAlert("Evaluation OK", "Thanks, I'M ALIVE!!!", "OK");
         }
 
         private Expression<Func<bool>> InnerExpression() =>

@@ -29,8 +29,11 @@
                 
             <Button
                 Text="Exception command"
-                Command="{Binding TestErrorCommand}"
-            />
+                Command="{Binding TestErrorCommand}"/>
+            
+            <Button
+                Text="Before run evaluation command"
+                Command="{Binding BeforeRunEvaluationCommadn}"/>
           
         </StackLayout>
     </ContentPage.Content>
