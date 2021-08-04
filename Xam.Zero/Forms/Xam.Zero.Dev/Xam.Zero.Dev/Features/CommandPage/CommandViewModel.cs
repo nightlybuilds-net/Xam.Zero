@@ -59,8 +59,8 @@ namespace Xam.Zero.Dev.Features.CommandPage
         {
             this.TestCommand = ZeroCommand.On(this)
                 // .WithCanExcecute(() => !string.IsNullOrEmpty(this.Name)  && !string.IsNullOrEmpty(this.Surname))
-                .WithCanExcecute(this.InnerExpression())
-                .WithExcecute(async () => await this.InnerAction());
+                .WithCanExecute(this.InnerExpression())
+                .WithExecute(this.InnerAction);
         }
 
         private async Task InnerAction()

@@ -34,7 +34,7 @@ namespace Xam.Zero.Tests
         public NotifyClass()
         {
             // this.ZeroCommand = ZeroCommand.On(this).WithCanExcecute(() => DateTime.Now.Hour > 10 || this.SurName == "Gino" && this._name == "bello");
-            this.ZeroCommand = ZeroCommand.On(this).WithCanExcecute(() =>string.IsNullOrEmpty(this.Name));
+            this.ZeroCommand = ZeroCommand.On(this).WithCanExecute(() =>string.IsNullOrEmpty(this.Name));
         }
     }
 }

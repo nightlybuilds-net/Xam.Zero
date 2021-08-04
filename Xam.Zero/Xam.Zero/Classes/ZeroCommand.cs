@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Xam.Zero.Classes
@@ -13,6 +14,7 @@ namespace Xam.Zero.Classes
         private Func<bool> _canExecute;
         private IEnumerable<string> _trackedProperties;
         private Action _action;
+        private Func<Task> _asyncAction;
 
         private ZeroCommand(INotifyPropertyChanged viewmodel)
         {
@@ -32,16 +34,22 @@ namespace Xam.Zero.Classes
             return new ZeroCommand(viewmodel);
         }
 
-        public ZeroCommand WithCanExcecute(Expression<Func<bool>> canExcecuteExpression)
+        public ZeroCommand WithCanExecute(Expression<Func<bool>> canExcecuteExpression)
         {
             this._canExecute = canExcecuteExpression.Compile();
             this._trackedProperties = this.GetTrackProperties(canExcecuteExpression.Body, this._viewmodel.GetType());
             return this;
         }
         
-        public ZeroCommand WithExcecute(Action action)
+        public ZeroCommand WithExecute(Action action)
         {
             this._action = action;
+            return this;
+        }
+        
+        public ZeroCommand WithExecute(Func<Task> taskAction)
+        {
+            this._asyncAction = taskAction;
             return this;
         }
 
@@ -82,15 +90,24 @@ namespace Xam.Zero.Classes
 
             return allProperties.Distinct();
         }
-        
+
+        /// <summary>
+        /// Force evaluation of Can Execute
+        /// </summary>
+        public void RaiseEvaluateCanExecute()
+        {
+            this.CanExecuteChanged?.Invoke(this,EventArgs.Empty);
+        }
         
         public bool CanExecute(object parameter)
         {
             return this._canExecute?.Invoke() ?? true;
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
+            await this._asyncAction.Invoke();
+            
             this._action?.Invoke();
         }
 
