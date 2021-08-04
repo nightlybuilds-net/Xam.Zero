@@ -9,16 +9,21 @@
              x:Class="Xam.Zero.Dev.Features.CommandPage.CommandPage">
     <ContentPage.Content>
         <StackLayout>
+            <Label Text="Canexecute rules: name.lenght > 5 and surname notempty and switch checked and isbusy is false"/>
             <Entry
                 Placeholder="Name"
                 Text="{Binding Name}"/>
             <Entry
                 Placeholder="Surname"
                 Text="{Binding Surname}"/>
+            <Switch
+                IsToggled="{Binding Checked}"
+                />
             <Button
                 Text="Test Excecute command"
                 Command="{Binding TestCommand}"
                 />
+          
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

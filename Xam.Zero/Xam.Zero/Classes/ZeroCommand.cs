@@ -80,7 +80,7 @@ namespace Xam.Zero.Classes
                     break;
             }
 
-            return allProperties;
+            return allProperties.Distinct();
         }
         
         
@@ -96,5 +96,6 @@ namespace Xam.Zero.Classes
 
         public event EventHandler CanExecuteChanged;
     }
+
 
 }
