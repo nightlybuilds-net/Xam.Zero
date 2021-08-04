@@ -15,6 +15,8 @@ namespace Xam.Zero.Classes
         private readonly IEnumerable<string> _trackedProperties;
         private readonly Func<bool> _beforeExecute;
         private readonly Func<Task<bool>> _beforeExecuteAsync;
+        private readonly Action _afterExecute;
+        private readonly Func<Task> _afterExecuteAsync;
         private readonly Action _action;
         private readonly Func<Task> _asyncAction;
         private readonly bool _swallowException;
@@ -23,7 +25,8 @@ namespace Xam.Zero.Classes
 
         internal ZeroCommand(INotifyPropertyChanged viewmodel, Action action, Func<Task> asyncAction,
             Func<bool> canExecute, Action<Exception> onError, Func<Exception, Task> onErrorAsync, bool swallowException,
-            IEnumerable<string> trackedProperties, Func<bool> beforeExecute, Func<Task<bool>> beforeExecuteAsync)
+            IEnumerable<string> trackedProperties, Func<bool> beforeExecute, Func<Task<bool>> beforeExecuteAsync,
+            Action afterExecute, Func<Task> afterExecuteAsync)
         {
             this._viewmodel = viewmodel;
             this._action = action;
@@ -35,6 +38,8 @@ namespace Xam.Zero.Classes
             this._trackedProperties = trackedProperties;
             this._beforeExecute = beforeExecute;
             this._beforeExecuteAsync = beforeExecuteAsync;
+            this._afterExecute = afterExecute;
+            this._afterExecuteAsync = afterExecuteAsync;
             viewmodel.PropertyChanged +=
                 new WeakEventHandler<PropertyChangedEventArgs>(this.InnerEvaluateCanExcecute).Handler;
         }
@@ -61,9 +66,12 @@ namespace Xam.Zero.Classes
 
         public async void Execute(object parameter)
         {
+            var beforeRunEvaluation = true;
             try
             {
-                if (await this.EvaluateBeforeRun()) return;
+                beforeRunEvaluation = await this.EvaluateBeforeRun();
+                if(!beforeRunEvaluation)
+                    return;
 
                 if (this._asyncAction != null)
                     await this._asyncAction.Invoke();
@@ -80,6 +88,16 @@ namespace Xam.Zero.Classes
                 if (!this._swallowException)
                     throw;
             }
+            finally
+            {
+                if (beforeRunEvaluation)
+                {
+                    if (this._afterExecuteAsync != null)
+                        await this._afterExecuteAsync?.Invoke();
+
+                    this._afterExecute?.Invoke();
+                }
+            }
         }
 
         /// <summary>
@@ -95,7 +113,7 @@ namespace Xam.Zero.Classes
             if (this._beforeExecute != null)
                 beforeRun = this._beforeExecute.Invoke();
 
-            return !beforeRun;
+            return beforeRun;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -113,6 +131,8 @@ namespace Xam.Zero.Classes
         private Func<Task> _actionAsync;
         private Func<bool> _beforeExecute;
         private Func<Task<bool>> _beforeExecuteAsync;
+        private Action _afterExecute;
+        private Func<Task> _afterExecuteAsync;
 
         private ZeroCommandBuilder(INotifyPropertyChanged viewmodel)
         {
@@ -201,7 +221,7 @@ namespace Xam.Zero.Classes
         {
             if (this._onErrorAsync != null || this._onError != null)
                 throw new Exception("On error action already added!");
-            
+
             this._onError = onError;
             return this;
         }
@@ -215,7 +235,7 @@ namespace Xam.Zero.Classes
         {
             if (this._onErrorAsync != null || this._onError != null)
                 throw new Exception("On error action already added!");
-            
+
             this._onErrorAsync = onErrorTask;
             return this;
         }
@@ -229,7 +249,7 @@ namespace Xam.Zero.Classes
         {
             if (this._action != null || this._actionAsync != null)
                 throw new Exception("Execute action already added!");
-            
+
             this._action = action;
             return this;
         }
@@ -243,7 +263,7 @@ namespace Xam.Zero.Classes
         {
             if (this._action != null || this._actionAsync != null)
                 throw new Exception("Execute action already added!");
-            
+
             this._actionAsync = taskAction;
             return this;
         }
@@ -257,11 +277,11 @@ namespace Xam.Zero.Classes
         {
             if (this._beforeExecute != null || this._beforeExecuteAsync != null)
                 throw new Exception("Before Execute action already added!");
-            
+
             this._beforeExecute = beforeExecute;
             return this;
         }
-        
+
         /// <summary>
         /// Add action before execute
         /// </summary>
@@ -269,7 +289,38 @@ namespace Xam.Zero.Classes
         /// <returns></returns>
         public ZeroCommandBuilder WithBeforeExecute(Func<Task<bool>> beforeExecuteAsync)
         {
+            if (this._beforeExecute != null || this._beforeExecuteAsync != null)
+                throw new Exception("Before Execute action already added!");
+
             this._beforeExecuteAsync = beforeExecuteAsync;
+            return this;
+        }
+
+        /// <summary>
+        /// Add action after execute (runned in finally scope)
+        /// </summary>
+        /// <param name="afterExecute"></param>
+        /// <returns></returns>
+        public ZeroCommandBuilder WithAfterExecute(Action afterExecute)
+        {
+            if (this._afterExecute != null || this._afterExecuteAsync != null)
+                throw new Exception("Before Execute action already added!");
+
+            this._afterExecute = afterExecute;
+            return this;
+        }
+
+        /// <summary>
+        /// Add action after execute (runned in finally scope)
+        /// </summary>
+        /// <param name="afterExecuteAsync"></param>
+        /// <returns></returns>
+        public ZeroCommandBuilder WithAfterExecute(Func<Task<bool>> afterExecuteAsync)
+        {
+            if (this._afterExecute != null || this._afterExecuteAsync != null)
+                throw new Exception("Before Execute action already added!");
+
+            this._afterExecuteAsync = afterExecuteAsync;
             return this;
         }
 
@@ -280,7 +331,8 @@ namespace Xam.Zero.Classes
         public ZeroCommand Build()
         {
             return new ZeroCommand(this._viewmodel, this._action, this._actionAsync, this._canExecute, this._onError,
-                this._onErrorAsync, this._swallowException, this._trackedProperties, this._beforeExecute,this._beforeExecuteAsync);
+                this._onErrorAsync, this._swallowException, this._trackedProperties, this._beforeExecute,
+                this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync);
         }
     }
 }

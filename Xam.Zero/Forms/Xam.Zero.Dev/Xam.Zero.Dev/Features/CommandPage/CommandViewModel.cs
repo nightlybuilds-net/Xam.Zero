@@ -84,6 +84,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute(this.InnerEvaluateCanRun)
                 .WithBeforeExecute(() => base.DisplayAlert("Before Run Question","Can i run?","yes","no"))
+                .WithAfterExecute(() => base.DisplayAlert("I'm running after a execution","I'll not run if evaluation fail!","ok"))
                 .Build();
         }
 
@@ -106,9 +107,9 @@ namespace Xam.Zero.Dev.Features.CommandPage
             throw new Exception("App is going to crash! EVERY MAN FOR HIMSELF!");
         }
         
-        private void InnerEvaluateCanRun()
+        private Task InnerEvaluateCanRun()
         {
-            base.DisplayAlert("Evaluation OK", "Thanks, I'M ALIVE!!!", "OK");
+            return base.DisplayAlert("Evaluation OK", "Thanks, I'M ALIVE!!!", "OK");
         }
 
         private Expression<Func<bool>> InnerExpression() =>
