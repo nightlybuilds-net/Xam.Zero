@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -12,22 +11,22 @@ namespace Xam.Zero.Classes
     {
         private readonly Func<bool> _canExecute;
         private readonly IEnumerable<string> _trackedProperties;
-        private readonly Func<bool> _beforeExecute;
-        private readonly Func<Task<bool>> _beforeExecuteAsync;
-        private readonly Action _afterExecute;
-        private readonly Func<Task> _afterExecuteAsync;
+        private readonly Func<ZeroCommandContext, bool> _beforeExecute;
+        private readonly Func<ZeroCommandContext, Task<bool>> _beforeExecuteAsync;
+        private readonly Action<ZeroCommandContext> _afterExecute;
+        private readonly Func<ZeroCommandContext, Task> _afterExecuteAsync;
         private readonly Action _action;
         private readonly Func<Task> _asyncAction;
         private readonly bool _swallowException;
         private readonly Action<Exception> _onError;
         private readonly Func<Exception, Task> _onErrorAsync;
 
-        private readonly Dictionary<string, object> _context = new Dictionary<string, object>();
+        private readonly ZeroCommandContext _context = new ZeroCommandContext();
 
         internal ZeroCommand(INotifyPropertyChanged viewmodel, Action action, Func<Task> asyncAction,
             Func<bool> canExecute, Action<Exception> onError, Func<Exception, Task> onErrorAsync, bool swallowException,
-            IEnumerable<string> trackedProperties, Func<bool> beforeExecute, Func<Task<bool>> beforeExecuteAsync,
-            Action afterExecute, Func<Task> afterExecuteAsync)
+            IEnumerable<string> trackedProperties, Func<ZeroCommandContext, bool> beforeExecute, Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
+            Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync)
         {
             this._action = action;
             this._asyncAction = asyncAction;
@@ -103,9 +102,9 @@ namespace Xam.Zero.Classes
                 if (beforeRunEvaluation)
                 {
                     if (this._afterExecuteAsync != null)
-                        await this._afterExecuteAsync?.Invoke();
+                        await this._afterExecuteAsync?.Invoke(this._context);
 
-                    this._afterExecute?.Invoke();
+                    this._afterExecute?.Invoke(this._context);
                 }
             }
         }
@@ -118,221 +117,14 @@ namespace Xam.Zero.Classes
         {
             var beforeRun = true;
             if (this._beforeExecuteAsync != null)
-                beforeRun = await this._beforeExecuteAsync.Invoke();
+                beforeRun = await this._beforeExecuteAsync.Invoke(this._context);
 
             if (this._beforeExecute != null)
-                beforeRun = this._beforeExecute.Invoke();
+                beforeRun = this._beforeExecute.Invoke(this._context);
 
             return beforeRun;
         }
 
         public event EventHandler CanExecuteChanged;
-    }
-
-    public class ZeroCommandBuilder
-    {
-        private readonly INotifyPropertyChanged _viewmodel;
-        private IEnumerable<string> _trackedProperties;
-        private bool _swallowException;
-        private Action<Exception> _onError;
-        private Func<Exception, Task> _onErrorAsync;
-        private Func<bool> _canExecute;
-        private Action _action;
-        private Func<Task> _actionAsync;
-        private Func<bool> _beforeExecute;
-        private Func<Task<bool>> _beforeExecuteAsync;
-        private Action _afterExecute;
-        private Func<Task> _afterExecuteAsync;
-
-        internal ZeroCommandBuilder(INotifyPropertyChanged viewmodel)
-        {
-            this._viewmodel = viewmodel;
-        }
-
-        /// <summary>
-        /// Add can execute expression
-        /// This expression is used for evalauation of canexecute and
-        /// for tracking raise canexecute dependencies 
-        /// </summary>
-        /// <param name="canExcecuteExpression"></param>
-        /// <returns></returns>
-        public ZeroCommandBuilder WithCanExecute(Expression<Func<bool>> canExcecuteExpression)
-        {
-            this._canExecute = canExcecuteExpression.Compile();
-            this._trackedProperties = this.GetTrackProperties(canExcecuteExpression.Body, this._viewmodel.GetType());
-            return this;
-        }
-
-
-        /// <summary>
-        /// Retrieve track properties that exist on tracked object
-        /// </summary>
-        /// <param name="canExcecuteExpression"></param>
-        /// <param name="trackedType"></param>
-        /// <returns></returns>
-        private IEnumerable<string> GetTrackProperties(Expression canExcecuteExpression, Type trackedType)
-        {
-            var allProperties = new List<string>();
-
-            switch (canExcecuteExpression)
-            {
-                case MemberExpression memberExpression:
-                {
-                    if (memberExpression.Member.DeclaringType == trackedType)
-                        allProperties.Add(memberExpression.Member.Name);
-                    break;
-                }
-                case BinaryExpression binaryExpression:
-                    allProperties.AddRange(this.GetTrackProperties(binaryExpression.Left, trackedType));
-                    allProperties.AddRange(this.GetTrackProperties(binaryExpression.Right, trackedType));
-                    break;
-                case MethodCallExpression methodCallExpression:
-                    foreach (var expression in methodCallExpression.Arguments)
-                    {
-                        allProperties.AddRange(this.GetTrackProperties(expression, trackedType));
-                    }
-
-                    break;
-                case UnaryExpression unaryExpression:
-                    allProperties.AddRange(this.GetTrackProperties(unaryExpression.Operand, trackedType));
-                    break;
-            }
-
-            return allProperties.Distinct();
-        }
-
-
-        /// <summary>
-        /// Do not throw exception on execute
-        /// </summary>
-        /// <returns></returns>
-        public ZeroCommandBuilder WithSwallowException()
-        {
-            this._swallowException = true;
-            return this;
-        }
-
-        /// <summary>
-        /// Catch execution error
-        /// </summary>
-        /// <param name="onError"></param>
-        /// <returns></returns>
-        public ZeroCommandBuilder WithErrorHandler(Action<Exception> onError)
-        {
-            if (this._onErrorAsync != null || this._onError != null)
-                throw new Exception("On error action already added!");
-
-            this._onError = onError;
-            return this;
-        }
-
-        /// <summary>
-        /// Catch execution error
-        /// </summary>
-        /// <param name="onErrorTask"></param>
-        /// <returns></returns>
-        public ZeroCommandBuilder WithErrorHandler(Func<Exception, Task> onErrorTask)
-        {
-            if (this._onErrorAsync != null || this._onError != null)
-                throw new Exception("On error action already added!");
-
-            this._onErrorAsync = onErrorTask;
-            return this;
-        }
-
-        /// <summary>
-        /// Add Execute for Action
-        /// </summary>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public ZeroCommandBuilder WithExecute(Action action)
-        {
-            if (this._action != null || this._actionAsync != null)
-                throw new Exception("Execute action already added!");
-
-            this._action = action;
-            return this;
-        }
-
-        /// <summary>
-        /// Add Execute for Task
-        /// </summary>
-        /// <param name="taskAction"></param>
-        /// <returns></returns>
-        public ZeroCommandBuilder WithExecute(Func<Task> taskAction)
-        {
-            if (this._action != null || this._actionAsync != null)
-                throw new Exception("Execute action already added!");
-
-            this._actionAsync = taskAction;
-            return this;
-        }
-
-        /// <summary>
-        /// Add action before execute
-        /// </summary>
-        /// <param name="beforeExecute"></param>
-        /// <returns>If return false stop the execution</returns>
-        public ZeroCommandBuilder WithBeforeExecute(Func<bool> beforeExecute)
-        {
-            if (this._beforeExecute != null || this._beforeExecuteAsync != null)
-                throw new Exception("Before Execute action already added!");
-
-            this._beforeExecute = beforeExecute;
-            return this;
-        }
-
-        /// <summary>
-        /// Add action before execute
-        /// </summary>
-        /// <param name="beforeExecuteAsync"></param>
-        /// <returns></returns>
-        public ZeroCommandBuilder WithBeforeExecute(Func<Task<bool>> beforeExecuteAsync)
-        {
-            if (this._beforeExecute != null || this._beforeExecuteAsync != null)
-                throw new Exception("Before Execute action already added!");
-
-            this._beforeExecuteAsync = beforeExecuteAsync;
-            return this;
-        }
-
-        /// <summary>
-        /// Add action after execute (runned in finally scope)
-        /// </summary>
-        /// <param name="afterExecute"></param>
-        /// <returns></returns>
-        public ZeroCommandBuilder WithAfterExecute(Action afterExecute)
-        {
-            if (this._afterExecute != null || this._afterExecuteAsync != null)
-                throw new Exception("Before Execute action already added!");
-
-            this._afterExecute = afterExecute;
-            return this;
-        }
-
-        /// <summary>
-        /// Add action after execute (runned in finally scope)
-        /// </summary>
-        /// <param name="afterExecuteAsync"></param>
-        /// <returns></returns>
-        public ZeroCommandBuilder WithAfterExecute(Func<Task<bool>> afterExecuteAsync)
-        {
-            if (this._afterExecute != null || this._afterExecuteAsync != null)
-                throw new Exception("Before Execute action already added!");
-
-            this._afterExecuteAsync = afterExecuteAsync;
-            return this;
-        }
-
-        /// <summary>
-        /// Create a new ZeroCommand instance
-        /// </summary>
-        /// <returns></returns>
-        public ZeroCommand Build()
-        {
-            return new ZeroCommand(this._viewmodel, this._action, this._actionAsync, this._canExecute, this._onError,
-                this._onErrorAsync, this._swallowException, this._trackedProperties, this._beforeExecute,
-                this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync);
-        }
     }
 }

@@ -28,12 +28,16 @@
                 Command="{Binding TestSwallowErrorCommand}"/>
                 
             <Button
-                Text="Exception command"
-                Command="{Binding TestErrorCommand}"/>
-            
-            <Button
                 Text="Before run evaluation command"
                 Command="{Binding BeforeRunEvaluationCommadn}"/>
+            
+            <Button
+                Text="Context evaluation command"
+                Command="{Binding ContextEvaluationCommand}"/>
+            
+            <Button
+                Text="Destroy Exception command"
+                Command="{Binding TestErrorCommand}"/>
           
         </StackLayout>
     </ContentPage.Content>

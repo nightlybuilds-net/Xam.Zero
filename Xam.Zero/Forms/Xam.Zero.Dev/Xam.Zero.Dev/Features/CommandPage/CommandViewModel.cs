@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
         public ICommand TestSwallowErrorCommand { get; set; }
         public ICommand TestErrorCommand { get; set; }
         public ICommand BeforeRunEvaluationCommadn { get; set; }
+        public ICommand ContextEvaluationCommand { get; set; }
 
         public string Surname
         {
@@ -83,9 +85,33 @@ namespace Xam.Zero.Dev.Features.CommandPage
             this.BeforeRunEvaluationCommadn = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute(this.InnerEvaluateCanRun)
-                .WithBeforeExecute(() => base.DisplayAlert("Before Run Question","Can i run?","yes","no"))
-                .WithAfterExecute(() => base.DisplayAlert("I'm running after a execution","I'll not run if evaluation fail!","ok"))
+                .WithBeforeExecute(context => base.DisplayAlert("Before Run Question","Can i run?","yes","no"))
+                .WithAfterExecute(context => base.DisplayAlert("I'm running after a execution","I'll not run if evaluation fail!","ok"))
                 .Build();
+            
+            this.ContextEvaluationCommand = ZeroCommand.On(this)
+                .WithCanExecute(this.InnerExpression())
+                .WithExecute(this.InnerShowMessageAction)
+                .WithBeforeExecute(context =>
+                {
+                    var stopWatch = new Stopwatch();
+                    context.Add(stopWatch);
+                    stopWatch.Start();
+                    return true;
+                })
+                .WithAfterExecute(async context =>
+                {
+                    var stopWatch = context.Get<Stopwatch>();
+                    stopWatch.Stop();
+                    await this.DisplayAlert("Evaluation", $"Executed in {stopWatch.ElapsedMilliseconds} ms", "OK");
+                    stopWatch.Reset();
+                })
+                .Build();
+        }
+
+        private Task InnerEvaluateContext(ZeroCommandContext context)
+        {
+            
         }
 
         private async Task InnerShowMessageAction()
