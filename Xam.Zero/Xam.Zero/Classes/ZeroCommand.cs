@@ -10,7 +10,6 @@ namespace Xam.Zero.Classes
 {
     public class ZeroCommand : ICommand
     {
-        private readonly INotifyPropertyChanged _viewmodel;
         private readonly Func<bool> _canExecute;
         private readonly IEnumerable<string> _trackedProperties;
         private readonly Func<bool> _beforeExecute;
@@ -23,12 +22,13 @@ namespace Xam.Zero.Classes
         private readonly Action<Exception> _onError;
         private readonly Func<Exception, Task> _onErrorAsync;
 
+        private readonly Dictionary<string, object> _context = new Dictionary<string, object>();
+
         internal ZeroCommand(INotifyPropertyChanged viewmodel, Action action, Func<Task> asyncAction,
             Func<bool> canExecute, Action<Exception> onError, Func<Exception, Task> onErrorAsync, bool swallowException,
             IEnumerable<string> trackedProperties, Func<bool> beforeExecute, Func<Task<bool>> beforeExecuteAsync,
             Action afterExecute, Func<Task> afterExecuteAsync)
         {
-            this._viewmodel = viewmodel;
             this._action = action;
             this._asyncAction = asyncAction;
             this._canExecute = canExecute;
@@ -42,6 +42,16 @@ namespace Xam.Zero.Classes
             this._afterExecuteAsync = afterExecuteAsync;
             viewmodel.PropertyChanged +=
                 new WeakEventHandler<PropertyChangedEventArgs>(this.InnerEvaluateCanExcecute).Handler;
+        }
+
+        /// <summary>
+        /// Start creation of a ZeroCommand
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        public static ZeroCommandBuilder On(INotifyPropertyChanged viewModel)
+        {
+            return new ZeroCommandBuilder(viewModel);
         }
 
         private void InnerEvaluateCanExcecute(object sender, PropertyChangedEventArgs e)
@@ -134,19 +144,9 @@ namespace Xam.Zero.Classes
         private Action _afterExecute;
         private Func<Task> _afterExecuteAsync;
 
-        private ZeroCommandBuilder(INotifyPropertyChanged viewmodel)
+        internal ZeroCommandBuilder(INotifyPropertyChanged viewmodel)
         {
             this._viewmodel = viewmodel;
-        }
-
-        /// <summary>
-        /// Start Builder
-        /// </summary>
-        /// <param name="viewmodel"></param>
-        /// <returns></returns>
-        public static ZeroCommandBuilder On(INotifyPropertyChanged viewmodel)
-        {
-            return new ZeroCommandBuilder(viewmodel);
         }
 
         /// <summary>

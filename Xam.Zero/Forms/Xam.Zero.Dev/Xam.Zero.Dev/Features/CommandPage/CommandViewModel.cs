@@ -62,25 +62,25 @@ namespace Xam.Zero.Dev.Features.CommandPage
 
         public CommandViewModel()
         {
-            this.TestSuccessCommand = ZeroCommandBuilder.On(this)
+            this.TestSuccessCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute(this.InnerShowMessageAction)
                 .Build();
             
-            this.TestSwallowErrorCommand = ZeroCommandBuilder.On(this)
+            this.TestSwallowErrorCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute(this.InnerManageErrorWithSwallow)
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .WithSwallowException()
                 .Build();
             
-            this.TestErrorCommand = ZeroCommandBuilder.On(this)
+            this.TestErrorCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute(this.InnerManageErrorWithoutSwallow)
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .Build();
             
-            this.BeforeRunEvaluationCommadn = ZeroCommandBuilder.On(this)
+            this.BeforeRunEvaluationCommadn = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute(this.InnerEvaluateCanRun)
                 .WithBeforeExecute(() => base.DisplayAlert("Before Run Question","Can i run?","yes","no"))
