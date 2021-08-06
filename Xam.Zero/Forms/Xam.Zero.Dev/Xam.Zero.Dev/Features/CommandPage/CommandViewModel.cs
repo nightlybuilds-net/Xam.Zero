@@ -66,32 +66,32 @@ namespace Xam.Zero.Dev.Features.CommandPage
         {
             this.TestSuccessCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(this.InnerShowMessageAction)
+                .WithExecute(context => this.InnerShowMessageAction())
                 .Build();
             
             this.TestSwallowErrorCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(this.InnerManageErrorWithSwallow)
+                .WithExecute(context => this.InnerManageErrorWithSwallow())
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .WithSwallowException()
                 .Build();
             
             this.TestErrorCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(this.InnerManageErrorWithoutSwallow)
+                .WithExecute(context => this.InnerManageErrorWithoutSwallow())
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .Build();
             
             this.BeforeRunEvaluationCommadn = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(this.InnerEvaluateCanRun)
+                .WithExecute(context => this.InnerEvaluateCanRun())
                 .WithBeforeExecute(context => base.DisplayAlert("Before Run Question","Can i run?","yes","no"))
                 .WithAfterExecute(context => base.DisplayAlert("I'm running after a execution","I'll not run if evaluation fail!","ok"))
                 .Build();
             
             this.ContextEvaluationCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(this.InnerShowMessageAction)
+                .WithExecute(context => this.InnerShowMessageAction())
                 .WithBeforeExecute(context =>
                 {
                     var stopWatch = new Stopwatch();
@@ -109,10 +109,6 @@ namespace Xam.Zero.Dev.Features.CommandPage
                 .Build();
         }
 
-        private Task InnerEvaluateContext(ZeroCommandContext context)
-        {
-            
-        }
 
         private async Task InnerShowMessageAction()
         {
