@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -22,11 +23,15 @@ namespace Xam.Zero.Classes
         private readonly Func<Exception, Task> _onErrorAsync;
 
         private readonly ZeroCommandContext _context = new ZeroCommandContext();
+        private readonly SemaphoreSlim _concurrentSemaphore;
 
-        internal ZeroCommand(INotifyPropertyChanged viewmodel, Action<ZeroCommandContext> action, Func<ZeroCommandContext, Task> asyncAction,
+        internal ZeroCommand(INotifyPropertyChanged viewmodel, Action<ZeroCommandContext> action,
+            Func<ZeroCommandContext, Task> asyncAction,
             Func<bool> canExecute, Action<Exception> onError, Func<Exception, Task> onErrorAsync, bool swallowException,
-            IEnumerable<string> trackedProperties, Func<ZeroCommandContext, bool> beforeExecute, Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
-            Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync)
+            IEnumerable<string> trackedProperties, Func<ZeroCommandContext, bool> beforeExecute,
+            Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
+            Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync,
+            int concurrentExecution)
         {
             this._action = action;
             this._asyncAction = asyncAction;
@@ -39,6 +44,7 @@ namespace Xam.Zero.Classes
             this._beforeExecuteAsync = beforeExecuteAsync;
             this._afterExecute = afterExecute;
             this._afterExecuteAsync = afterExecuteAsync;
+            this._concurrentSemaphore = new SemaphoreSlim(concurrentExecution);
             viewmodel.PropertyChanged +=
                 new WeakEventHandler<PropertyChangedEventArgs>(this.InnerEvaluateCanExcecute).Handler;
         }
@@ -75,6 +81,8 @@ namespace Xam.Zero.Classes
 
         public async void Execute(object parameter)
         {
+            await this._concurrentSemaphore.WaitAsync();
+            
             var beforeRunEvaluation = true;
             try
             {
@@ -106,6 +114,8 @@ namespace Xam.Zero.Classes
 
                     this._afterExecute?.Invoke(this._context);
                 }
+
+                this._concurrentSemaphore.Release();
             }
         }
 

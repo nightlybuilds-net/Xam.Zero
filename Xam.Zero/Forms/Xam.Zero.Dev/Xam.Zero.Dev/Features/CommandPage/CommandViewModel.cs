@@ -19,6 +19,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
         public ICommand TestErrorCommand { get; set; }
         public ICommand BeforeRunEvaluationCommadn { get; set; }
         public ICommand ContextEvaluationCommand { get; set; }
+        public ICommand OneByOneCommand { get; set; }
 
         public string Surname
         {
@@ -105,6 +106,21 @@ namespace Xam.Zero.Dev.Features.CommandPage
                     stopWatch.Stop();
                     await this.DisplayAlert("Evaluation", $"Executed in {stopWatch.ElapsedMilliseconds} ms", "OK");
                     stopWatch.Reset();
+                })
+                .Build();
+
+            this.OneByOneCommand = ZeroCommand.On(this)
+                .WithBeforeExecute(context =>
+                {
+                    var executionCount = context.Get<int>(0);
+                    executionCount += 1;
+                    context.Add<int>(executionCount);
+                    return true;
+                })
+                .WithExecute(async context =>
+                {
+                    await Task.Delay(1000);
+                    await this.DisplayAlert("Execution", $"Execution number {context.Get<int>()} times", "OK");
                 })
                 .Build();
         }

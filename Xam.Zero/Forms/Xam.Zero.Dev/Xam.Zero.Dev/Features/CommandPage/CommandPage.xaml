@@ -36,6 +36,10 @@
                 Command="{Binding ContextEvaluationCommand}"/>
             
             <Button
+                Text="Tap me quickly!!"
+                Command="{Binding OneByOneCommand}"/>
+            
+            <Button
                 Text="Destroy Exception command"
                 Command="{Binding TestErrorCommand}"/>
           

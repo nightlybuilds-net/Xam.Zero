@@ -106,10 +106,14 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Get<T>()
+        public T Get<T>(T defaultValue = default)
         {
             var key = typeof(T).FullName;
-            return (T)this._innerObjects[key ?? throw new InvalidOperationException("Key cannot be null")];
+            if (key == null)
+                throw new InvalidOperationException("Key cannot be null");
+            if (!this._innerObjects.ContainsKey(key))
+                return defaultValue;
+            return (T)this._innerObjects[key];
         }
 
         /// <summary>
@@ -120,6 +124,16 @@ namespace Xam.Zero.Classes
         {
             this._innerObjects.Values.OfType<IDisposable>().ForEach(f=>f.Dispose());
             this._innerObjects.Clear();
+        }
+
+        /// <summary>
+        /// True if context containe given key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool Contains(string key)
+        {
+            return this._innerObjects.ContainsKey(key);
         }
 
         /// <summary>

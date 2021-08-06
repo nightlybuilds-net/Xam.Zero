@@ -21,10 +21,12 @@ namespace Xam.Zero.Classes
         private Func<ZeroCommandContext, Task<bool>> _beforeExecuteAsync;
         private Action<ZeroCommandContext> _afterExecute;
         private Func<ZeroCommandContext, Task> _afterExecuteAsync;
+        private int _concurrentExecution;
 
         internal ZeroCommandBuilder(INotifyPropertyChanged viewmodel)
         {
             this._viewmodel = viewmodel;
+            this._concurrentExecution = 1;
         }
 
         /// <summary>
@@ -77,6 +79,19 @@ namespace Xam.Zero.Classes
             }
 
             return allProperties.Distinct();
+        }
+
+        
+        /// <summary>
+        /// How many concurrent execution are supported.
+        /// Default is 1
+        /// </summary>
+        /// <param name="concurrentExecution"></param>
+        /// <returns></returns>
+        public ZeroCommandBuilder WithConcurrencyExecutionCount(int concurrentExecution)
+        {
+            this._concurrentExecution = concurrentExecution;
+            return this;
         }
 
 
@@ -213,7 +228,7 @@ namespace Xam.Zero.Classes
         {
             return new ZeroCommand(this._viewmodel, this._action, this._actionAsync, this._canExecute, this._onError,
                 this._onErrorAsync, this._swallowException, this._trackedProperties, this._beforeExecute,
-                this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync);
+                this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync, this._concurrentExecution);
         }
     }
 }
