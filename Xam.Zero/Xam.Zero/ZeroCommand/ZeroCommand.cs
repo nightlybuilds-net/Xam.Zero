@@ -5,8 +5,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xam.Zero.Classes;
 
-namespace Xam.Zero.Classes
+namespace Xam.Zero.ZeroCommand
 {
     public class ZeroCommand : ZeroCommand<object>
     {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xam.Zero.Classes;
 using Xam.Zero.ViewModels;
+using Xam.Zero.ZeroCommand;
 
 namespace Xam.Zero.Dev.Features.CommandPage
 {
@@ -67,32 +68,32 @@ namespace Xam.Zero.Dev.Features.CommandPage
 
         public CommandViewModel()
         {
-            this.TestSuccessCommand = ZeroCommand.On(this)
+            this.TestSuccessCommand = ZeroCommand.ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute((commandParam, context) => this.InnerShowMessageAction())
                 .Build();
             
-            this.TestSwallowErrorCommand = ZeroCommand.On(this)
+            this.TestSwallowErrorCommand = ZeroCommand.ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute((commandParam,context) => this.InnerManageErrorWithSwallow())
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .WithSwallowException()
                 .Build();
             
-            this.TestErrorCommand = ZeroCommand.On(this)
+            this.TestErrorCommand = ZeroCommand.ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute((commandParam,context)  => this.InnerManageErrorWithoutSwallow())
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .Build();
             
-            this.BeforeRunEvaluationCommadn = ZeroCommand.On(this)
+            this.BeforeRunEvaluationCommadn = ZeroCommand.ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute((commandParam,context)  => this.InnerEvaluateCanRun())
                 .WithBeforeExecute(context => base.DisplayAlert("Before Run Question","Can i run?","yes","no"))
                 .WithAfterExecute(context => base.DisplayAlert("I'm running after a execution","I'll not run if evaluation fail!","ok"))
                 .Build();
             
-            this.ContextEvaluationCommand = ZeroCommand.On(this)
+            this.ContextEvaluationCommand = ZeroCommand.ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute((commandParam,context)  => this.InnerShowMessageAction())
                 .WithBeforeExecute(context =>
@@ -111,7 +112,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
                 })
                 .Build();
 
-            this.OneByOneCommand = ZeroCommand.On(this)
+            this.OneByOneCommand = ZeroCommand.ZeroCommand.On(this)
                 .WithBeforeExecute(context =>
                 {
                     var executionCount = context.Get<int>(0);
@@ -126,7 +127,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
                 })
                 .Build();
 
-            this.AutoInvalidateCommand = ZeroCommand.On(this)
+            this.AutoInvalidateCommand = ZeroCommand.ZeroCommand.On(this)
                 .AutoInvalidateWhenExecuting()
                 .WithExecute(async (o, context) =>
                 {
