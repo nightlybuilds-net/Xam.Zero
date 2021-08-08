@@ -36,6 +36,7 @@ namespace Xam.Zero.Dev.Features.Home
         }
 
         public ICommand NavigateCommand { get; set; }
+        public ICommand NavigatToTestCommandPage { get; set; }
         public ICommand GoToTabbedCommand { get; set; }
         public ICommand AlertCommand { get; set; }
         public ICommand PromptCommand { get; set; }
@@ -54,7 +55,7 @@ namespace Xam.Zero.Dev.Features.Home
             {
                 this._shellService.SwitchContainer<TabbedShell>();
             });
-            
+            this.NavigatToTestCommandPage = new Command(async () => await this.Push<CommandPage.CommandPage>());
             this.AlertCommand = new Command(() => { this.DisplayAlert("Prova", "Dai che fungi", "ok"); });
             this.PromptCommand = new Command(async () => { this._promptText = await this.DisplayPrompt("Prova", "Scrivi una mail", accept: "ok", keyboard: Keyboard.Email); });
             
