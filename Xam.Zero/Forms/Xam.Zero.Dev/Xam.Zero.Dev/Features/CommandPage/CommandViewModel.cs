@@ -20,6 +20,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
         public ICommand BeforeRunEvaluationCommadn { get; set; }
         public ICommand ContextEvaluationCommand { get; set; }
         public ICommand OneByOneCommand { get; set; }
+        public ICommand AutoInvalidateCommand { get; set; }
 
         public string Surname
         {
@@ -123,6 +124,14 @@ namespace Xam.Zero.Dev.Features.CommandPage
                     await this.DisplayAlert("Execution", $"Execution number {context.Get<int>()} times", "OK");
                 })
                 .Build();
+
+            this.AutoInvalidateCommand = ZeroCommand.On(this)
+                .AutoInvalidateWhenExecuting()
+                .WithExecute(async (o, context) =>
+                {
+                    await Task.Delay(1000);
+                    await base.DisplayAlert("Auto invalidate", "Now button should be disabled!", "ok");
+                }).Build();
         }
 
 

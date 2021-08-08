@@ -22,6 +22,7 @@ namespace Xam.Zero.Classes
         private Action<ZeroCommandContext> _afterExecute;
         private Func<ZeroCommandContext, Task> _afterExecuteAsync;
         private int _concurrentExecution;
+        private bool _autoCanExecute;
 
         internal ZeroCommandBuilder(INotifyPropertyChanged viewmodel)
         {
@@ -221,6 +222,16 @@ namespace Xam.Zero.Classes
         }
 
         /// <summary>
+        /// If AutoCanExecute is enabled command canexecute is false when is executing
+        /// </summary>
+        /// <returns></returns>
+        public ZeroCommandBuilder AutoInvalidateWhenExecuting()
+        {
+            this._autoCanExecute = true;
+            return this;
+        }
+
+        /// <summary>
         /// Create a new ZeroCommand instance
         /// </summary>
         /// <returns></returns>
@@ -228,7 +239,7 @@ namespace Xam.Zero.Classes
         {
             return new ZeroCommand(this._viewmodel, this._action, this._actionAsync, this._canExecute, this._onError,
                 this._onErrorAsync, this._swallowException, this._trackedProperties, this._beforeExecute,
-                this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync, this._concurrentExecution);
+                this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync, this._concurrentExecution, this._autoCanExecute);
         }
     }
 }

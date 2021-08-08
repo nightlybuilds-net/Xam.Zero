@@ -16,6 +16,7 @@ namespace Xam.Zero.Classes
         private readonly Func<ZeroCommandContext, Task<bool>> _beforeExecuteAsync;
         private readonly Action<ZeroCommandContext> _afterExecute;
         private readonly Func<ZeroCommandContext, Task> _afterExecuteAsync;
+        private readonly bool _autoCanExecute;
         private readonly Action<object, ZeroCommandContext> _action;
         private readonly Func<object, ZeroCommandContext, Task> _asyncAction;
         private readonly bool _swallowException;
@@ -24,6 +25,7 @@ namespace Xam.Zero.Classes
 
         private readonly ZeroCommandContext _context = new ZeroCommandContext();
         private readonly SemaphoreSlim _concurrentSemaphore;
+        private bool _running;
 
         internal ZeroCommand(INotifyPropertyChanged viewmodel, Action<object, ZeroCommandContext> action,
             Func<object, ZeroCommandContext, Task> asyncAction,
@@ -31,7 +33,7 @@ namespace Xam.Zero.Classes
             IEnumerable<string> trackedProperties, Func<ZeroCommandContext, bool> beforeExecute,
             Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
             Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync,
-            int concurrentExecution)
+            int concurrentExecution, bool autoCanExecute)
         {
             this._action = action;
             this._asyncAction = asyncAction;
@@ -44,6 +46,7 @@ namespace Xam.Zero.Classes
             this._beforeExecuteAsync = beforeExecuteAsync;
             this._afterExecute = afterExecute;
             this._afterExecuteAsync = afterExecuteAsync;
+            this._autoCanExecute = autoCanExecute;
             this._concurrentSemaphore = new SemaphoreSlim(concurrentExecution);
             viewmodel.PropertyChanged +=
                 new WeakEventHandler<PropertyChangedEventArgs>(this.InnerEvaluateCanExcecute).Handler;
@@ -76,11 +79,16 @@ namespace Xam.Zero.Classes
 
         public bool CanExecute(object parameter)
         {
+            if (this._autoCanExecute && this._running) return false;
+            
             return this._canExecute?.Invoke() ?? true;
         }
 
         public async void Execute(object parameter)
         {
+            this._running = true;
+            if(this._autoCanExecute) this.RaiseEvaluateCanExecute();
+            
             await this._concurrentSemaphore.WaitAsync();
             
             var beforeRunEvaluation = true;
@@ -116,6 +124,8 @@ namespace Xam.Zero.Classes
                 }
 
                 this._concurrentSemaphore.Release();
+                this._running = false;
+                if(this._autoCanExecute) this.RaiseEvaluateCanExecute();
             }
         }
 
