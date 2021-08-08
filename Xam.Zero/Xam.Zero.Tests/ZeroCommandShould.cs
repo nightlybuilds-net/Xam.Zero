@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Input;
 using NUnit.Framework;
 using Xam.Zero.Classes;
 using Xam.Zero.ViewModels;
@@ -29,12 +30,12 @@ namespace Xam.Zero.Tests
         public string SurName { get; set; }
         public bool CanPlay { get; set; }
 
-        public ZeroCommand ZeroCommand;
+        public ICommand TestCommand;
 
         public NotifyClass()
         {
             // this.ZeroCommand = ZeroCommand.On(this).WithCanExcecute(() => DateTime.Now.Hour > 10 || this.SurName == "Gino" && this._name == "bello");
-            this.ZeroCommand = ZeroCommand.On(this).WithCanExecute(() =>string.IsNullOrEmpty(this.Name)).Build();
+            this.TestCommand = ZeroCommand.On(this).WithCanExecute(() =>string.IsNullOrEmpty(this.Name)).Build();
         }
     }
 }

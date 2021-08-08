@@ -47,7 +47,10 @@
                 Text="Auto invalidate when executing"
                 Command="{Binding AutoInvalidateCommand}"/>
             
-           
+            
+            <Button
+                Text="Command with parameter"
+                Command="{Binding CommandWithParameter}" CommandParameter="3"/>
           
         </StackLayout>
     </ContentPage.Content>

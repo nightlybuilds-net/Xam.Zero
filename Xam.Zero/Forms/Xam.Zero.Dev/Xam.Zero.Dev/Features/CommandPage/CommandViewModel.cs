@@ -21,6 +21,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
         public ICommand ContextEvaluationCommand { get; set; }
         public ICommand OneByOneCommand { get; set; }
         public ICommand AutoInvalidateCommand { get; set; }
+        public ICommand CommandWithParameter { get; set; }
 
         public string Surname
         {
@@ -132,6 +133,14 @@ namespace Xam.Zero.Dev.Features.CommandPage
                     await Task.Delay(1000);
                     await base.DisplayAlert("Auto invalidate", "Now button should be disabled!", "ok");
                 }).Build();
+
+            this.CommandWithParameter = ZeroCommand<string>.On(this)
+                .WithCanExecute(this.InnerExpression())
+                .WithExecute(async (s, context) =>
+                {
+                    await base.DisplayAlert("Command parameter", $"Parameter is {s}", "ok");
+                })
+                .Build();
         }
 
 

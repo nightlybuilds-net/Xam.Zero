@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Xam.Zero.Classes
 {
-    public class ZeroCommandBuilder
+    public class ZeroCommandBuilder<T>
     {
         private readonly INotifyPropertyChanged _viewmodel;
         private IEnumerable<string> _trackedProperties;
@@ -15,8 +15,8 @@ namespace Xam.Zero.Classes
         private Action<Exception> _onError;
         private Func<Exception, Task> _onErrorAsync;
         private Func<bool> _canExecute;
-        private Action<object, ZeroCommandContext> _action;
-        private Func<object, ZeroCommandContext, Task> _actionAsync;
+        private Action<T, ZeroCommandContext> _action;
+        private Func<T, ZeroCommandContext, Task> _actionAsync;
         private Func<ZeroCommandContext, bool> _beforeExecute;
         private Func<ZeroCommandContext, Task<bool>> _beforeExecuteAsync;
         private Action<ZeroCommandContext> _afterExecute;
@@ -37,7 +37,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="canExcecuteExpression"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder WithCanExecute(Expression<Func<bool>> canExcecuteExpression)
+        public ZeroCommandBuilder<T> WithCanExecute(Expression<Func<bool>> canExcecuteExpression)
         {
             this._canExecute = canExcecuteExpression.Compile();
             this._trackedProperties = this.GetTrackProperties(canExcecuteExpression.Body, this._viewmodel.GetType());
@@ -89,7 +89,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="concurrentExecution"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder WithConcurrencyExecutionCount(int concurrentExecution)
+        public ZeroCommandBuilder<T> WithConcurrencyExecutionCount(int concurrentExecution)
         {
             this._concurrentExecution = concurrentExecution;
             return this;
@@ -100,7 +100,7 @@ namespace Xam.Zero.Classes
         /// Do not throw exception on execute
         /// </summary>
         /// <returns></returns>
-        public ZeroCommandBuilder WithSwallowException()
+        public ZeroCommandBuilder<T> WithSwallowException()
         {
             this._swallowException = true;
             return this;
@@ -111,7 +111,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="onError"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder WithErrorHandler(Action<Exception> onError)
+        public ZeroCommandBuilder<T> WithErrorHandler(Action<Exception> onError)
         {
             if (this._onErrorAsync != null || this._onError != null)
                 throw new Exception("On error action already added!");
@@ -125,7 +125,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="onErrorTask"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder WithErrorHandler(Func<Exception, Task> onErrorTask)
+        public ZeroCommandBuilder<T> WithErrorHandler(Func<Exception, Task> onErrorTask)
         {
             if (this._onErrorAsync != null || this._onError != null)
                 throw new Exception("On error action already added!");
@@ -139,7 +139,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder WithExecute(Action<object,ZeroCommandContext> action)
+        public ZeroCommandBuilder<T> WithExecute(Action<T,ZeroCommandContext> action)
         {
             if (this._action != null || this._actionAsync != null)
                 throw new Exception("Execute action already added!");
@@ -153,7 +153,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="taskAction"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder WithExecute(Func<object,ZeroCommandContext,Task> taskAction)
+        public ZeroCommandBuilder<T> WithExecute(Func<T,ZeroCommandContext,Task> taskAction)
         {
             if (this._action != null || this._actionAsync != null)
                 throw new Exception("Execute action already added!");
@@ -169,7 +169,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="beforeExecute"></param>
         /// <returns>If return false stop the execution</returns>
-        public ZeroCommandBuilder WithBeforeExecute(Func<ZeroCommandContext ,bool> beforeExecute)
+        public ZeroCommandBuilder<T> WithBeforeExecute(Func<ZeroCommandContext ,bool> beforeExecute)
         {
             if (this._beforeExecute != null || this._beforeExecuteAsync != null)
                 throw new Exception("Before Execute action already added!");
@@ -183,7 +183,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="beforeExecuteAsync"></param>
         /// <returns>If return false stop the execution</returns>
-        public ZeroCommandBuilder WithBeforeExecute(Func<ZeroCommandContext ,Task<bool>> beforeExecuteAsync)
+        public ZeroCommandBuilder<T> WithBeforeExecute(Func<ZeroCommandContext ,Task<bool>> beforeExecuteAsync)
         {
             if (this._beforeExecute != null || this._beforeExecuteAsync != null)
                 throw new Exception("Before Execute action already added!");
@@ -198,7 +198,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="afterExecute"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder WithAfterExecute(Action<ZeroCommandContext> afterExecute)
+        public ZeroCommandBuilder<T> WithAfterExecute(Action<ZeroCommandContext> afterExecute)
         {
             if (this._afterExecute != null || this._afterExecuteAsync != null)
                 throw new Exception("Before Execute action already added!");
@@ -212,7 +212,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="afterExecuteAsync"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder WithAfterExecute(Func<ZeroCommandContext,Task> afterExecuteAsync)
+        public ZeroCommandBuilder<T> WithAfterExecute(Func<ZeroCommandContext,Task> afterExecuteAsync)
         {
             if (this._afterExecute != null || this._afterExecuteAsync != null)
                 throw new Exception("Before Execute action already added!");
@@ -225,7 +225,7 @@ namespace Xam.Zero.Classes
         /// If AutoCanExecute is enabled command canexecute is false when is executing
         /// </summary>
         /// <returns></returns>
-        public ZeroCommandBuilder AutoInvalidateWhenExecuting()
+        public ZeroCommandBuilder<T> AutoInvalidateWhenExecuting()
         {
             this._autoCanExecute = true;
             return this;
@@ -235,9 +235,9 @@ namespace Xam.Zero.Classes
         /// Create a new ZeroCommand instance
         /// </summary>
         /// <returns></returns>
-        public ZeroCommand Build()
+        public ZeroCommand<T> Build()
         {
-            return new ZeroCommand(this._viewmodel, this._action, this._actionAsync, this._canExecute, this._onError,
+            return new ZeroCommand<T>(this._viewmodel, this._action, this._actionAsync, this._canExecute, this._onError,
                 this._onErrorAsync, this._swallowException, this._trackedProperties, this._beforeExecute,
                 this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync, this._concurrentExecution, this._autoCanExecute);
         }

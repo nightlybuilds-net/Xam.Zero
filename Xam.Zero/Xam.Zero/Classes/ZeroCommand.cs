@@ -8,7 +8,21 @@ using System.Windows.Input;
 
 namespace Xam.Zero.Classes
 {
-    public class ZeroCommand : ICommand
+    public class ZeroCommand : ZeroCommand<object>
+    {
+        internal ZeroCommand(INotifyPropertyChanged viewmodel, Action<object, ZeroCommandContext> action,
+            Func<object, ZeroCommandContext, Task> asyncAction, Func<bool> canExecute, Action<Exception> onError,
+            Func<Exception, Task> onErrorAsync, bool swallowException, IEnumerable<string> trackedProperties,
+            Func<ZeroCommandContext, bool> beforeExecute, Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
+            Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync,
+            int concurrentExecution, bool autoCanExecute) : base(viewmodel, action, asyncAction, canExecute, onError,
+            onErrorAsync, swallowException, trackedProperties, beforeExecute, beforeExecuteAsync, afterExecute,
+            afterExecuteAsync, concurrentExecution, autoCanExecute)
+        {
+        }
+    }
+
+    public class ZeroCommand<T> : ICommand
     {
         private readonly Func<bool> _canExecute;
         private readonly IEnumerable<string> _trackedProperties;
@@ -17,8 +31,8 @@ namespace Xam.Zero.Classes
         private readonly Action<ZeroCommandContext> _afterExecute;
         private readonly Func<ZeroCommandContext, Task> _afterExecuteAsync;
         private readonly bool _autoCanExecute;
-        private readonly Action<object, ZeroCommandContext> _action;
-        private readonly Func<object, ZeroCommandContext, Task> _asyncAction;
+        private readonly Action<T, ZeroCommandContext> _action;
+        private readonly Func<T, ZeroCommandContext, Task> _asyncAction;
         private readonly bool _swallowException;
         private readonly Action<Exception> _onError;
         private readonly Func<Exception, Task> _onErrorAsync;
@@ -27,8 +41,8 @@ namespace Xam.Zero.Classes
         private readonly SemaphoreSlim _concurrentSemaphore;
         private bool _running;
 
-        internal ZeroCommand(INotifyPropertyChanged viewmodel, Action<object, ZeroCommandContext> action,
-            Func<object, ZeroCommandContext, Task> asyncAction,
+        internal ZeroCommand(INotifyPropertyChanged viewmodel, Action<T, ZeroCommandContext> action,
+            Func<T, ZeroCommandContext, Task> asyncAction,
             Func<bool> canExecute, Action<Exception> onError, Func<Exception, Task> onErrorAsync, bool swallowException,
             IEnumerable<string> trackedProperties, Func<ZeroCommandContext, bool> beforeExecute,
             Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
@@ -57,9 +71,9 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="viewModel"></param>
         /// <returns></returns>
-        public static ZeroCommandBuilder On(INotifyPropertyChanged viewModel)
+        public static ZeroCommandBuilder<T> On(INotifyPropertyChanged viewModel)
         {
-            return new ZeroCommandBuilder(viewModel);
+            return new ZeroCommandBuilder<T>(viewModel);
         }
 
         private void InnerEvaluateCanExcecute(object sender, PropertyChangedEventArgs e)
@@ -80,28 +94,28 @@ namespace Xam.Zero.Classes
         public bool CanExecute(object parameter)
         {
             if (this._autoCanExecute && this._running) return false;
-            
+
             return this._canExecute?.Invoke() ?? true;
         }
 
         public async void Execute(object parameter)
         {
             this._running = true;
-            if(this._autoCanExecute) this.RaiseEvaluateCanExecute();
-            
+            if (this._autoCanExecute) this.RaiseEvaluateCanExecute();
+
             await this._concurrentSemaphore.WaitAsync();
-            
+
             var beforeRunEvaluation = true;
             try
             {
                 beforeRunEvaluation = await this.EvaluateBeforeRun();
-                if(!beforeRunEvaluation)
+                if (!beforeRunEvaluation)
                     return;
 
                 if (this._asyncAction != null)
-                    await this._asyncAction.Invoke(parameter,this._context);
+                    await this._asyncAction.Invoke((T)parameter, this._context);
 
-                this._action?.Invoke(parameter,this._context);
+                this._action?.Invoke((T)parameter, this._context);
             }
             catch (Exception e)
             {
@@ -125,7 +139,7 @@ namespace Xam.Zero.Classes
 
                 this._concurrentSemaphore.Release();
                 this._running = false;
-                if(this._autoCanExecute) this.RaiseEvaluateCanExecute();
+                if (this._autoCanExecute) this.RaiseEvaluateCanExecute();
             }
         }
 
