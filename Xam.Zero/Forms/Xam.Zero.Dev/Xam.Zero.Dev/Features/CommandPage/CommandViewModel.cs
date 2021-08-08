@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xam.Zero.Classes;
 using Xam.Zero.ViewModels;
-using Xam.Zero.ZeroCommand;
+using Xam.Zero.ZCommand;
+
 
 namespace Xam.Zero.Dev.Features.CommandPage
 {
@@ -23,6 +24,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
         public ICommand OneByOneCommand { get; set; }
         public ICommand AutoInvalidateCommand { get; set; }
         public ICommand CommandWithParameter { get; set; }
+        public ICommand CommandWithValidation { get; set; }
 
         public string Surname
         {
@@ -68,32 +70,32 @@ namespace Xam.Zero.Dev.Features.CommandPage
 
         public CommandViewModel()
         {
-            this.TestSuccessCommand = ZeroCommand.ZeroCommand.On(this)
+            this.TestSuccessCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute((commandParam, context) => this.InnerShowMessageAction())
                 .Build();
             
-            this.TestSwallowErrorCommand = ZeroCommand.ZeroCommand.On(this)
+            this.TestSwallowErrorCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute((commandParam,context) => this.InnerManageErrorWithSwallow())
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .WithSwallowException()
                 .Build();
             
-            this.TestErrorCommand = ZeroCommand.ZeroCommand.On(this)
+            this.TestErrorCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute((commandParam,context)  => this.InnerManageErrorWithoutSwallow())
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .Build();
             
-            this.BeforeRunEvaluationCommadn = ZeroCommand.ZeroCommand.On(this)
+            this.BeforeRunEvaluationCommadn = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute((commandParam,context)  => this.InnerEvaluateCanRun())
                 .WithBeforeExecute(context => base.DisplayAlert("Before Run Question","Can i run?","yes","no"))
                 .WithAfterExecute(context => base.DisplayAlert("I'm running after a execution","I'll not run if evaluation fail!","ok"))
                 .Build();
             
-            this.ContextEvaluationCommand = ZeroCommand.ZeroCommand.On(this)
+            this.ContextEvaluationCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
                 .WithExecute((commandParam,context)  => this.InnerShowMessageAction())
                 .WithBeforeExecute(context =>
@@ -112,7 +114,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
                 })
                 .Build();
 
-            this.OneByOneCommand = ZeroCommand.ZeroCommand.On(this)
+            this.OneByOneCommand = ZeroCommand.On(this)
                 .WithBeforeExecute(context =>
                 {
                     var executionCount = context.Get<int>(0);
@@ -127,7 +129,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
                 })
                 .Build();
 
-            this.AutoInvalidateCommand = ZeroCommand.ZeroCommand.On(this)
+            this.AutoInvalidateCommand = ZeroCommand.On(this)
                 .AutoInvalidateWhenExecuting()
                 .WithExecute(async (o, context) =>
                 {
@@ -140,6 +142,21 @@ namespace Xam.Zero.Dev.Features.CommandPage
                 .WithExecute(async (s, context) =>
                 {
                     await base.DisplayAlert("Command parameter", $"Parameter is {s}", "ok");
+                })
+                .Build();
+
+            this.CommandWithValidation = ZeroCommand.On(this)
+                .WithValidator(async context =>
+                {
+                    var canExecute = this.InnerExpression().Compile().Invoke();
+                    if(!canExecute)
+                        await base.DisplayAlert("Cannot execute", "Check the validation rulez!", "ok");
+
+                    return canExecute;
+                })
+                .WithExecute(async (o, context) =>
+                {
+                    await base.DisplayAlert("Yes!", "Validation has passed!", "ok");
                 })
                 .Build();
         }

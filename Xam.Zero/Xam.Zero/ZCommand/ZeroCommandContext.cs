@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms.Internals;
 
-namespace Xam.Zero.ZeroCommand
+namespace Xam.Zero.ZCommand
 {
     public enum ContextBehaviour
     {
@@ -149,4 +149,6 @@ namespace Xam.Zero.ZeroCommand
             this._innerObjects.Remove(key);
         }
     }
+
+    
 }

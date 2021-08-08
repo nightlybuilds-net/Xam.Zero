@@ -3,6 +3,7 @@ using System.Windows.Input;
 using NUnit.Framework;
 using Xam.Zero.Classes;
 using Xam.Zero.ViewModels;
+using Xam.Zero.ZCommand;
 
 namespace Xam.Zero.Tests
 {
@@ -35,7 +36,7 @@ namespace Xam.Zero.Tests
         public NotifyClass()
         {
             // this.ZeroCommand = ZeroCommand.On(this).WithCanExcecute(() => DateTime.Now.Hour > 10 || this.SurName == "Gino" && this._name == "bello");
-            this.TestCommand = ZeroCommand.ZeroCommand.On(this).WithCanExecute(() =>string.IsNullOrEmpty(this.Name)).Build();
+            this.TestCommand = ZeroCommand.On(this).WithCanExecute(() =>string.IsNullOrEmpty(this.Name)).Build();
         }
     }
 }

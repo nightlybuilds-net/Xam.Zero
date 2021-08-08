@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Xam.Zero.ZeroCommand
+namespace Xam.Zero.ZCommand
 {
     public class ZeroCommandBuilder<T>
     {
@@ -23,6 +23,8 @@ namespace Xam.Zero.ZeroCommand
         private Func<ZeroCommandContext, Task> _afterExecuteAsync;
         private int _concurrentExecution;
         private bool _autoCanExecute;
+        private Func<ZeroCommandContext, bool> _validate;
+        private Func<ZeroCommandContext, Task<bool>> _validateAsync;
 
         internal ZeroCommandBuilder(INotifyPropertyChanged viewmodel)
         {
@@ -41,6 +43,36 @@ namespace Xam.Zero.ZeroCommand
         {
             this._canExecute = canExcecuteExpression.Compile();
             this._trackedProperties = this.GetTrackProperties(canExcecuteExpression.Body, this._viewmodel.GetType());
+            return this;
+        }
+
+        /// <summary>
+        /// When a validator is created zerocommand will check this func before execute
+        /// Validator not affect on canexecute
+        /// </summary>
+        /// <param name="validate"></param>
+        /// <returns></returns>
+        public ZeroCommandBuilder<T> WithValidator(Func<ZeroCommandContext,bool> validate)
+        {
+            if (this._validate != null || this._validateAsync != null)
+                throw new Exception("Validate action already added!");
+
+            this._validate = validate;
+            return this;
+        }
+
+        /// <summary>
+        /// When a validator is created zerocommand will check this func before execute
+        /// Validator not affect on canexecute
+        /// </summary>
+        /// <param name="validate"></param>
+        /// <returns></returns>
+        public ZeroCommandBuilder<T> WithValidator(Func<ZeroCommandContext,Task<bool>> validate)
+        {
+            if (this._validate != null || this._validateAsync != null)
+                throw new Exception("Validate action already added!");
+            
+            this._validateAsync = validate;
             return this;
         }
 
@@ -82,7 +114,7 @@ namespace Xam.Zero.ZeroCommand
             return allProperties.Distinct();
         }
 
-        
+
         /// <summary>
         /// How many concurrent execution are supported.
         /// Default is 1
@@ -139,7 +171,7 @@ namespace Xam.Zero.ZeroCommand
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder<T> WithExecute(Action<T,ZeroCommandContext> action)
+        public ZeroCommandBuilder<T> WithExecute(Action<T, ZeroCommandContext> action)
         {
             if (this._action != null || this._actionAsync != null)
                 throw new Exception("Execute action already added!");
@@ -153,7 +185,7 @@ namespace Xam.Zero.ZeroCommand
         /// </summary>
         /// <param name="taskAction"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder<T> WithExecute(Func<T,ZeroCommandContext,Task> taskAction)
+        public ZeroCommandBuilder<T> WithExecute(Func<T, ZeroCommandContext, Task> taskAction)
         {
             if (this._action != null || this._actionAsync != null)
                 throw new Exception("Execute action already added!");
@@ -162,14 +194,13 @@ namespace Xam.Zero.ZeroCommand
             return this;
         }
 
-     
 
         /// <summary>
         /// Add action before execute
         /// </summary>
         /// <param name="beforeExecute"></param>
         /// <returns>If return false stop the execution</returns>
-        public ZeroCommandBuilder<T> WithBeforeExecute(Func<ZeroCommandContext ,bool> beforeExecute)
+        public ZeroCommandBuilder<T> WithBeforeExecute(Func<ZeroCommandContext, bool> beforeExecute)
         {
             if (this._beforeExecute != null || this._beforeExecuteAsync != null)
                 throw new Exception("Before Execute action already added!");
@@ -183,7 +214,7 @@ namespace Xam.Zero.ZeroCommand
         /// </summary>
         /// <param name="beforeExecuteAsync"></param>
         /// <returns>If return false stop the execution</returns>
-        public ZeroCommandBuilder<T> WithBeforeExecute(Func<ZeroCommandContext ,Task<bool>> beforeExecuteAsync)
+        public ZeroCommandBuilder<T> WithBeforeExecute(Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync)
         {
             if (this._beforeExecute != null || this._beforeExecuteAsync != null)
                 throw new Exception("Before Execute action already added!");
@@ -191,7 +222,7 @@ namespace Xam.Zero.ZeroCommand
             this._beforeExecuteAsync = beforeExecuteAsync;
             return this;
         }
-       
+
 
         /// <summary>
         /// Add action after execute (runned in finally scope)
@@ -212,7 +243,7 @@ namespace Xam.Zero.ZeroCommand
         /// </summary>
         /// <param name="afterExecuteAsync"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder<T> WithAfterExecute(Func<ZeroCommandContext,Task> afterExecuteAsync)
+        public ZeroCommandBuilder<T> WithAfterExecute(Func<ZeroCommandContext, Task> afterExecuteAsync)
         {
             if (this._afterExecute != null || this._afterExecuteAsync != null)
                 throw new Exception("Before Execute action already added!");
@@ -239,7 +270,8 @@ namespace Xam.Zero.ZeroCommand
         {
             return new ZeroCommand<T>(this._viewmodel, this._action, this._actionAsync, this._canExecute, this._onError,
                 this._onErrorAsync, this._swallowException, this._trackedProperties, this._beforeExecute,
-                this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync, this._concurrentExecution, this._autoCanExecute);
+                this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync, this._concurrentExecution,
+                this._autoCanExecute, this._validate, this._validateAsync);
         }
     }
 }

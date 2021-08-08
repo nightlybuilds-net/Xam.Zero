@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xam.Zero.Classes;
 
-namespace Xam.Zero.ZeroCommand
+namespace Xam.Zero.ZCommand
 {
     public class ZeroCommand : ZeroCommand<object>
     {
@@ -16,9 +16,9 @@ namespace Xam.Zero.ZeroCommand
             Func<Exception, Task> onErrorAsync, bool swallowException, IEnumerable<string> trackedProperties,
             Func<ZeroCommandContext, bool> beforeExecute, Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
             Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync,
-            int concurrentExecution, bool autoCanExecute) : base(viewmodel, action, asyncAction, canExecute, onError,
+            int concurrentExecution, bool autoCanExecute, Func<ZeroCommandContext,bool> validate, Func<ZeroCommandContext,Task<bool>> validateAsync) : base(viewmodel, action, asyncAction, canExecute, onError,
             onErrorAsync, swallowException, trackedProperties, beforeExecute, beforeExecuteAsync, afterExecute,
-            afterExecuteAsync, concurrentExecution, autoCanExecute)
+            afterExecuteAsync, concurrentExecution, autoCanExecute, validate, validateAsync)
         {
         }
     }
@@ -32,6 +32,8 @@ namespace Xam.Zero.ZeroCommand
         private readonly Action<ZeroCommandContext> _afterExecute;
         private readonly Func<ZeroCommandContext, Task> _afterExecuteAsync;
         private readonly bool _autoCanExecute;
+        private readonly Func<ZeroCommandContext, bool> _validate;
+        private readonly Func<ZeroCommandContext, Task<bool>> _validateAsync;
         private readonly Action<T, ZeroCommandContext> _action;
         private readonly Func<T, ZeroCommandContext, Task> _asyncAction;
         private readonly bool _swallowException;
@@ -48,7 +50,7 @@ namespace Xam.Zero.ZeroCommand
             IEnumerable<string> trackedProperties, Func<ZeroCommandContext, bool> beforeExecute,
             Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
             Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync,
-            int concurrentExecution, bool autoCanExecute)
+            int concurrentExecution, bool autoCanExecute, Func<ZeroCommandContext, bool> validate, Func<ZeroCommandContext, Task<bool>> validateAsync)
         {
             this._action = action;
             this._asyncAction = asyncAction;
@@ -62,6 +64,8 @@ namespace Xam.Zero.ZeroCommand
             this._afterExecute = afterExecute;
             this._afterExecuteAsync = afterExecuteAsync;
             this._autoCanExecute = autoCanExecute;
+            this._validate = validate;
+            this._validateAsync = validateAsync;
             this._concurrentSemaphore = new SemaphoreSlim(concurrentExecution);
             viewmodel.PropertyChanged +=
                 new WeakEventHandler<PropertyChangedEventArgs>(this.InnerEvaluateCanExcecute).Handler;
@@ -156,6 +160,12 @@ namespace Xam.Zero.ZeroCommand
 
             if (this._beforeExecute != null)
                 beforeRun = this._beforeExecute.Invoke(this._context);
+
+            if (this._validate != null)
+                beforeRun = this._validate.Invoke(this._context);
+            
+            if (this._validateAsync != null)
+                beforeRun = await this._validateAsync.Invoke(this._context);
 
             return beforeRun;
         }
