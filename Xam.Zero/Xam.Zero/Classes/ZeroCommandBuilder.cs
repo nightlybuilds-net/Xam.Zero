@@ -15,8 +15,8 @@ namespace Xam.Zero.Classes
         private Action<Exception> _onError;
         private Func<Exception, Task> _onErrorAsync;
         private Func<bool> _canExecute;
-        private Action<ZeroCommandContext> _action;
-        private Func<ZeroCommandContext, Task> _actionAsync;
+        private Action<object, ZeroCommandContext> _action;
+        private Func<object, ZeroCommandContext, Task> _actionAsync;
         private Func<ZeroCommandContext, bool> _beforeExecute;
         private Func<ZeroCommandContext, Task<bool>> _beforeExecuteAsync;
         private Action<ZeroCommandContext> _afterExecute;
@@ -138,7 +138,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder WithExecute(Action<ZeroCommandContext> action)
+        public ZeroCommandBuilder WithExecute(Action<object,ZeroCommandContext> action)
         {
             if (this._action != null || this._actionAsync != null)
                 throw new Exception("Execute action already added!");
@@ -152,7 +152,7 @@ namespace Xam.Zero.Classes
         /// </summary>
         /// <param name="taskAction"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder WithExecute(Func<ZeroCommandContext,Task> taskAction)
+        public ZeroCommandBuilder WithExecute(Func<object,ZeroCommandContext,Task> taskAction)
         {
             if (this._action != null || this._actionAsync != null)
                 throw new Exception("Execute action already added!");

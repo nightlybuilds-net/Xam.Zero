@@ -16,8 +16,8 @@ namespace Xam.Zero.Classes
         private readonly Func<ZeroCommandContext, Task<bool>> _beforeExecuteAsync;
         private readonly Action<ZeroCommandContext> _afterExecute;
         private readonly Func<ZeroCommandContext, Task> _afterExecuteAsync;
-        private readonly Action<ZeroCommandContext> _action;
-        private readonly Func<ZeroCommandContext, Task> _asyncAction;
+        private readonly Action<object, ZeroCommandContext> _action;
+        private readonly Func<object, ZeroCommandContext, Task> _asyncAction;
         private readonly bool _swallowException;
         private readonly Action<Exception> _onError;
         private readonly Func<Exception, Task> _onErrorAsync;
@@ -25,8 +25,8 @@ namespace Xam.Zero.Classes
         private readonly ZeroCommandContext _context = new ZeroCommandContext();
         private readonly SemaphoreSlim _concurrentSemaphore;
 
-        internal ZeroCommand(INotifyPropertyChanged viewmodel, Action<ZeroCommandContext> action,
-            Func<ZeroCommandContext, Task> asyncAction,
+        internal ZeroCommand(INotifyPropertyChanged viewmodel, Action<object, ZeroCommandContext> action,
+            Func<object, ZeroCommandContext, Task> asyncAction,
             Func<bool> canExecute, Action<Exception> onError, Func<Exception, Task> onErrorAsync, bool swallowException,
             IEnumerable<string> trackedProperties, Func<ZeroCommandContext, bool> beforeExecute,
             Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
@@ -91,9 +91,9 @@ namespace Xam.Zero.Classes
                     return;
 
                 if (this._asyncAction != null)
-                    await this._asyncAction.Invoke(this._context);
+                    await this._asyncAction.Invoke(parameter,this._context);
 
-                this._action?.Invoke(this._context);
+                this._action?.Invoke(parameter,this._context);
             }
             catch (Exception e)
             {

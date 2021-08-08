@@ -67,32 +67,32 @@ namespace Xam.Zero.Dev.Features.CommandPage
         {
             this.TestSuccessCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(context => this.InnerShowMessageAction())
+                .WithExecute((commandParam, context) => this.InnerShowMessageAction())
                 .Build();
             
             this.TestSwallowErrorCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(context => this.InnerManageErrorWithSwallow())
+                .WithExecute((commandParam,context) => this.InnerManageErrorWithSwallow())
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .WithSwallowException()
                 .Build();
             
             this.TestErrorCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(context => this.InnerManageErrorWithoutSwallow())
+                .WithExecute((commandParam,context)  => this.InnerManageErrorWithoutSwallow())
                 .WithErrorHandler(exception => base.DisplayAlert("Managed Exception",exception.Message,"ok"))
                 .Build();
             
             this.BeforeRunEvaluationCommadn = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(context => this.InnerEvaluateCanRun())
+                .WithExecute((commandParam,context)  => this.InnerEvaluateCanRun())
                 .WithBeforeExecute(context => base.DisplayAlert("Before Run Question","Can i run?","yes","no"))
                 .WithAfterExecute(context => base.DisplayAlert("I'm running after a execution","I'll not run if evaluation fail!","ok"))
                 .Build();
             
             this.ContextEvaluationCommand = ZeroCommand.On(this)
                 .WithCanExecute(this.InnerExpression())
-                .WithExecute(context => this.InnerShowMessageAction())
+                .WithExecute((commandParam,context)  => this.InnerShowMessageAction())
                 .WithBeforeExecute(context =>
                 {
                     var stopWatch = new Stopwatch();
@@ -117,9 +117,9 @@ namespace Xam.Zero.Dev.Features.CommandPage
                     context.Add<int>(executionCount);
                     return true;
                 })
-                .WithExecute(async context =>
+                .WithExecute(async (commandParam,context)  =>
                 {
-                    await Task.Delay(1000);
+                    await Task.Delay(500);
                     await this.DisplayAlert("Execution", $"Execution number {context.Get<int>()} times", "OK");
                 })
                 .Build();
