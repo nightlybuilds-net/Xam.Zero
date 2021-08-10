@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
@@ -25,11 +26,25 @@ namespace Xam.Zero.ZCommand
         private bool _autoCanExecute;
         private Func<ZeroCommandContext, bool> _validate;
         private Func<ZeroCommandContext, Task<bool>> _validateAsync;
+        private List<INotifyCollectionChanged> _observedCollection = new List<INotifyCollectionChanged>();
 
         internal ZeroCommandBuilder(INotifyPropertyChanged viewmodel)
         {
             this._viewmodel = viewmodel;
             this._concurrentExecution = 1;
+        }
+
+        /// <summary>
+        /// Add observablecollection dependencies
+        /// When a collection raise event canexecute is evaualted again
+        /// You can add many collection to observe
+        /// </summary>
+        /// <param name="observableCollection"></param>
+        /// <returns></returns>
+        public ZeroCommandBuilder<T> WithRaiseCanExecuteOnCollectionChanged(INotifyCollectionChanged observableCollection)
+        {
+            this._observedCollection.Add(observableCollection);
+            return this;
         }
 
         /// <summary>
@@ -271,7 +286,7 @@ namespace Xam.Zero.ZCommand
             return new ZeroCommand<T>(this._viewmodel, this._action, this._actionAsync, this._canExecute, this._onError,
                 this._onErrorAsync, this._swallowException, this._trackedProperties, this._beforeExecute,
                 this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync, this._concurrentExecution,
-                this._autoCanExecute, this._validate, this._validateAsync);
+                this._autoCanExecute, this._validate, this._validateAsync, this._observedCollection);
         }
     }
 }

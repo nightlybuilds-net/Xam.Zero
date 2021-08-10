@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -16,9 +17,12 @@ namespace Xam.Zero.ZCommand
             Func<Exception, Task> onErrorAsync, bool swallowException, IEnumerable<string> trackedProperties,
             Func<ZeroCommandContext, bool> beforeExecute, Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
             Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync,
-            int concurrentExecution, bool autoCanExecute, Func<ZeroCommandContext,bool> validate, Func<ZeroCommandContext,Task<bool>> validateAsync) : base(viewmodel, action, asyncAction, canExecute, onError,
-            onErrorAsync, swallowException, trackedProperties, beforeExecute, beforeExecuteAsync, afterExecute,
-            afterExecuteAsync, concurrentExecution, autoCanExecute, validate, validateAsync)
+            int concurrentExecution, bool autoCanExecute, Func<ZeroCommandContext, bool> validate,
+            Func<ZeroCommandContext, Task<bool>> validateAsync, List<INotifyCollectionChanged> notifyCollectionChangeds)
+            : base(viewmodel, action, asyncAction, canExecute, onError,
+                onErrorAsync, swallowException, trackedProperties, beforeExecute, beforeExecuteAsync, afterExecute,
+                afterExecuteAsync, concurrentExecution, autoCanExecute, validate, validateAsync,
+                notifyCollectionChangeds)
         {
         }
     }
@@ -50,7 +54,8 @@ namespace Xam.Zero.ZCommand
             IEnumerable<string> trackedProperties, Func<ZeroCommandContext, bool> beforeExecute,
             Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
             Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync,
-            int concurrentExecution, bool autoCanExecute, Func<ZeroCommandContext, bool> validate, Func<ZeroCommandContext, Task<bool>> validateAsync)
+            int concurrentExecution, bool autoCanExecute, Func<ZeroCommandContext, bool> validate,
+            Func<ZeroCommandContext, Task<bool>> validateAsync, List<INotifyCollectionChanged> notifyCollectionChangeds)
         {
             this._action = action;
             this._asyncAction = asyncAction;
@@ -69,6 +74,12 @@ namespace Xam.Zero.ZCommand
             this._concurrentSemaphore = new SemaphoreSlim(concurrentExecution);
             viewmodel.PropertyChanged +=
                 new WeakEventHandler<PropertyChangedEventArgs>(this.InnerEvaluateCanExcecute).Handler;
+            notifyCollectionChangeds.ForEach(collection =>
+            {
+                collection.CollectionChanged +=
+                    new WeakEventHandler<NotifyCollectionChangedEventArgs>((sender, args) =>
+                        this.CanExecuteChanged?.Invoke(this, EventArgs.Empty)).Handler;
+            });
         }
 
         /// <summary>
@@ -163,7 +174,7 @@ namespace Xam.Zero.ZCommand
 
             if (this._validate != null)
                 beforeRun = this._validate.Invoke(this._context);
-            
+
             if (this._validateAsync != null)
                 beforeRun = await this._validateAsync.Invoke(this._context);
 
