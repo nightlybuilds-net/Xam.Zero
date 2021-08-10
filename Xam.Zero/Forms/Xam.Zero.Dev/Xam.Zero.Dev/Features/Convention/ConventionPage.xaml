@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:convention="clr-namespace:Xam.Zero.Dev.Features.Convention;assembly=Xam.Zero.Dev"
+             x:DataType="convention:ConventionPageViewModel"
+             x:Class="Xam.Zero.Dev.Features.Convention.ConventionPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="This page doesn't use markupextension for resolve viewmodel"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            <Button Text="Try binding" Command="{Binding TestCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

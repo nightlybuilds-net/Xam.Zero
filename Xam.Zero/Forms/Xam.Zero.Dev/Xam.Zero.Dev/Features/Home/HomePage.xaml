@@ -22,6 +22,7 @@
             <Button Text="Test Alert" Command="{Binding AlertCommand}"/>
             <Button Text="Test Prompt Alert" Command="{Binding PromptCommand}"/>
             <Button Text="Command test page" Command="{Binding NavigatToTestCommandPage}"/>
+            <Button Text="NavigateByConvention" Command="{Binding NavigateByConvention}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
