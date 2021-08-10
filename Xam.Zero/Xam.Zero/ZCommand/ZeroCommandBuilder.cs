@@ -121,7 +121,7 @@ namespace Xam.Zero.ZCommand
         /// </summary>
         /// <param name="concurrentExecution"></param>
         /// <returns></returns>
-        public ZeroCommandBuilder<T> WithConcurrencyExecutionCount(int concurrentExecution)
+        public ZeroCommandBuilder<T> WithConcurrentExecutionOf(int concurrentExecution)
         {
             this._concurrentExecution = concurrentExecution;
             return this;
@@ -256,7 +256,7 @@ namespace Xam.Zero.ZCommand
         /// If AutoCanExecute is enabled command canexecute is false when is executing
         /// </summary>
         /// <returns></returns>
-        public ZeroCommandBuilder<T> AutoInvalidateWhenExecuting()
+        public ZeroCommandBuilder<T> WithAutoInvalidateWhenExecuting()
         {
             this._autoCanExecute = true;
             return this;

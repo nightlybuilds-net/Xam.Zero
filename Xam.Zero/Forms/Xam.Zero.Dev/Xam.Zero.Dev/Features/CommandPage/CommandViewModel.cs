@@ -130,7 +130,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
                 .Build();
 
             this.AutoInvalidateCommand = ZeroCommand.On(this)
-                .AutoInvalidateWhenExecuting()
+                .WithAutoInvalidateWhenExecuting()
                 .WithExecute(async (o, context) =>
                 {
                     await Task.Delay(1000);
