@@ -44,9 +44,17 @@
                     Text="Tap me quickly!!"
                     Command="{Binding OneByOneCommand}"/>
             
-                <Button
-                    Text="Auto invalidate when executing"
-                    Command="{Binding AutoInvalidateCommand}"/>
+                <StackLayout
+                    HorizontalOptions="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        Text="Auto invalidate when executing"
+                        Command="{Binding AutoInvalidateCommand}"/>
+                    <ActivityIndicator 
+                        IsRunning="True"
+                        IsVisible="{Binding AutoInvalidateCommand.IsExecuting}"/>
+                </StackLayout>
+               
             
                 <Button
                     Text="Command with parameter"

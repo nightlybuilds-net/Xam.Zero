@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xam.Zero.Annotations;
 using Xam.Zero.Classes;
 
 namespace Xam.Zero.ZCommand
@@ -27,7 +29,7 @@ namespace Xam.Zero.ZCommand
         }
     }
 
-    public class ZeroCommand<T> : ICommand
+    public class ZeroCommand<T> : ICommand, INotifyPropertyChanged
     {
         private readonly Func<bool> _canExecute;
         private readonly IEnumerable<string> _trackedProperties;
@@ -46,7 +48,23 @@ namespace Xam.Zero.ZCommand
 
         private readonly ZeroCommandContext _context = new ZeroCommandContext();
         private readonly SemaphoreSlim _concurrentSemaphore;
-        private bool _running;
+
+        private bool _isExecuting;
+        /// <summary>
+        /// This is internal managed by ZeroCommand
+        /// Is set to true before onbeforerun
+        /// Is set to false on after execute
+        /// This raise notifypropertychanged  
+        /// </summary>
+        public bool IsExecuting
+        {
+            get => this._isExecuting;
+            private set
+            {
+                this._isExecuting = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         internal ZeroCommand(INotifyPropertyChanged viewmodel, Action<T, ZeroCommandContext> action,
             Func<T, ZeroCommandContext, Task> asyncAction,
@@ -109,14 +127,14 @@ namespace Xam.Zero.ZCommand
 
         public bool CanExecute(object parameter)
         {
-            if (this._autoCanExecute && this._running) return false;
+            if (this._autoCanExecute && this.IsExecuting) return false;
 
             return this._canExecute?.Invoke() ?? true;
         }
 
         public async void Execute(object parameter)
         {
-            this._running = true;
+            this.IsExecuting = true;
             if (this._autoCanExecute) this.RaiseEvaluateCanExecute();
 
             await this._concurrentSemaphore.WaitAsync();
@@ -154,7 +172,7 @@ namespace Xam.Zero.ZCommand
                 }
 
                 this._concurrentSemaphore.Release();
-                this._running = false;
+                this.IsExecuting = false;
                 if (this._autoCanExecute) this.RaiseEvaluateCanExecute();
             }
         }
@@ -182,5 +200,12 @@ namespace Xam.Zero.ZCommand
         }
 
         public event EventHandler CanExecuteChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

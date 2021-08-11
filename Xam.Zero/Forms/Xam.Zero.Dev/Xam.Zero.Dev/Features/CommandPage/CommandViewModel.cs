@@ -24,7 +24,7 @@ namespace Xam.Zero.Dev.Features.CommandPage
         public ICommand BeforeRunEvaluationCommadn { get; set; }
         public ICommand ContextEvaluationCommand { get; set; }
         public ICommand OneByOneCommand { get; set; }
-        public ICommand AutoInvalidateCommand { get; set; }
+        public ZeroCommand<object> AutoInvalidateCommand { get; set; }
         public ICommand CommandWithParameter { get; set; }
         public ICommand CommandWithValidation { get; set; }
         public ICommand AddAnElementCommand { get; set; }
