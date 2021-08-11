@@ -83,7 +83,9 @@ there are two mandatory ways to define the binding context of out pages and both
 
 Where ViewModel is the type of the ***Viewmodel*** we want to bind to the view and ***Page*** is a reference to the ContentPage
 
-2. If the page is independent from the Shell, for example after a page push in the navigation stack, just the view model location is requested.
+2. If the page is independent from the Shell, for example after a page push in the navigation stack, you can use markup extension method with just the view model location is requested.
+Or you can use **binding by convention**: if no BindingContext with Markup is defined Xam.Zero will look for a ViewModel that is called like: "PageName"+ViewModel.
+So You can just push a SecondPage and Zero will try to bind with a SecondPageViewModel (nice!)
 ```csharp
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
@@ -112,6 +114,24 @@ Task PopModal(object data = null, bool animated = true) {}
 ### Passing data during navigation
  With the useful signatures Push and Pop, we can pass data as object parameters. This data are trapped within the Init() and ReverseInit() of ZeroBaseModel, in which we can cast to a type we want to use.
  
+### Zero Command
+This is introduced in version 1.1.0 and is a custom implementation of ICommand with many useful features.
+the goal is to keep the ViewModel as clean as possible by **automatically tracking dependencies** and composing a flow related to the execution of the command.
+You can find usage examples in "CommandPageViewModel" in this repo.
+
+You can create instances of ICommand using the ZeroComandBuilder and you can customize the flow of the activity in a descriptive way.
+
+#### Dependency tracker
+When you create a zerocommand you have to specify an INotifyPropertyChanged instance (usually the viewmodel) so that the CanExecute expression is evaluated by finding properties that exist on the viewmodel in order to re-evaluate the canexecute automatically.
+Example:
+
+`
+this.YourCommand = ZeroCommand.On(this).WithCanExecute(()=> !this.IsBusy && !string.IsNullOrEmpty(this.someProperty).WithExecute((commandParam, context) => this.InnerShowMessageAction()).Build();
+`
+
+So CanExecute on this ICommand is automatically evaluated when IsBusy or SomeProperty changed (all tracked dependencies must be implement propertychanged)
+
+
 ### Useful Signatures
 Xamarin Zero offers many useful signature awesomely designed to satisfy our MVVM desire!
 
