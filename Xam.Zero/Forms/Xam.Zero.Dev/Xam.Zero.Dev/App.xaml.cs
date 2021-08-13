@@ -25,6 +25,7 @@ namespace Xam.Zero.Dev
                 .WithContainer(TinyIocZeroContainer.Build(Container))
                 .RegisterShell(() => new AppShell())
                 .RegisterShell(() => new TabbedShell())
+                // .StartWithPage<HomePage>(true);
                 .StartWith<AppShell>();
         }
 
