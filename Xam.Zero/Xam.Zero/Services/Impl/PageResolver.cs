@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Xam.Zero.Ioc;
 using Xam.Zero.ViewModels;
 using Xamarin.Forms;
@@ -8,6 +10,8 @@ namespace Xam.Zero.Services.Impl
 {
     public class PageResolver : IPageResolver
     {
+        private static Type[] _assemblyTypes;
+
         public T ResolvePage<T>(ZeroBaseModel previousModel = null, object data = null) where T : Page
         {
             var page = ZeroIoc.Container.Resolve<T>();
@@ -34,12 +38,16 @@ namespace Xam.Zero.Services.Impl
 
         private ZeroBaseModel ResolveViewModelByConvention(Page page)
         {
-            var typeFullName = page.GetType().FullName;
-            var viewModelFullName = $"{typeFullName}ViewModel";
-            var pageQualifiedName = page.GetType().AssemblyQualifiedName;
-            var viewModelQualifiedName = pageQualifiedName?.Replace(typeFullName ?? throw new InvalidOperationException("Page.GetType is null"),viewModelFullName);
-            var viewModelType = Type.GetType(viewModelQualifiedName ?? throw new InvalidOperationException("Viewmodel type is null"));
-            var context =  (ZeroBaseModel)ZeroIoc.Container.Resolve(viewModelType);
+            if (_assemblyTypes == null)
+            {
+                var pageAssemply = page.GetType().Assembly;
+                _assemblyTypes = pageAssemply.GetTypes().Where(w => w.IsClass).Where(w => !w.IsAbstract)
+                    .Where(w => w.IsSubclassOf(typeof(ZeroBaseModel))).ToArray();
+            }
+
+            var viewModelName = $"{page.GetType().Name}ViewModel";
+            var vmType = _assemblyTypes.Single(sd => sd.Name == viewModelName);
+            var context =  (ZeroBaseModel)ZeroIoc.Container.Resolve(vmType);
             page.BindingContext = context;
             return context;
         }
