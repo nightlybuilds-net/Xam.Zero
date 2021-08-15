@@ -58,7 +58,7 @@ namespace Xam.Zero
             this.Shells.Add(typeof(T), shell);
             return this;
         }
-        
+
         /// <summary>
         /// Setup default register behaviour as transient
         /// </summary>
@@ -79,7 +79,7 @@ namespace Xam.Zero
             return this;
         }
 
-        
+
         /// <summary>
         /// Start app when only one shell is registered
         /// Initialize ZeroApp
@@ -93,6 +93,20 @@ namespace Xam.Zero
 
             this.InnerBootStrap();
             Builded.App.MainPage = this.Shells.Single().Value();
+        }
+
+
+        /// <summary>
+        ///  just start with a page instead of a shell
+        /// </summary>
+        /// <param name="wrapIntoNavigationPage">if true wrap page T into a new NavigationPage</param>
+        /// <typeparam name="T"></typeparam>
+        public void StartWithPage<T>(bool wrapIntoNavigationPage = false) where T : Page
+        {
+            this.InnerBootStrap();
+            var resolver = ZeroIoc.Container.Resolve<IPageResolver>();
+            var page = resolver.ResolvePage<T>();
+            Builded.App.MainPage = wrapIntoNavigationPage ? (Page)new NavigationPage(page) : page;
         }
 
 
@@ -131,7 +145,7 @@ namespace Xam.Zero
 
             this._container.Register<IShellService, ShellService>(true);
             this._container.Register<IPageResolver, PageResolver>(true);
-            
+
             this._container.RegisterInstance<IMessagingCenter>(MessagingCenter
                 .Instance); // register messaging center for injection
 
@@ -148,9 +162,9 @@ namespace Xam.Zero
         internal static void RegisterMany(Func<Type, bool> filter, bool isDefaultTransient)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(w=> !w.FullName.StartsWith("JetBrains")) // kludge fix error in rider
+                .Where(w => !w.FullName.StartsWith("JetBrains")) // kludge fix error in rider
                 .SelectMany(s => s.GetTypes());
-            
+
             var models = types.Where(filter.Invoke).ToArray();
 
             models.ForEach(type =>

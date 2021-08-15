@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:commandPage="clr-namespace:Xam.Zero.Dev.Features.CommandPage;assembly=Xam.Zero.Dev"
+             xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+             x:DataType="commandPage:CommandViewModel"
+             BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type commandPage:CommandViewModel}}"
+             x:Class="Xam.Zero.Dev.Features.CommandPage.CommandPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="Canexecute rules: name.lenght > 5 and surname notempty and switch checked and isbusy is false"/>
+                <Entry
+                    Placeholder="Name"
+                    Text="{Binding Name}"/>
+                <Entry
+                    Placeholder="Surname"
+                    Text="{Binding Surname}"/>
+                <Switch
+                    IsToggled="{Binding Checked}"
+                />
+                <Button
+                    Text="Success command"
+                    Command="{Binding TestSuccessCommand}"
+                />
+                <Button
+                    Text="Swallowed exception command"
+                    Command="{Binding TestSwallowErrorCommand}"/>
+                
+                <Button
+                    Text="Before run evaluation command"
+                    Command="{Binding BeforeRunEvaluationCommadn}"/>
+            
+                <Button
+                    Text="Context evaluation command"
+                    Command="{Binding ContextEvaluationCommand}"/>
+            
+                <Button
+                    Text="Destroy Exception command"
+                    Command="{Binding TestErrorCommand}"/>
+            
+                <Button
+                    Text="Tap me quickly!!"
+                    Command="{Binding OneByOneCommand}"/>
+            
+                <StackLayout
+                    HorizontalOptions="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        Text="Auto invalidate when executing"
+                        Command="{Binding AutoInvalidateCommand}"/>
+                    <ActivityIndicator 
+                        IsRunning="True"
+                        IsVisible="{Binding AutoInvalidateCommand.IsExecuting}"/>
+                </StackLayout>
+               
+            
+                <Button
+                    Text="Command with parameter"
+                    Command="{Binding CommandWithParameter}" CommandParameter="3"/>
+            
+                <Button
+                    Text="Command with validation"
+                    Command="{Binding CommandWithValidation}" />
+                
+                <Button
+                    Text="Add an element to enable the next button"
+                    Command="{Binding AddAnElementCommand}" />
+                
+                <Button
+                    Text="Button enabled if there is an element in list (click previous button)"
+                    Command="{Binding CollectionEnabledCommand}" />
+          
+            </StackLayout>
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>

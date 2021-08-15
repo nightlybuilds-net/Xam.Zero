@@ -87,12 +87,30 @@ namespace Xam.Zero.ViewModels
         /// <param name="animated">animated?</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task Push<T>(object data = null, bool animated = true) where T : Page
+        public Task Push<T>(object data = null, bool animated = true) where T : Page
         {
             var page = this.ResolvePageWithContext<T>(data);
-            await this.CurrentPage.Navigation.PushAsync(page, animated);
+            return this.CurrentPage.Navigation.PushAsync(page, animated);
         }
+
+        /// <summary>
+        /// Go to page by explicit type
+        /// </summary>
+        /// <param name="pageType">This type must be a Page</param>
+        /// <param name="data"></param>
+        /// <param name="animated"></param>
+        public Task Push(Type pageType, object data = null, bool animated = true)
+        {
+            if (!pageType.IsSubclassOf(typeof(Page)))
+                throw new Exception("Parameter [pageType] must be a Page");
+
+            var page = this.ResolvePageWithContext(pageType, data);
+            return this.CurrentPage.Navigation.PushAsync(page, animated);
+
+        }
+
         
+
         /// <summary>
         /// Go to page modally
         /// </summary>
@@ -100,10 +118,10 @@ namespace Xam.Zero.ViewModels
         /// <param name="animated">animated</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task PushModal<T>(object data = null, bool animated = true) where T : Page
+        public Task PushModal<T>(object data = null, bool animated = true) where T : Page
         {
             var page = this.ResolvePageWithContext<T>(data);
-            await this.CurrentPage.Navigation.PushModalAsync(page, animated);
+            return this.CurrentPage.Navigation.PushModalAsync(page, animated);
         }
         
         /// <summary>
@@ -112,10 +130,10 @@ namespace Xam.Zero.ViewModels
         /// <param name="data">data to pass back</param>
         /// <param name="animated"></param>
         /// <returns></returns>
-        public async Task Pop(object data = null, bool animated = true)
+        public Task Pop(object data = null, bool animated = true)
         {
             this.PreviousModel?.ReversePrepareModel(data);
-            await this.CurrentPage.Navigation.PopAsync(animated);
+            return this.CurrentPage.Navigation.PopAsync(animated);
         }
         
         /// <summary>
@@ -124,10 +142,10 @@ namespace Xam.Zero.ViewModels
         /// <param name="data">data to pass back</param>
         /// <param name="animated"></param>
         /// <returns></returns>
-        public async Task PopModal(object data = null, bool animated = true)
+        public Task PopModal(object data = null, bool animated = true)
         {
             this.PreviousModel?.ReversePrepareModel(data);
-            await this.CurrentPage.Navigation.PopModalAsync(animated);
+            return this.CurrentPage.Navigation.PopModalAsync(animated);
         }
         
         /// <summary>
@@ -140,6 +158,19 @@ namespace Xam.Zero.ViewModels
         {
             var resolver = ZeroIoc.Container.Resolve<IPageResolver>();
             var page = resolver.ResolvePage<T>(this, data);
+            return page;
+        }
+        
+        /// <summary>
+        /// Resolve a page with context using explicit type
+        /// </summary>
+        /// <param name="pageType"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private Page ResolvePageWithContext(Type pageType, object data)
+        {
+            var resolver = ZeroIoc.Container.Resolve<IPageResolver>();
+            var page = resolver.ResolvePage(pageType,this, data);
             return page;
         }
 

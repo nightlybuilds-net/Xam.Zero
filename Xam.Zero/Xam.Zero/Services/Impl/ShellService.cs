@@ -10,16 +10,12 @@ namespace Xam.Zero.Services.Impl
         public void SwitchContainer<T>() where T : Shell
         {
             var container = ZeroApp.Builded.Shells.SingleOrDefault(s => s.Key == typeof(T)).Value();
-            
-            if(container == null)
-                throw new Exception($"Cannot switch to shell of type: {typeof(T)}. Have you register using ZeroApp.RegisterShell<T>??");
-            
-            ZeroApp.Builded.App.MainPage = container;
-        }
 
-        public Task Alert()
-        {
-            return ZeroApp.Builded.App.MainPage.DisplayAlert("prova", "oinoinw", "OK");
+            if (container == null)
+                throw new Exception(
+                    $"Cannot switch to shell of type: {typeof(T)}. Have you register using ZeroApp.RegisterShell<T>??");
+
+            ZeroApp.Builded.App.MainPage = container;
         }
     }
 }
