@@ -50,6 +50,7 @@ namespace Xam.Zero.ZCommand
         private readonly SemaphoreSlim _concurrentSemaphore;
 
         private bool _isExecuting;
+
         /// <summary>
         /// This is internal managed by ZeroCommand
         /// Is set to true before onbeforerun
@@ -158,7 +159,7 @@ namespace Xam.Zero.ZCommand
 
                 this._onError?.Invoke(e);
 
-                if (!this._swallowException)
+                if (this._onErrorAsync == null && this._onError == null && !this._swallowException)
                     throw;
             }
             finally
