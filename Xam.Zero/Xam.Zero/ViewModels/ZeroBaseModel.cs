@@ -175,11 +175,5 @@ namespace Xam.Zero.ViewModels
         }
 
         #endregion
-
-
-        
-       
-
-      
     }
 }
