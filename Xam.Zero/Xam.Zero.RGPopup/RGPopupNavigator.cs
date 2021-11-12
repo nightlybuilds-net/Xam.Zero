@@ -33,6 +33,8 @@ namespace Xam.Zero.RGPopup
             var popupPage = (PopupPage)popup;
             var completionSource = new TaskCompletionSource<T>();
             var popupId = this._objectIDGenerator.GetId(popupPage, out var _);
+            if (this._popupMapper.ContainsKey(popupId)) 
+                this._popupMapper.Remove(popupId);
             this._popupMapper.Add(popupId, completionSource);
             await PopupNavigation.Instance.PushAsync(popupPage);
             var result = await completionSource.Task;
