@@ -12,8 +12,8 @@ namespace Xam.Zero.Popups
     {
         public static Task<T> ShowPopupAsync<T>(this INavigation navigation, IXamZeroPopup<T> popup)
         {
-            var popupNavigator = ZeroIoc.Container.Resolve<IPopupNavigator>();
-            return popupNavigator.ShowPopup<T>(navigation, popup);
+            var popupNavigator = ZeroIoc.PopupNavigator;
+            return popupNavigator.ShowPopup<T>(popup);
         }
     }
 }

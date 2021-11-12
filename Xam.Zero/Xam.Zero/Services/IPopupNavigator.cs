@@ -9,9 +9,9 @@ namespace Xam.Zero.Services
 {
     public interface IPopupNavigator
     {
-        Type BasePopupType { get; set; }
+        Type BasePopupType { get; }
 
-        Task<T> ShowPopup<T>(INavigation navigation, IXamZeroPopup<T> popup);
-        Task<T> DismissPopup<T>(INavigation navigation, IXamZeroPopup<T> popup);
+        Task<T> ShowPopup<T>(IXamZeroPopup<T> popup);
+        Task DismissPopup<T>(IXamZeroPopup<T> popup, T result);
     }
 }
