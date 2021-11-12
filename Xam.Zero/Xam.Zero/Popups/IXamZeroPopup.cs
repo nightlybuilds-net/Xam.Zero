@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Xam.Zero
+namespace Xam.Zero.Popups
 {
-    public interface IXamZeroPopup 
-    { 
-        
+    public interface IXamZeroPopup
+    {
+
     }
 
     public interface IXamZeroPopup<T> : IXamZeroPopup

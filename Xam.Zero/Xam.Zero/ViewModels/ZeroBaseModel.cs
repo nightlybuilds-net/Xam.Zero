@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Xam.Zero.Classes;
 using Xam.Zero.Ioc;
+using Xam.Zero.Popups;
 using Xam.Zero.Services;
 using Xamarin.Forms;
 
@@ -30,8 +31,6 @@ namespace Xam.Zero.ViewModels
                 this._currentPage.Disappearing += new WeakEventHandler<EventArgs>(this.CurrentPageOnDisappearing).Handler; 
             }
         }
-
-      
 
         #region VIRTUALS
 
@@ -174,6 +173,21 @@ namespace Xam.Zero.ViewModels
             return page;
         }
 
+        #endregion
+
+        #region POPUP Navigation
+        public Task<T> ShowPopup<P, T>(object data = null) where P : IXamZeroPopup<T>
+        {
+            var popup = ResolvePopupWithContext<P, T>(data);
+            return this.CurrentPage.Navigation.ShowPopupAsync(popup);
+        }
+
+        private IXamZeroPopup<T> ResolvePopupWithContext<P, T>(object data) where P : IXamZeroPopup<T>
+        {
+            var resolver = ZeroIoc.Container.Resolve<IPopupResolver>();
+            var popup = resolver.ResolvePopup<P, T>(data);
+            return popup;
+        }
         #endregion
     }
 }
