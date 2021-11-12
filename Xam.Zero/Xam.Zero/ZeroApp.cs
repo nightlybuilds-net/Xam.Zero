@@ -91,6 +91,16 @@ namespace Xam.Zero
             return this;
         }
 
+        /// <summary>
+        /// Setup default popups register behaviour as transient
+        /// </summary>
+        /// <returns></returns>
+        public ZeroApp WithTransientPopups()
+        {
+            this._popupsAreTransient = true;
+            return this;
+        }
+
 
         /// <summary>
         /// Start app when only one shell is registered
@@ -156,7 +166,7 @@ namespace Xam.Zero
             ZeroIoc.RegisterPages(this._pagesAreTransient);
             ZeroIoc.RegisterViewModels(this._viewmodelsAreTransient);
             ZeroIoc.RegisterPopups(this._popupsAreTransient);
-            ZeroIoc.RegisterPopupViewModels(true);
+            ZeroIoc.RegisterPopupViewModels(this._viewmodelsAreTransient);
 
             this._container.Register<IShellService, ShellService>(true);
             this._container.Register<IPageResolver, PageResolver>(true);

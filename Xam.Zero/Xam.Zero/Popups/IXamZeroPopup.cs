@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Xam.Zero.Popups
 {
@@ -11,6 +12,6 @@ namespace Xam.Zero.Popups
 
     public interface IXamZeroPopup<T> : IXamZeroPopup
     {
-        void DismissPopup(T result);
+        
     }
 }

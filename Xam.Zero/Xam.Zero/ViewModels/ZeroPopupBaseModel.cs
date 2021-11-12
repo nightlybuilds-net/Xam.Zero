@@ -1,4 +1,6 @@
-﻿using Xam.Zero.Popups;
+﻿using System.Threading.Tasks;
+using Xam.Zero.Ioc;
+using Xam.Zero.Popups;
 
 namespace Xam.Zero.ViewModels
 {
@@ -22,9 +24,10 @@ namespace Xam.Zero.ViewModels
 
         public IXamZeroPopup<T> CurrentPopup { get; set; }
 
-        public void Dismiss()
+        public Task DismissPopup()
         {
-            CurrentPopup.DismissPopup(Value);
+            var popupNavigator = ZeroIoc.PopupNavigator;
+            return popupNavigator.DismissPopup(this.CurrentPopup, this.Value);
         }
     }
 }
