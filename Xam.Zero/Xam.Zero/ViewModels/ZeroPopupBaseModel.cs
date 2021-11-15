@@ -9,6 +9,17 @@ namespace Xam.Zero.ViewModels
 
     }
 
+    public class ZeroPopupBaseModel : NotifyBaseModel, IZeroPopupBaseModel
+    {
+        public IXamZeroPopup CurrentPopup { get; set; }
+
+        public Task DismissPopup()
+        {
+            var popupNavigator = ZeroIoc.PopupNavigator;
+            return popupNavigator.DismissPopup(this.CurrentPopup);
+        }
+    }
+
     public class ZeroPopupBaseModel<T> : NotifyBaseModel, IZeroPopupBaseModel
     {
         private T _value;

@@ -12,8 +12,6 @@ namespace Xam.Zero.RGPopup
 {
     public class RGPopupNavigator : IPopupNavigator
     {
-        public Type BasePopupType => typeof(PopupPage);
-
         private readonly ObjectIDGenerator _objectIDGenerator;
         private readonly Dictionary<long, object> _popupMapper;
 
@@ -28,6 +26,12 @@ namespace Xam.Zero.RGPopup
             return new RGPopupNavigator();
         }
 
+        public Task ShowPopup(IXamZeroPopup popup)
+        {
+            var popupPage = (PopupPage)popup;
+            return PopupNavigation.Instance.PushAsync(popupPage);
+        }
+
         public async Task<T> ShowPopup<T>(IXamZeroPopup<T> popup)
         {
             var popupPage = (PopupPage)popup;
@@ -39,6 +43,12 @@ namespace Xam.Zero.RGPopup
             await PopupNavigation.Instance.PushAsync(popupPage);
             var result = await completionSource.Task;
             return result;
+        }
+
+        public Task DismissPopup(IXamZeroPopup popup)
+        {
+            var popupPage = (PopupPage)popup;
+            return PopupNavigation.Instance.RemovePageAsync(popupPage);
         }
 
         public Task DismissPopup<T>(IXamZeroPopup<T> popup, T result)

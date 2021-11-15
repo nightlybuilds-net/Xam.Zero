@@ -13,6 +13,15 @@ namespace Xam.Zero.Services.Impl
     {
         private static Type[] _assemblyTypes;
 
+        public P ResolvePopup<P>(object data) where P : IXamZeroPopup
+        {
+            var popup = ZeroIoc.Container.Resolve<P>();
+            var navigablePopup = popup as NavigableElement;
+            var context = (ZeroPopupBaseModel)(navigablePopup.BindingContext ?? ResolveViewModelByConvention(popup));
+            context.CurrentPopup = popup;
+            return popup;
+        }
+
         public P ResolvePopup<P, T>(object data) where P : IXamZeroPopup<T>
         {
             var popup = ZeroIoc.Container.Resolve<P>();
@@ -22,7 +31,7 @@ namespace Xam.Zero.Services.Impl
             return popup;
         }
 
-        private ZeroPopupBaseModel<T> ResolveViewModelByConvention<T>(IXamZeroPopup<T> popup)
+        private ZeroPopupBaseModel ResolveViewModelByConvention(IXamZeroPopup popup)
         {
             if (_assemblyTypes == null)
             {
@@ -33,7 +42,7 @@ namespace Xam.Zero.Services.Impl
 
             var viewModelName = $"{popup.GetType().Name}ViewModel";
             var vmType = _assemblyTypes.Single(sd => sd.Name == viewModelName);
-            var context = (ZeroPopupBaseModel<T>)ZeroIoc.Container.Resolve(vmType);
+            var context = (ZeroPopupBaseModel)ZeroIoc.Container.Resolve(vmType);
 
             var navigablePopup = popup as NavigableElement;
             navigablePopup.BindingContext = context;

@@ -12,8 +12,6 @@ namespace Xam.Zero.ToolkitPopup
 {
     public class ToolkitPopupNavigator : IPopupNavigator
     {
-        public Type BasePopupType => typeof(BasePopup);
-
         private ToolkitPopupNavigator() { }
 
         public static ToolkitPopupNavigator Build()
@@ -21,14 +19,30 @@ namespace Xam.Zero.ToolkitPopup
             return new ToolkitPopupNavigator();
         }
 
+        public Task ShowPopup(IXamZeroPopup popup)
+        {
+            var popupPage = (Popup)popup;
+            Application.Current.MainPage.Navigation.ShowPopup(popupPage);
+            return Task.CompletedTask;
+        }
+
         public Task<T> ShowPopup<T>(IXamZeroPopup<T> popup)
         {
-            return Application.Current.MainPage.Navigation.ShowPopupAsync(popup as Popup<T>);
+            var popupPage = (Popup<T>)popup;
+            return Application.Current.MainPage.Navigation.ShowPopupAsync(popupPage);
+        }
+
+        public Task DismissPopup(IXamZeroPopup popup)
+        {
+            var popupPage = (Popup)popup;
+            popupPage.Dismiss(null);
+            return Task.CompletedTask;
         }
 
         public Task DismissPopup<T>(IXamZeroPopup<T> popup, T result)
         {
-            (popup as Popup<T>).Dismiss(result);
+            var popupPage = (Popup<T>)popup;
+            popupPage.Dismiss(result);
             return Task.CompletedTask;
         }
     }

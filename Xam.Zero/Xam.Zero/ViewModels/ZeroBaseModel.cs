@@ -176,10 +176,23 @@ namespace Xam.Zero.ViewModels
         #endregion
 
         #region POPUP Navigation
+        public Task<T> ShowPopup<P>(object data = null) where P : IXamZeroPopup<T>
+        {
+            var popup = ResolvePopupWithContext<P>(data);
+            return this.CurrentPage.Navigation.ShowPopupAsync(popup);
+        }
+
         public Task<T> ShowPopup<P, T>(object data = null) where P : IXamZeroPopup<T>
         {
             var popup = ResolvePopupWithContext<P, T>(data);
             return this.CurrentPage.Navigation.ShowPopupAsync(popup);
+        }
+
+        private IXamZeroPopup ResolvePopupWithContext<P>(object data) where P : IXamZeroPopup<T>
+        {
+            var resolver = ZeroIoc.Container.Resolve<IPopupResolver>();
+            var popup = resolver.ResolvePopup<P>(data);
+            return popup;
         }
 
         private IXamZeroPopup<T> ResolvePopupWithContext<P, T>(object data) where P : IXamZeroPopup<T>

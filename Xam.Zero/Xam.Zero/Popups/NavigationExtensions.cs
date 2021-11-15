@@ -10,6 +10,12 @@ namespace Xam.Zero.Popups
 {
     internal static class NavigationExtensions
     {
+        public static Task ShowPopupAsync(this INavigation navigation, IXamZeroPopup popup)
+        {
+            var popupNavigator = ZeroIoc.PopupNavigator;
+            return popupNavigator.ShowPopup(popup);
+        }
+
         public static Task<T> ShowPopupAsync<T>(this INavigation navigation, IXamZeroPopup<T> popup)
         {
             var popupNavigator = ZeroIoc.PopupNavigator;
