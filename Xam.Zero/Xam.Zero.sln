@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xam.Zero", "Xam.Zero\Xam.Zero.csproj", "{B1FA5BB6-6B5D-4C72-80FD-D5A4A6016B1B}"
 EndProject
@@ -41,7 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuspecs", "Nuspecs", "{8CB7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xam.Zero.ToolkitPopup", "Xam.Zero.ToolkitPopup\Xam.Zero.ToolkitPopup.csproj", "{7CC59BEC-EA22-4542-A983-7D517B1A07EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.Zero.RGPopup", "Xam.Zero.RGPopup\Xam.Zero.RGPopup.csproj", "{44BC505A-344B-4E57-903E-D4F0839711A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xam.Zero.RGPopup", "Xam.Zero.RGPopup\Xam.Zero.RGPopup.csproj", "{44BC505A-344B-4E57-903E-D4F0839711A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +75,7 @@ Global
 		{5EF52D91-1474-4C8F-88F8-4F37E74350F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0315F570-B577-4C03-A96F-6B3A7C577A4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0315F570-B577-4C03-A96F-6B3A7C577A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0315F570-B577-4C03-A96F-6B3A7C577A4F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{0315F570-B577-4C03-A96F-6B3A7C577A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0315F570-B577-4C03-A96F-6B3A7C577A4F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A121464-1AFF-4B44-BC6F-E3130B074AC8}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator

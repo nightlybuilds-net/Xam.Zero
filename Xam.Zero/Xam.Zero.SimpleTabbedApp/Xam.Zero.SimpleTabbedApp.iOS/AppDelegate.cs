@@ -18,6 +18,7 @@ namespace Xam.Zero.SimpleTabbedApp.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Rg.Plugins.Popup.Popup.Init();
             Xamarin.Forms.Forms.Init();
             this.LoadApplication(new App());
 
