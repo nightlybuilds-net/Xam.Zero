@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using DryIoc;
+using Ninject;
 using Xam.Zero.Ninject;
 using Xam.Zero.SimpleTabbedApp.Services;
 using Xam.Zero.SimpleTabbedApp.Services.Impl;
@@ -13,6 +14,12 @@ namespace Xam.Zero.SimpleTabbedApp
     public partial class App : Application
     {
         public static readonly StandardKernel Kernel = new StandardKernel();
+        private static readonly Container MyContainer = new Container(rules =>
+        {
+            rules = rules.WithDefaultIfAlreadyRegistered(IfAlreadyRegistered.Keep);
+            return rules.WithoutFastExpressionCompiler();
+        });
+
 
         public App()
         {
@@ -20,7 +27,8 @@ namespace Xam.Zero.SimpleTabbedApp
             
             ZeroApp
                 .On(this)
-                .WithContainer(NinjectZeroContainer.Build(Kernel))
+                .WithContainer(DryIoc.DryIocZeroContainer.Build(MyContainer))
+                .WithPopupNavigator(ToolkitPopup.ToolkitPopupNavigator.Build())
                 .RegisterShell(() => new SimpleShell())
                 .RegisterShell(() => new TabbedShell())
                 .StartWith<SimpleShell>();

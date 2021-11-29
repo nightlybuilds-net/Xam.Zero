@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Xam.Zero.SimpleTabbedApp.Pages.PopupsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+    xmlns:viewModels="clr-namespace:Xam.Zero.SimpleTabbedApp.ViewModels;assembly=Xam.Zero.SimpleTabbedApp"
+    x:Name="Popups"
+    BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type viewModels:PopupsViewModel},
+                                                                Page={x:Reference Popups}}">
+
+    <StackLayout>
+        <Button Command="{Binding OpenToolkitAlertCommand}" Text="Open ToolkitAlert" />
+    </StackLayout>
+</ContentPage>
