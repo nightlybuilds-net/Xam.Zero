@@ -9,7 +9,7 @@ namespace Xam.Zero.ViewModels
 
     }
 
-    public class ZeroPopupBaseModel : NotifyBaseModel, IZeroPopupBaseModel
+    public abstract class ZeroPopupBaseModel : NotifyBaseModel, IZeroPopupBaseModel
     {
         public IXamZeroPopup CurrentPopup { get; set; }
 
@@ -20,7 +20,7 @@ namespace Xam.Zero.ViewModels
         }
     }
 
-    public class ZeroPopupBaseModel<T> : NotifyBaseModel, IZeroPopupBaseModel
+    public abstract class ZeroPopupBaseModel<T> : NotifyBaseModel, IZeroPopupBaseModel
     {
         private T _value;
         public T Value

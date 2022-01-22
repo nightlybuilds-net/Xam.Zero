@@ -9,6 +9,9 @@
     x:Name="ToolkitAlert"
     BindingContext="{markupExtensions:ShellPagedViewModelMarkup ViewModel={x:Type toolkit:ToolkitAlertViewModel},
                                                                 Page={x:Reference ToolkitAlert}}">
+    BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type toolkit:ToolkitAlertViewModel}}"
+    HorizontalOptions="Center"
+    VerticalOptions="Center"
     <StackLayout>
         <Label Text="This is a Toolkit alert popup" />
         <Button Command="{Binding CloseCommand}" Text="Close" />

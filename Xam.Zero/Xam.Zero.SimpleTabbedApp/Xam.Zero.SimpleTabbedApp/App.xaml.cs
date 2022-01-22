@@ -29,12 +29,14 @@ namespace Xam.Zero.SimpleTabbedApp
                 .On(this)
                 .WithContainer(DryIoc.DryIocZeroContainer.Build(MyContainer))
                 .WithPopupNavigator(ToolkitPopup.ToolkitPopupNavigator.Build())
+                .WithTransientPages()
+                .WithTransientViewModels()
                 .RegisterShell(() => new SimpleShell())
                 .RegisterShell(() => new TabbedShell())
                 .StartWith<SimpleShell>();
 
             Kernel.Bind<IDummyService>().To<DummyService>().InSingletonScope();
-
+            MyContainer.Register<IDummyService, DummyService>();
         }
 
         protected override void OnStart()
