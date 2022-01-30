@@ -17,5 +17,13 @@ namespace Xam.Zero.Utility
                 BindingFlags.NonPublic | BindingFlags.Instance);
             if (dynMethod != null) dynMethod.Invoke(model, new object[] {data});
         }
+
+        internal static void InvokeReflectionPrepareModel<T>(T model, object data) where T : IZeroPopupBaseModel
+        {
+            // call init method
+            var dynMethod = typeof(T).GetMethod("PrepareModel",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            if (dynMethod != null) dynMethod.Invoke(model, new object[] { data });
+        }
     }
 }

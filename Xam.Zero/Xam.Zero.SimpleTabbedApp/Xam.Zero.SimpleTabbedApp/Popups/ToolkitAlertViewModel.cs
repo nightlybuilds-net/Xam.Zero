@@ -5,7 +5,7 @@ using System.Windows.Input;
 using Xam.Zero.ViewModels;
 using Xam.Zero.ZCommand;
 
-namespace Xam.Zero.SimpleTabbedApp.Popups.Toolkit
+namespace Xam.Zero.SimpleTabbedApp.Popups
 {
     public class ToolkitAlertViewModel : ZeroPopupBaseModel
     {
@@ -15,8 +15,14 @@ namespace Xam.Zero.SimpleTabbedApp.Popups.Toolkit
         {
             this.CloseCommand = ZeroCommand.On(this)
                 .WithAutoInvalidateWhenExecuting()
-                .WithExecute((obj, context) => this.DismissPopup())
+                .WithExecute((obj, context) => DismissPopup())
                 .Build();
+        }
+
+        protected override void PrepareModel(object data)
+        {
+            base.PrepareModel(data);
+            Console.WriteLine($"Inside {GetType().Name} PrepareModel");
         }
     }
 }

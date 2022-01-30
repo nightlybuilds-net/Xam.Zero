@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xct:Popup
+    x:Class="Xam.Zero.SimpleTabbedApp.Popups.Toolkit.ToolkitSetValuePopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+    xmlns:popups="clr-namespace:Xam.Zero.SimpleTabbedApp.Popups"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:Name="ToolkitSetValue"
+    x:TypeArguments="x:String"
+    x:DataType="popups:ToolkitSetValueViewModel"
+    BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type popups:ToolkitSetValueViewModel}}"
+    Size="360,240">
+    <StackLayout>
+        <Label Text="Set text as return value" 
+               FontAttributes="Bold"/>
+
+        <Entry Placeholder="Return value"
+               Text="{Binding Value}"/>
+
+        <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
+            <Button Command="{Binding CloseCommand}" Text="Close"
+                VerticalOptions="EndAndExpand"/>
+            <Button Command="{Binding SetValueCommand}" Text="Confirm"
+                VerticalOptions="EndAndExpand"/>
+        </StackLayout>
+    </StackLayout>
+</xct:Popup>

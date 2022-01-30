@@ -12,25 +12,33 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
     public class PopupsViewModel : ZeroBaseModel
     {
         public ICommand OpenToolkitAlertCommand { get; private set; }
+        public ICommand OpenToolkitSetValueCommand { get; private set; }
 
         public PopupsViewModel()
         {
             this.OpenToolkitAlertCommand = ZeroCommand.On(this)
                 .WithAutoInvalidateWhenExecuting()
-                .WithExecute((obj,context) => this.OpenPopup())
+                .WithErrorHandler(ex => this.RunWithErrorHandler(ex))
+                .WithExecute((obj,context) => this.ShowPopup<ToolkitAlertPopup>())
+                .Build();
+
+            this.OpenToolkitSetValueCommand = ZeroCommand.On(this)
+                .WithAutoInvalidateWhenExecuting()
+                .WithErrorHandler(ex => this.RunWithErrorHandler(ex))
+                .WithExecute(async (obj, context) =>
+                {
+                    var result = await this.ShowPopup<ToolkitSetValuePopup, string>();
+                    await this.DisplayAlert("Info", $"The value returned by popup is '{result}'", "Cancel");
+                })
                 .Build();
         }
 
-        private async Task OpenPopup()
+        private Task RunWithErrorHandler(Exception ex)
         {
-            try
-            {
-                await this.ShowPopup<ToolkitAlertPopup>();
-            }
-            catch (Exception ex)
-            {
-                ;
-            }
+#if DEBUG
+            Console.WriteLine(ex.Message);
+#endif
+            return Task.CompletedTask;
         }
     }
 }

@@ -24,6 +24,9 @@
       <Compile Update="Pages\PopupsPage.xaml.cs">
         <DependentUpon>PopupsPage.xaml</DependentUpon>
       </Compile>
+      <Compile Update="Popups\Toolkit\ToolkitSetValuePopup.xaml.cs">
+        <DependentUpon>ToolkitSetValuePopup.xaml</DependentUpon>
+      </Compile>
       <Compile Update="Popups\Toolkit\ToolkitAlertPopup.xaml.cs">
         <DependentUpon>ToolkitAlertPopup.xaml</DependentUpon>
       </Compile>

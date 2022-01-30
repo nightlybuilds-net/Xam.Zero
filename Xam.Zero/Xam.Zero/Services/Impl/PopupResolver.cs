@@ -19,6 +19,7 @@ namespace Xam.Zero.Services.Impl
             var navigablePopup = popup as NavigableElement;
             var context = (ZeroPopupBaseModel)(navigablePopup.BindingContext ?? ResolveViewModelByConvention(popup));
             context.CurrentPopup = popup;
+            Utility.Utility.InvokeReflectionPrepareModel(context, data);
             return popup;
         }
 
@@ -28,6 +29,7 @@ namespace Xam.Zero.Services.Impl
             var navigablePopup = popup as NavigableElement;
             var context = (ZeroPopupBaseModel<T>)(navigablePopup.BindingContext ?? ResolveViewModelByConvention(popup));
             context.CurrentPopup = popup;
+            Utility.Utility.InvokeReflectionPrepareModel(context, data);
             return popup;
         }
 

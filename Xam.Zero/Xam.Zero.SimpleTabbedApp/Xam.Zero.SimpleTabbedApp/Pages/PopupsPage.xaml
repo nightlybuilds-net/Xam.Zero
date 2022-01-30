@@ -10,6 +10,7 @@
                                                                 Page={x:Reference Popups}}">
 
     <StackLayout>
-        <Button Command="{Binding OpenToolkitAlertCommand}" Text="Open ToolkitAlert" />
+        <Button Command="{Binding OpenToolkitAlertCommand}" Text="Open Alert popup" />
+        <Button Command="{Binding OpenToolkitSetValueCommand}" Text="Open SetValue popup" />
     </StackLayout>
 </ContentPage>

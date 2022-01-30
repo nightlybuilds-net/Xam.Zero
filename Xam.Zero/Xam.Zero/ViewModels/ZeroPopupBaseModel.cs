@@ -6,7 +6,6 @@ namespace Xam.Zero.ViewModels
 {
     public interface IZeroPopupBaseModel
     {
-
     }
 
     public abstract class ZeroPopupBaseModel : NotifyBaseModel, IZeroPopupBaseModel
@@ -17,6 +16,10 @@ namespace Xam.Zero.ViewModels
         {
             var popupNavigator = ZeroIoc.PopupNavigator;
             return popupNavigator.DismissPopup(this.CurrentPopup);
+        }
+
+        protected virtual void PrepareModel(object data)
+        {
         }
     }
 
@@ -39,6 +42,10 @@ namespace Xam.Zero.ViewModels
         {
             var popupNavigator = ZeroIoc.PopupNavigator;
             return popupNavigator.DismissPopup(this.CurrentPopup, this.Value);
+        }
+
+        protected virtual void PrepareModel(object data)
+        {
         }
     }
 }
