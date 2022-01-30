@@ -15,7 +15,7 @@ namespace Xam.Zero.SimpleTabbedApp.Popups
         {
             this.CloseCommand = ZeroCommand.On(this)
                 .WithAutoInvalidateWhenExecuting()
-                .WithExecute((obj, context) => DismissPopup())
+                .WithExecute((obj, context) => DismissPopup("ToolkitAlertViewModel: Use close command"))
                 .Build();
         }
 

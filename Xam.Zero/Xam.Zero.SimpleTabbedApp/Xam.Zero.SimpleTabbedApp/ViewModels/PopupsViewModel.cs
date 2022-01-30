@@ -37,6 +37,12 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
                 .Build();
         }
 
+        protected override void ReversePrepareModel(object data)
+        {
+            base.ReversePrepareModel(data);
+            Console.WriteLine(data?.ToString() ?? "no data");
+        }
+
         private Task RunWithErrorHandler(Exception ex)
         {
 #if DEBUG

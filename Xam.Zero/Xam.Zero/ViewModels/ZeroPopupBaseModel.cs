@@ -11,10 +11,12 @@ namespace Xam.Zero.ViewModels
     public abstract class ZeroPopupBaseModel : NotifyBaseModel, IZeroPopupBaseModel
     {
         public IXamZeroPopup CurrentPopup { get; set; }
+        public ZeroBaseModel PreviousModel { get; set; }
 
-        public Task DismissPopup()
+        public Task DismissPopup(object data = null)
         {
             var popupNavigator = ZeroIoc.PopupNavigator;
+            if (this.PreviousModel != null) Utility.Utility.InvokeReflectionReversePrepareModel(this.PreviousModel, data);
             return popupNavigator.DismissPopup(this.CurrentPopup);
         }
 
@@ -37,10 +39,12 @@ namespace Xam.Zero.ViewModels
         }
 
         public IXamZeroPopup<T> CurrentPopup { get; set; }
+        public ZeroBaseModel PreviousModel { get; set; }
 
-        public Task DismissPopup()
+        public Task DismissPopup(object data = null)
         {
             var popupNavigator = ZeroIoc.PopupNavigator;
+            if (this.PreviousModel != null) Utility.Utility.InvokeReflectionReversePrepareModel(this.PreviousModel, data);
             return popupNavigator.DismissPopup(this.CurrentPopup, this.Value);
         }
 

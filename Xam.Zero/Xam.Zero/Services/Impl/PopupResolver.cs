@@ -13,22 +13,24 @@ namespace Xam.Zero.Services.Impl
     {
         private static Type[] _assemblyTypes;
 
-        public P ResolvePopup<P>(object data) where P : IXamZeroPopup
+        public P ResolvePopup<P>(ZeroBaseModel previousModel = null, object data = null) where P : IXamZeroPopup
         {
             var popup = ZeroIoc.Container.Resolve<P>();
             var navigablePopup = popup as NavigableElement;
             var context = (ZeroPopupBaseModel)(navigablePopup.BindingContext ?? ResolveViewModelByConvention(popup));
             context.CurrentPopup = popup;
+            context.PreviousModel = previousModel;
             Utility.Utility.InvokeReflectionPrepareModel(context, data);
             return popup;
         }
 
-        public P ResolvePopup<P, T>(object data) where P : IXamZeroPopup<T>
+        public P ResolvePopup<P, T>(ZeroBaseModel previousModel = null, object data = null) where P : IXamZeroPopup<T>
         {
             var popup = ZeroIoc.Container.Resolve<P>();
             var navigablePopup = popup as NavigableElement;
             var context = (ZeroPopupBaseModel<T>)(navigablePopup.BindingContext ?? ResolveViewModelByConvention(popup));
             context.CurrentPopup = popup;
+            context.PreviousModel = previousModel;
             Utility.Utility.InvokeReflectionPrepareModel(context, data);
             return popup;
         }

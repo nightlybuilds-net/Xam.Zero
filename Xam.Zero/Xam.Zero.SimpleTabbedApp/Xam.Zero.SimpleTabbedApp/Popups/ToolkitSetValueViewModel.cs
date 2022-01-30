@@ -19,13 +19,13 @@ namespace Xam.Zero.SimpleTabbedApp.Popups
                 .WithExecute((obj, context) =>
                 {
                     this.Value = null;
-                    return DismissPopup();
+                    return DismissPopup("ToolkitSetValueViewModel: Use close command");
                 })
                 .Build();
 
             SetValueCommand = ZeroCommand.On(this)
                 .WithAutoInvalidateWhenExecuting()
-                .WithExecute((obj, context) => DismissPopup())
+                .WithExecute((obj, context) => DismissPopup("ToolkitSetValueViewModel: Use setvalue command"))
                 .Build();
         }
 

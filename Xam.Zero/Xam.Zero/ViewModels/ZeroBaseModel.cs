@@ -191,14 +191,14 @@ namespace Xam.Zero.ViewModels
         private IXamZeroPopup ResolvePopupWithContext<P>(object data) where P : IXamZeroPopup
         {
             var resolver = ZeroIoc.Container.Resolve<IPopupResolver>();
-            var popup = resolver.ResolvePopup<P>(data);
+            var popup = resolver.ResolvePopup<P>(this, data);
             return popup;
         }
 
         private IXamZeroPopup<T> ResolvePopupWithContext<P, T>(object data) where P : IXamZeroPopup<T>
         {
             var resolver = ZeroIoc.Container.Resolve<IPopupResolver>();
-            var popup = resolver.ResolvePopup<P, T>(data);
+            var popup = resolver.ResolvePopup<P, T>(this, data);
             return popup;
         }
         #endregion
