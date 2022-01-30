@@ -1,18 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<xct:Popup
-    x:Class="Xam.Zero.SimpleTabbedApp.Popups.Toolkit.ToolkitSetValuePopup"
+<rg:PopupPage
+    x:Class="Xam.Zero.SimpleTabbedApp.Popups.Toolkit.RgSetValuePopup"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
     xmlns:popups="clr-namespace:Xam.Zero.SimpleTabbedApp.Popups"
-    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:rg="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     x:Name="ToolkitSetValue"
-    x:TypeArguments="x:String"
     x:DataType="popups:ToolkitSetValueViewModel"
-    BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type popups:ToolkitSetValueViewModel}}"
-    Size="360,240">
-    <StackLayout>
-        <Label Text="This is a Toolkit set value popup" FontAttributes="Bold" />
+    BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type popups:ToolkitSetValueViewModel}}">
+    <StackLayout Margin="8"
+                 WidthRequest="360"
+                 HeightRequest="240"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Center"
+                 BackgroundColor="White">
+        <Label Text="This is a Rg.Popup set value popup" FontAttributes="Bold" />
 
         <Entry Placeholder="Return value"
                Text="{Binding Value}"/>
@@ -24,4 +27,4 @@
                 VerticalOptions="EndAndExpand"/>
         </StackLayout>
     </StackLayout>
-</xct:Popup>
+</rg:PopupPage>

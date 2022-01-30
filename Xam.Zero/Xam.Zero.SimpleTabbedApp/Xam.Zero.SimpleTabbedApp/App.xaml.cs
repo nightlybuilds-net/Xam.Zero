@@ -20,20 +20,26 @@ namespace Xam.Zero.SimpleTabbedApp
             return rules.WithoutFastExpressionCompiler();
         });
 
+       public static bool UseRgPluginPopups = true;
 
         public App()
         {
             this.InitializeComponent();
             
-            ZeroApp
+            var zeroApp = ZeroApp
                 .On(this)
                 .WithContainer(DryIoc.DryIocZeroContainer.Build(MyContainer))
-                .WithPopupNavigator(ToolkitPopup.ToolkitPopupNavigator.Build())
                 .WithTransientPages()
                 .WithTransientViewModels()
                 .RegisterShell(() => new SimpleShell())
-                .RegisterShell(() => new TabbedShell())
-                .StartWith<SimpleShell>();
+                .RegisterShell(() => new TabbedShell());
+
+            if (App.UseRgPluginPopups)
+                zeroApp.WithPopupNavigator(RGPopup.RGPopupNavigator.Build());
+            else
+                zeroApp.WithPopupNavigator(ToolkitPopup.ToolkitPopupNavigator.Build());
+
+            zeroApp.StartWith<SimpleShell>();
 
             Kernel.Bind<IDummyService>().To<DummyService>().InSingletonScope();
             MyContainer.Register<IDummyService, DummyService>();

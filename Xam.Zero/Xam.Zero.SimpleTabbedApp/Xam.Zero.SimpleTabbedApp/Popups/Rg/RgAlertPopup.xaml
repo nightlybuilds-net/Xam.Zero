@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rg:PopupPage
+    x:Class="Xam.Zero.SimpleTabbedApp.Popups.Toolkit.RgAlertPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:rg="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+    xmlns:popups="clr-namespace:Xam.Zero.SimpleTabbedApp.Popups"
+    x:Name="ToolkitAlert"
+    x:DataType="popups:ToolkitAlertViewModel"
+    BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type popups:ToolkitAlertViewModel}}">
+    <StackLayout Margin="8"
+                 HeightRequest="240"
+                 WidthRequest="360"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Center"
+                 BackgroundColor="White">
+        <Label Text="This is a Rg.Popup alert popup" FontAttributes="Bold" />
+        <Button Command="{Binding CloseCommand}" Text="Close"
+                VerticalOptions="EndAndExpand"/>
+    </StackLayout>
+</rg:PopupPage>

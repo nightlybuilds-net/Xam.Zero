@@ -19,7 +19,9 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
             this.OpenToolkitAlertCommand = ZeroCommand.On(this)
                 .WithAutoInvalidateWhenExecuting()
                 .WithErrorHandler(ex => this.RunWithErrorHandler(ex))
-                .WithExecute((obj,context) => this.ShowPopup<ToolkitAlertPopup>())
+                .WithExecute((obj,context) => App.UseRgPluginPopups 
+                    ? this.ShowPopup<RgAlertPopup>() 
+                    : this.ShowPopup<ToolkitAlertPopup>())
                 .Build();
 
             this.OpenToolkitSetValueCommand = ZeroCommand.On(this)
@@ -27,7 +29,9 @@ namespace Xam.Zero.SimpleTabbedApp.ViewModels
                 .WithErrorHandler(ex => this.RunWithErrorHandler(ex))
                 .WithExecute(async (obj, context) =>
                 {
-                    var result = await this.ShowPopup<ToolkitSetValuePopup, string>();
+                    var result = App.UseRgPluginPopups
+                        ? await this.ShowPopup<RgSetValuePopup, string>()
+                        : await this.ShowPopup<ToolkitSetValuePopup, string>();
                     await this.DisplayAlert("Info", $"The value returned by popup is '{result}'", "Cancel");
                 })
                 .Build();

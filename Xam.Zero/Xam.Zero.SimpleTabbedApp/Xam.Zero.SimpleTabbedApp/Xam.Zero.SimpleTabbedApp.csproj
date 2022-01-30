@@ -24,6 +24,12 @@
       <Compile Update="Pages\PopupsPage.xaml.cs">
         <DependentUpon>PopupsPage.xaml</DependentUpon>
       </Compile>
+      <Compile Update="Popups\Rg\RgAlertPopup.xaml.cs">
+        <DependentUpon>RgAlertPopup.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Popups\Rg\RgSetValuePopup.xaml.cs">
+        <DependentUpon>RgSetValuePopup.xaml</DependentUpon>
+      </Compile>
       <Compile Update="Popups\Toolkit\ToolkitSetValuePopup.xaml.cs">
         <DependentUpon>ToolkitSetValuePopup.xaml</DependentUpon>
       </Compile>
@@ -65,10 +71,6 @@
       <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.14" />
       <PackageReference Include="Xamarin.CommunityToolkit" Version="1.3.0" />
       <PackageReference Include="Xamarin.Forms" Version="5.0.0.2244" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Popups\Rg\" />
     </ItemGroup>
 
     <ItemGroup>
