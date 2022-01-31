@@ -18,7 +18,8 @@ namespace Xam.Zero.SimpleTabbedApp.Android
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-            
+
+            Rg.Plugins.Popup.Popup.Init(this);
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
             this.LoadApplication(new App());
         }

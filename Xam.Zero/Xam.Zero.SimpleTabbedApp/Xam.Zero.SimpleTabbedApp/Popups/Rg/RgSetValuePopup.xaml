@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rg:PopupPage
+    x:Class="Xam.Zero.SimpleTabbedApp.Popups.Toolkit.RgSetValuePopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+    xmlns:popups="clr-namespace:Xam.Zero.SimpleTabbedApp.Popups"
+    xmlns:rg="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Name="ToolkitSetValue"
+    x:DataType="popups:ToolkitSetValueViewModel"
+    BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type popups:ToolkitSetValueViewModel}}">
+    <StackLayout Margin="8"
+                 WidthRequest="360"
+                 HeightRequest="240"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Center"
+                 BackgroundColor="White">
+        <Label Text="This is a Rg.Popup set value popup" FontAttributes="Bold" />
+
+        <Entry Placeholder="Return value"
+               Text="{Binding Value}"/>
+
+        <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
+            <Button Command="{Binding CloseCommand}" Text="Close"
+                VerticalOptions="EndAndExpand"/>
+            <Button Command="{Binding SetValueCommand}" Text="Confirm"
+                VerticalOptions="EndAndExpand"/>
+        </StackLayout>
+    </StackLayout>
+</rg:PopupPage>

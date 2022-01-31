@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xct:Popup
+    x:Class="Xam.Zero.SimpleTabbedApp.Popups.Toolkit.ToolkitAlertPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:markupExtensions="clr-namespace:Xam.Zero.MarkupExtensions;assembly=Xam.Zero"
+    xmlns:popups="clr-namespace:Xam.Zero.SimpleTabbedApp.Popups"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:Name="ToolkitAlert"
+    x:DataType="popups:ToolkitAlertViewModel"
+    BindingContext="{markupExtensions:ViewModelMarkup ViewModel={x:Type popups:ToolkitAlertViewModel}}"
+    Size="360,240">
+    <StackLayout Margin="8">
+        <Label Text="This is a Toolkit alert popup" />
+        <Button Command="{Binding CloseCommand}" Text="Close"
+                VerticalOptions="EndAndExpand"/>
+    </StackLayout>
+</xct:Popup>

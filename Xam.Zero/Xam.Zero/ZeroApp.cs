@@ -25,6 +25,7 @@ namespace Xam.Zero
         internal readonly Dictionary<Type, Func<Shell>> Shells = new Dictionary<Type, Func<Shell>>();
 
         private IContainer _container;
+        private IPopupNavigator _popupNavigator;
         private bool _viewmodelsAreTransient;
         private bool _pagesAreTransient;
 
@@ -52,6 +53,16 @@ namespace Xam.Zero
             return this;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="popupNavigator"></param>
+        /// <returns></returns>
+        public ZeroApp WithPopupNavigator(IPopupNavigator popupNavigator)
+        {
+            this._popupNavigator = popupNavigator;
+            return this;
+        }
 
         public ZeroApp RegisterShell<T>(Func<T> shell) where T : Shell
         {
@@ -78,7 +89,6 @@ namespace Xam.Zero
             this._pagesAreTransient = true;
             return this;
         }
-
 
         /// <summary>
         /// Start app when only one shell is registered
@@ -140,11 +150,15 @@ namespace Xam.Zero
         private void InnerBootStrap()
         {
             ZeroIoc.UseContainer(this._container);
+            ZeroIoc.UsePopupNavigator(this._popupNavigator);
             ZeroIoc.RegisterPages(this._pagesAreTransient);
             ZeroIoc.RegisterViewModels(this._viewmodelsAreTransient);
+            ZeroIoc.RegisterPopups(this._pagesAreTransient);
+            ZeroIoc.RegisterPopupViewModels(this._viewmodelsAreTransient);
 
             this._container.Register<IShellService, ShellService>(true);
             this._container.Register<IPageResolver, PageResolver>(true);
+            this._container.Register<IPopupResolver, PopupResolver>(true);
 
             this._container.RegisterInstance<IMessagingCenter>(MessagingCenter
                 .Instance); // register messaging center for injection

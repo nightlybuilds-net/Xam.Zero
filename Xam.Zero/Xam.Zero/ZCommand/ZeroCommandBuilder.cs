@@ -27,6 +27,7 @@ namespace Xam.Zero.ZCommand
         private Func<ZeroCommandContext, bool> _validate;
         private Func<ZeroCommandContext, Task<bool>> _validateAsync;
         private List<INotifyCollectionChanged> _observedCollection = new List<INotifyCollectionChanged>();
+        private List<INotifyPropertyChanged> _observedDependencies = new List<INotifyPropertyChanged>();
 
         internal ZeroCommandBuilder(INotifyPropertyChanged viewmodel)
         {
@@ -44,6 +45,17 @@ namespace Xam.Zero.ZCommand
         public ZeroCommandBuilder<T> WithRaiseCanExecuteOnCollectionChanged(INotifyCollectionChanged observableCollection)
         {
             this._observedCollection.Add(observableCollection);
+            return this;
+        }
+        
+        /// <summary>
+        /// Evaluate can execute when a propertychanged event is raised from a tracked dependency
+        /// </summary>
+        /// <param name="propertyChanged"></param>
+        /// <returns></returns>
+        public ZeroCommandBuilder<T> WithDependencyEvaluate(INotifyPropertyChanged propertyChanged)
+        {
+            this._observedDependencies.Add(propertyChanged);
             return this;
         }
 
@@ -286,7 +298,7 @@ namespace Xam.Zero.ZCommand
             return new ZeroCommand<T>(this._viewmodel, this._action, this._actionAsync, this._canExecute, this._onError,
                 this._onErrorAsync, this._swallowException, this._trackedProperties, this._beforeExecute,
                 this._beforeExecuteAsync, this._afterExecute, this._afterExecuteAsync, this._concurrentExecution,
-                this._autoCanExecute, this._validate, this._validateAsync, this._observedCollection);
+                this._autoCanExecute, this._validate, this._validateAsync, this._observedCollection, this._observedDependencies);
         }
     }
 }

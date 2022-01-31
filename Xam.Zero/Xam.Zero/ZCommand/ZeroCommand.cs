@@ -20,11 +20,12 @@ namespace Xam.Zero.ZCommand
             Func<ZeroCommandContext, bool> beforeExecute, Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
             Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync,
             int concurrentExecution, bool autoCanExecute, Func<ZeroCommandContext, bool> validate,
-            Func<ZeroCommandContext, Task<bool>> validateAsync, List<INotifyCollectionChanged> notifyCollectionChangeds)
+            Func<ZeroCommandContext, Task<bool>> validateAsync, List<INotifyCollectionChanged> notifyCollectionChangeds,
+            List<INotifyPropertyChanged> notifyPropertyChangeds)
             : base(viewmodel, action, asyncAction, canExecute, onError,
                 onErrorAsync, swallowException, trackedProperties, beforeExecute, beforeExecuteAsync, afterExecute,
                 afterExecuteAsync, concurrentExecution, autoCanExecute, validate, validateAsync,
-                notifyCollectionChangeds)
+                notifyCollectionChangeds,notifyPropertyChangeds)
         {
         }
     }
@@ -74,7 +75,8 @@ namespace Xam.Zero.ZCommand
             Func<ZeroCommandContext, Task<bool>> beforeExecuteAsync,
             Action<ZeroCommandContext> afterExecute, Func<ZeroCommandContext, Task> afterExecuteAsync,
             int concurrentExecution, bool autoCanExecute, Func<ZeroCommandContext, bool> validate,
-            Func<ZeroCommandContext, Task<bool>> validateAsync, List<INotifyCollectionChanged> notifyCollectionChangeds)
+            Func<ZeroCommandContext, Task<bool>> validateAsync, List<INotifyCollectionChanged> notifyCollectionChangeds,
+            List<INotifyPropertyChanged> notifyPropertyChangeds)
         {
             this._action = action;
             this._asyncAction = asyncAction;
@@ -97,6 +99,12 @@ namespace Xam.Zero.ZCommand
             {
                 collection.CollectionChanged +=
                     new WeakEventHandler<NotifyCollectionChangedEventArgs>((sender, args) =>
+                        this.CanExecuteChanged?.Invoke(this, EventArgs.Empty)).Handler;
+            });
+            notifyPropertyChangeds.ForEach(collection =>
+            {
+                collection.PropertyChanged +=
+                    new WeakEventHandler<PropertyChangedEventArgs>((sender, args) =>
                         this.CanExecuteChanged?.Invoke(this, EventArgs.Empty)).Handler;
             });
         }

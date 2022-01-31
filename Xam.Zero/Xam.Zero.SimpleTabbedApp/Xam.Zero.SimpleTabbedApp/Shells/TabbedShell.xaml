@@ -1,33 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
-<Shell 
+<Shell
+    x:Class="Xam.Zero.SimpleTabbedApp.Shells.TabbedShell"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:Xam.Zero.SimpleTabbedApp.Pages;assembly=Xam.Zero.SimpleTabbedApp"
-    x:Class="Xam.Zero.SimpleTabbedApp.Shells.TabbedShell"
-    FlyoutBehavior="Disabled"
-    >
-   <ShellItem>
-       <ShellSection
-           Title="Home">
-           <ShellContent>
-               <pages:HomePage/>
-           </ShellContent>
-       </ShellSection>
-       <ShellSection
-           Title="News">
-           <ShellContent>
-               <pages:NewsPage/>
-           </ShellContent>
-       </ShellSection>
-       <ShellSection
-           Title="Settings">
-           <ShellContent>
-               <pages:SettingsPage/>
-           </ShellContent>
-       </ShellSection>
-   </ShellItem>
-    
-    
-    
+    FlyoutBehavior="Disabled">
+    <ShellItem>
+        <ShellSection Title="Home">
+            <ShellContent>
+                <pages:HomePage />
+            </ShellContent>
+        </ShellSection>
+        <ShellSection Title="News">
+            <ShellContent>
+                <pages:NewsPage />
+            </ShellContent>
+        </ShellSection>
+        <ShellSection Title="Popups">
+            <ShellContent>
+                <pages:PopupsPage />
+            </ShellContent>
+        </ShellSection>
+        <ShellSection Title="Settings">
+            <ShellContent>
+                <pages:SettingsPage />
+            </ShellContent>
+        </ShellSection>
+    </ShellItem>
+
+
+
 </Shell>
