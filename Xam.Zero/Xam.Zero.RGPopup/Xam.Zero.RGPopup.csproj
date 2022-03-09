@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>Xam.Zero.RGPopup</Title>
+    <Authors>Nightly Builds Net</Authors>
+    <Description>Xam Zero plugin for RGPopUp</Description>
+    <Copyright>Nightly Builds Net</Copyright>
+    <PackageProjectUrl>https://github.com/nightlybuilds-net/Xam.Zero</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nightlybuilds-net/Xam.Zero</RepositoryUrl>
+    <PackageTags>xam zero, xam.zero, xamarin, mvvm</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>Xam.Zero.ToolkitPopup</Title>
+    <Authors>Nightly Builds Net</Authors>
+    <Description>Xam zero plugin for Toolkit PopUp</Description>
+    <Copyright>Nightly Builds Net</Copyright>
+    <PackageProjectUrl>https://github.com/nightlybuilds-net/Xam.Zero</PackageProjectUrl>
+    <PackageTags>xam zero, xam.zero, mvvm, xamarin</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
