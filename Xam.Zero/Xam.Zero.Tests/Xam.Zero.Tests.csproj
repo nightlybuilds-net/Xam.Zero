@@ -35,10 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DryIoc, Version=4.1.1.0, Culture=neutral, PublicKeyToken=dfbf2bd50fcf7768">
-      <HintPath>..\packages\DryIoc.dll.4.1.1\lib\net45\DryIoc.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DryIoc, Version=5.0.2.0, Culture=neutral, PublicKeyToken=dfbf2bd50fcf7768, processorArchitecture=MSIL">
+      <HintPath>..\packages\DryIoc.dll.5.0.2\lib\net45\DryIoc.dll</HintPath>
     </Reference>
+    <Reference Include="mscorlib" />
     <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7">
       <HintPath>..\packages\Portable.Ninject.3.3.1\lib\net40-client\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -50,6 +50,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Xamarin.Forms.4.5.0.356\lib\netstandard2.0\Xamarin.Forms.Core.dll</HintPath>
