@@ -1,6 +1,6 @@
 ﻿using DryIoc;
+using DryIoc.FastExpressionCompiler;
 using Ninject;
-using Xam.Zero.Ninject;
 using Xam.Zero.SimpleTabbedApp.Services;
 using Xam.Zero.SimpleTabbedApp.Services.Impl;
 using Xam.Zero.SimpleTabbedApp.Shells;
@@ -17,7 +17,7 @@ namespace Xam.Zero.SimpleTabbedApp
         private static readonly Container MyContainer = new Container(rules =>
         {
             rules = rules.WithDefaultIfAlreadyRegistered(IfAlreadyRegistered.Keep);
-            return rules.WithoutFastExpressionCompiler();
+            return rules.WithUseInterpretation();
         });
 
        public static bool UseRgPluginPopups = true;
