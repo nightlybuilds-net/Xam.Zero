@@ -119,6 +119,22 @@ namespace Xam.Zero
             Builded.App.MainPage = wrapIntoNavigationPage ? (Page)new NavigationPage(page) : page;
         }
 
+        /// <summary>
+        ///  just start with a page instead of a shell
+        /// </summary>
+        /// <param name="pageSelector"></param>
+        /// <param name="wrapIntoNavigationPage">if true wrap page T into a new NavigationPage</param>
+        /// <typeparam name="T"></typeparam>
+        public void StartWithPage<T>(Func<IContainer, Type> pageSelector,bool wrapIntoNavigationPage = false) where T : Page
+        {
+            this.InnerBootStrap();
+            var resolver = ZeroIoc.Container.Resolve<IPageResolver>();
+            var pageType = pageSelector.Invoke(this._container);
+            
+            var page = resolver.ResolvePage(pageType,null,null);
+            Builded.App.MainPage = wrapIntoNavigationPage ? (Page)new NavigationPage(page) : page;
+        }
+
 
         /// <summary>
         /// Initialize ZeroApp
