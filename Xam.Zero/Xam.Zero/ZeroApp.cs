@@ -125,7 +125,7 @@ namespace Xam.Zero
         /// <param name="pageSelector"></param>
         /// <param name="wrapIntoNavigationPage">if true wrap page T into a new NavigationPage</param>
         /// <typeparam name="T"></typeparam>
-        public void StartWithPage<T>(Func<IContainer, Type> pageSelector,bool wrapIntoNavigationPage = false) where T : Page
+        public void StartWithPage(Func<IContainer, Type> pageSelector,bool wrapIntoNavigationPage = false) 
         {
             this.InnerBootStrap();
             var resolver = ZeroIoc.Container.Resolve<IPageResolver>();
