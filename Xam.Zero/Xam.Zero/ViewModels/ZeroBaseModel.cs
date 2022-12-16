@@ -129,10 +129,10 @@ namespace Xam.Zero.ViewModels
         /// <param name="data">data to pass back</param>
         /// <param name="animated"></param>
         /// <returns></returns>
-        public Task Pop(object data = null, bool animated = true)
+        public async Task Pop(object data = null, bool animated = true)
         {
+            await this.CurrentPage.Navigation.PopAsync(animated);
             this.PreviousModel?.ReversePrepareModel(data);
-            return this.CurrentPage.Navigation.PopAsync(animated);
         }
         
         /// <summary>
@@ -141,10 +141,10 @@ namespace Xam.Zero.ViewModels
         /// <param name="data">data to pass back</param>
         /// <param name="animated"></param>
         /// <returns></returns>
-        public Task PopModal(object data = null, bool animated = true)
+        public async Task PopModal(object data = null, bool animated = true)
         {
+            await this.CurrentPage.Navigation.PopModalAsync(animated);
             this.PreviousModel?.ReversePrepareModel(data);
-            return this.CurrentPage.Navigation.PopModalAsync(animated);
         }
         
         /// <summary>
