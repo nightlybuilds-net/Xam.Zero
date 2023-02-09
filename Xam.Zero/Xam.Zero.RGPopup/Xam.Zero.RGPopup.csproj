@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Xam.Zero.RGPopup</Title>
     <Authors>Nightly Builds Net</Authors>
     <Description>Xam Zero plugin for RGPopUp</Description>
