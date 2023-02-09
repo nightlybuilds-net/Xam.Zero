@@ -7,10 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xam.Zero.Annotations;
-using Xam.Zero.Classes;
 
-namespace Xam.Zero.ZCommand
+namespace Xam.Zero.Commands.ZCommand
 {
     public class ZeroCommand : ZeroCommand<object>
     {
@@ -211,7 +209,6 @@ namespace Xam.Zero.ZCommand
         public event EventHandler CanExecuteChanged;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

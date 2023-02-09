@@ -2,11 +2,11 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xam.Zero.Classes;
+using Xam.Zero.Commands.ZCommand;
 using Xam.Zero.Dev.Features.Convention;
 using Xam.Zero.Dev.Features.Second;
 using Xam.Zero.Services;
 using Xam.Zero.ViewModels;
-using Xam.Zero.ZCommand;
 using Xamarin.Forms;
 
 namespace Xam.Zero.Dev.Features.Home

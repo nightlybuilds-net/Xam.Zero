@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://github.com/nightlybuilds-net/Xam.Zero</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nightlybuilds-net/Xam.Zero</RepositoryUrl>
     <PackageTags>xam zero, xam.zero, xamarin, mvvm</PackageTags>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

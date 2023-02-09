@@ -2,5 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+        <Title>Xam.Zero.Commands</Title>
+        <Authors>Marco Milani</Authors>
+        <Description>ZCommand package</Description>
+        <Copyright>Marco Milani</Copyright>
+        <PackageProjectUrl>https://github.com/nightlybuilds-net/Xam.Zero</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/nightlybuilds-net/Xam.Zero</RepositoryUrl>
+        <PackageTags>xam.zero, icommand, mvvm</PackageTags>
     </PropertyGroup>
 </Project>

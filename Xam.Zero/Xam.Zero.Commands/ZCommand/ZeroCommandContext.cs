@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Xamarin.Forms.Internals;
 
-namespace Xam.Zero.ZCommand
+namespace Xam.Zero.Commands.ZCommand
 {
     public enum ContextBehaviour
     {
@@ -121,7 +120,11 @@ namespace Xam.Zero.ZCommand
         /// </summary>
         public void Clear()
         {
-            this._innerObjects.Values.OfType<IDisposable>().ForEach(f=>f.Dispose());
+            foreach (var disposable in this._innerObjects.Values.OfType<IDisposable>())
+            {
+                disposable.Dispose();
+            }
+
             this._innerObjects.Clear();
         }
 

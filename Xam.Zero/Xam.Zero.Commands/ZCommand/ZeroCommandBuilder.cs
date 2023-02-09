@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Xam.Zero.ZCommand
+namespace Xam.Zero.Commands.ZCommand
 {
     public class ZeroCommandBuilder<T>
     {

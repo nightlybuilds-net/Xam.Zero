@@ -1,6 +1,6 @@
 using System.Windows.Input;
+using Xam.Zero.Commands.ZCommand;
 using Xam.Zero.ViewModels;
-using Xam.Zero.ZCommand;
 
 namespace Xam.Zero.Dev.Features.Convention
 {

@@ -17,4 +17,8 @@
       <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Xam.Zero.Commands\Xam.Zero.Commands.csproj" />
+    </ItemGroup>
+
 </Project>

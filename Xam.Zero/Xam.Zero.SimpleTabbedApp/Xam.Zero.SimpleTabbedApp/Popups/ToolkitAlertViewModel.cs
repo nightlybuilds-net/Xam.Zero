@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Xam.Zero.Commands.ZCommand;
 using Xam.Zero.ViewModels;
-using Xam.Zero.ZCommand;
 
 namespace Xam.Zero.SimpleTabbedApp.Popups
 {

@@ -8,6 +8,7 @@
     <Copyright>Nightly Builds Net</Copyright>
     <PackageProjectUrl>https://github.com/nightlybuilds-net/Xam.Zero</PackageProjectUrl>
     <PackageTags>xam zero, xam.zero, mvvm, xamarin</PackageTags>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

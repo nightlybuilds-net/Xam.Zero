@@ -6,8 +6,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xam.Zero.Classes;
+using Xam.Zero.Commands.ZCommand;
 using Xam.Zero.ViewModels;
-using Xam.Zero.ZCommand;
 
 
 namespace Xam.Zero.Dev.Features.CommandPage
