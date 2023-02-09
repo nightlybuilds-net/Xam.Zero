@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xam.Zero.Commands.ZCommand;
 using Xam.Zero.SimpleTabbedApp.Popups.Toolkit;
 using Xam.Zero.ViewModels;
-using Xam.Zero.ZCommand;
 
 namespace Xam.Zero.SimpleTabbedApp.ViewModels
 {
